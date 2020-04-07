@@ -24,7 +24,7 @@ class UserRegister(Resource):
     def post(cls):
         data = cls.user_parser.parse_args()
         if UserModel.find_by_email(data['email']):
-            return {'message': 'This email is already exists'}, 400
+            return {'message': 'This email address already exists'}, 400
         data['password'] = generate_password_hash(data['password'])
         new_user = UserModel(**data)  # data['email'], data['password'], user parser insures it only has 2
         new_user.save_to_db()
