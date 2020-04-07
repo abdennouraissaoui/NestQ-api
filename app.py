@@ -4,8 +4,6 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
 
-from db import db
-
 from resources.user import (
     UserRegister,
     UserPortfolios,
@@ -40,6 +38,5 @@ api.add_resource(UserLogin, "/api/login")
 api.add_resource(TokenRefresh, '/api/refresh')
 api.add_resource(UserLogout, "/api/logout")
 api.add_resource(Analytics, "/api/tearsheet/<string:portfolio_name>")
-db.init_app(app)
 if __name__ == '__main__':
     app.run(debug=True)  # important to mention debug=True
