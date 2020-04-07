@@ -5,7 +5,7 @@ class UserModel(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
-    password = db.Column(db.String(80))
+    password = db.Column(db.String(160))
     firstName = db.Column(db.String(80))
     lastName = db.Column(db.String(80))
     portfolios = db.relationship('PortfolioModel', lazy='dynamic')
