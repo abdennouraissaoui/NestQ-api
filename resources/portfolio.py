@@ -1,7 +1,6 @@
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.portfolio import PortfolioModel
-from datetime import datetime
 from finance.optimizer import available_optimizers
 
 
@@ -27,6 +26,7 @@ class Portfolio(Resource):
         if data['allocation'] != "Manual":
             parser.add_argument('optimizationStartDate', required=True, help="This field cannot be left blank!")
             parser.add_argument('optimizationEndDate', required=True, help="This field cannot be left blank!")
+            data = parser.parse_args()
             data['optimizationStartDate'] = data['optimizationStartDate'][:10]
             data['optimizationEndDate'] = data['optimizationEndDate'][:10]
             data['holdings'] = get_weights(list(data['holdings'].keys()),

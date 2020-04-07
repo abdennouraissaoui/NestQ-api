@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.user import UserModel
+from models.portfolio import PortfolioModel
 from blacklist import BLACKLIST
 from werkzeug.security import (
     generate_password_hash,
@@ -12,6 +13,7 @@ from flask_jwt_extended import (
     jwt_required,
     get_raw_jwt)
 from datetime import timedelta
+from misc.default_portfolios import DEFAULT_PORTFOLIOS
 
 class UserRegister(Resource):
     user_parser = reqparse.RequestParser()
@@ -28,13 +30,24 @@ class UserRegister(Resource):
         data['password'] = generate_password_hash(data['password'])
         new_user = UserModel(**data)  # data['email'], data['password'], user parser insures it only has 2
         new_user.save_to_db()
-        return {"message": "User created successfully"}, 202
+        # create the default portfolios for the user
+        for portfolio_meta in DEFAULT_PORTFOLIOS:
+            portfolio = PortfolioModel(portfolio_meta["name"], new_user.id, portfolio_meta)
+            portfolio.save_to_db()
+
+        access_token = create_access_token(identity=new_user.id, fresh=True, expires_delta=timedelta(hours=1))
+        refresh_token = create_refresh_token(new_user.id)
+        return {
+                   'access_token': access_token,
+                   'refresh_token': refresh_token,
+               }, 200
 
 
 class UserLogin(Resource):
     user_parser = reqparse.RequestParser()
     user_parser.add_argument('email', type=str, required=True, help="You must provide an email")
     user_parser.add_argument('password', type=str, required=True, help="You must provide a password")
+
     @classmethod
     def post(cls):
         data = cls.user_parser.parse_args()
