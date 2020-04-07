@@ -17,8 +17,7 @@ class Portfolio(Resource):
         parser.add_argument('holdings', type=dict, required=True, help="This field cannot be left blank!")
         parser.add_argument('allocation', type=str, required=True, help="This field cannot be left blank!")
         parser.add_argument('rebalancingFrequency', type=str, required=True, help="This field cannot be left blank!")
-        parser.add_argument('optimizationStartDate', type=str, required=False)
-        parser.add_argument('optimizationEndDate', type=str, required=False)
+
         for requirement, type in additional_reqs.items():
             parser.add_argument(requirement, type=type, required=True, help="This field cannot be left blank!")
         data = parser.parse_args()
@@ -26,6 +25,8 @@ class Portfolio(Resource):
         # get the weights
         # TODO: Handle cases where the allocation type is not supported
         if data['allocation'] != "Manual":
+            parser.add_argument('optimizationStartDate', required=True, help="This field cannot be left blank!")
+            parser.add_argument('optimizationEndDate', required=True, help="This field cannot be left blank!")
             data['optimizationStartDate'] = data['optimizationStartDate'][:10]
             data['optimizationEndDate'] = data['optimizationEndDate'][:10]
             data['holdings'] = get_weights(list(data['holdings'].keys()),

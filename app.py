@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
@@ -14,7 +14,12 @@ from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
 # from resources.analytics import Analytics
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder="build/static", template_folder="build")
+@app.route("/")
+def react_app():
+    return render_template('index.html')
+
+
 app.config['PROPAGATE_EXCEPTIONS'] = True  # To allow flask propagating exception even if debug is set to false on app
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
@@ -38,5 +43,4 @@ api.add_resource(UserLogin, "/api/login")
 api.add_resource(TokenRefresh, '/api/refresh')
 api.add_resource(UserLogout, "/api/logout")
 api.add_resource(Analytics, "/api/tearsheet/<string:portfolio_name>")
-if __name__ == '__main__':
-    app.run(debug=True)  # important to mention debug=True
+
