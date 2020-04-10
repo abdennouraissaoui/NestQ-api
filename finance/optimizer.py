@@ -5,7 +5,6 @@ def markowitz(tickers, start=None, end=None):
     from pypfopt.efficient_frontier import EfficientFrontier
     from pypfopt import risk_models
     from pypfopt import expected_returns
-
     prices = load_prices(tickers, start, end)
     mu = expected_returns.mean_historical_return(prices)
     S = risk_models.sample_cov(prices)

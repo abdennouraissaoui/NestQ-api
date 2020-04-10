@@ -133,8 +133,6 @@ def create_full_tear_sheet(portfolio, start=None, end=None):
     rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
     rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
                                         portfolio.settings["rebalancingFrequency"])
-
-
     risk_metrics = tbl_col_rows(get_risk_metrics(rets, 0.02, 12))
     ff_exp = tbl_col_rows(get_ff_exposure(rets))
     inv_growth = stringify_date_index(get_inv_growth(rets))
