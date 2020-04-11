@@ -3,6 +3,7 @@ from flask import Flask, render_template, send_from_directory
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
+from werkzeug.routing import BaseConverter
 
 from resources.user import (
     UserRegister,
@@ -14,19 +15,41 @@ from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
+
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+app.url_map.converters['regex'] = RegexConverter
+
+
+@app.route("/<regex(r'(.*?)\.(json|txt|png|ico|js)$'):file>")
+def public(file):
+    return send_from_directory('./build', file)
+
 @app.route("/")
 @app.route("/portfolios")
 def react_app():
     return render_template('index.html')
 
-@app.route("/manifest.json")
-def manifest():
-    return send_from_directory('./build', 'manifest.json')
 
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory('./build', 'favicon.ico')
+
+
+#
+# @app.route("/manifest.json")
+# def manifest():
+#     return send_from_directory('./build', 'manifest.json')
+#
+#
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory('./build', 'favicon.ico')
+#
+# @app.route('/service-worker.js')
+# def sw():
+#     return send_from_directory('./build', 'service-worker.js')
 
 
 app.config['PROPAGATE_EXCEPTIONS'] = True  # To allow flask propagating exception even if debug is set to false on app
