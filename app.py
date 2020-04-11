@@ -14,7 +14,7 @@ from resources.user import (
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
 
-app = Flask(__name__, static_folder="build/static", template_folder="build")
+app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
 
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
@@ -26,7 +26,7 @@ app.url_map.converters['regex'] = RegexConverter
 
 @app.route("/<regex(r'(.*?)\.(json|txt|png|ico|js)$'):file>")
 def public(file):
-    return send_from_directory('./build', file)
+    return send_from_directory('./frontend/build', file)
 
 @app.route("/")
 @app.route("/portfolios")

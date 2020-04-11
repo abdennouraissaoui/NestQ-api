@@ -1,14 +1,14 @@
 {
   "short_name": "NestQ",
   "name": "NestQ",
-  "start_url": "https://www.nestq.ca",
+  "start_url": "https://www.nestq.ca/",
   "display": "standalone",
   "theme_color": "#2C3334",
   "background_color": "#ffffff",
   "orientation": "portrait-primary",
   "icons":[
     {
-      "src":"src/logo-200x200.png",
+      "src":"logo-200x200.png",
       "sizes":"200x200",
       "type":"image/png"
     }
