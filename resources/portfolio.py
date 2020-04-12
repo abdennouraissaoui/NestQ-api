@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.portfolio import PortfolioModel
 from finance.optimizer import available_optimizers
-
+from finance.analytics import create_full_tear_sheet, cache
 
 def get_weights(tickers, method, start=None, end=None):
     if method in available_optimizers.keys():
@@ -67,6 +67,7 @@ class Portfolio(Resource):
     def put(self, name):
         portfolio = PortfolioModel.find_by_name(name, get_jwt_identity())
         if portfolio:
+            cache.delete_memoized(create_full_tear_sheet)
             data = self.get_data(additional_reqs={"name": str})
             try:
                 original_create_date = portfolio.date_created

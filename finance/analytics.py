@@ -1,7 +1,9 @@
 import pandas as pd
 import statsmodels.api as sm
 from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index
+from flask_caching import Cache
 
+cache = Cache()
 
 def form_portfolio(underlyings_returns, weights, rebalancing_frequency):
     # TODO: incorporate rebalancing frequency
@@ -126,7 +128,7 @@ def get_returns(prices, meta_data):
     returns = prices.pct_change().dropna()
     return (returns * meta_data).sum(axis=1)
 
-
+@cache.memoize(timeout=300)
 def create_full_tear_sheet(portfolio, start=None, end=None):
     tickers = list(portfolio.settings["holdings"].keys())
     prices = load_prices(tickers, start, end)

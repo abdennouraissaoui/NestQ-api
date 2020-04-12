@@ -13,9 +13,11 @@ from resources.user import (
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
 
+
+
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
-
-
+from finance.analytics import cache
+cache.init_app(app, config={'CACHE_TYPE': 'simple'})
 
 @app.before_request
 def before_request():
