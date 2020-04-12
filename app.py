@@ -4,7 +4,6 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
 from werkzeug.routing import BaseConverter
-
 from resources.user import (
     UserRegister,
     UserPortfolios,
@@ -13,8 +12,11 @@ from resources.user import (
     UserLogout)
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
+from finance.analytics import cache
 
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
+cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+
 
 
 @app.before_request

@@ -73,7 +73,7 @@ const SignupForm = () => {
                             name="lastName"
                             hasFeedback={true}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} name="lastName" placeholder="First name" />
+                            <Input prefix={<UserOutlined className="site-form-item-icon" />} name="lastName" placeholder="Last name" />
                         </Form.Item>
 
                         <Form.Item

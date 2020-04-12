@@ -8,7 +8,7 @@ import { AuthContext } from "./shared/Context/AuthContext"
 import Home from "./home/Home"
 import Analytics from "./analysis/pages/Analytics"
 import { useAuth } from './shared/hooks/auth-hook';
-
+import About from "./about/About"
 
 function App() {
   const { accessToken, login, logout, refreshToken } = useAuth();
@@ -19,11 +19,11 @@ function App() {
         <Route path="/portfolios" exact>
           <Portfolios />
         </Route>
-        <Route path="/about" exact>
-          <h2>Hello</h2>
-        </Route>
         <Route path="/analytics/portfolio/:portfolioName" exact>
           <Analytics />
+        </Route>
+        <Route path="/about" exact>
+          <About />
         </Route>
         <Redirect to="/portfolios" />
       </Switch>
@@ -36,6 +36,9 @@ function App() {
         </Route>
         <Route path="/" exact>
           <Home />
+        </Route>
+        <Route path="/about" exact>
+          <About />
         </Route>
         <Redirect to="/" />
       </Switch>

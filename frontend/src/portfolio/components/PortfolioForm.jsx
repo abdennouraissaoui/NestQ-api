@@ -10,23 +10,20 @@ import {
   Select,
   Form,
   RemoveRowButton,
-  InputNumber
+  InputNumber,
+  AutoComplete
 } from "formik-antd"
 import { Button, Alert, Modal } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
-import { string, object, array, number } from 'yup';
+import { string, object, array } from 'yup';
+const tickers = require("./tickers.json")
 const { MonthPicker } = DatePicker
 const { toDictOfHoldings } = DataFormatter
-
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
   holdings: array().of(
-    object().shape({
-      ticker: string().required("Please enter a ticker"),
-      weight: number("Must be a number").moreThan(0, "Weight must be positive").max(100, "A weight cannot exceed 100%")
-    })
-  ).required("Must have at least one security").min(1)
+    object()).required("Must have at least one security").min(1)
 })
 
 
@@ -173,7 +170,18 @@ const PortfolioForm = (props) => {
                         hasFeedback={true}
                         className="w-60"
                       >
-                        <Input style={{ marginTop: "0px" }} className="ticker w-60" name={`holdings.${index}.ticker`} placeholder="Search for securities" />
+                        {/* <Input style={{ marginTop: "0px" }} className="ticker w-60" name={`holdings.${index}.ticker`} placeholder="Search for securities" /> */}
+                        <AutoComplete
+                          filterOption={(inputValue, option) =>
+                            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                          }
+                          options={tickers}
+                          style={{ marginTop: "0px" }}
+                          className="ticker w-60"
+                          name={`holdings.${index}.ticker`}
+                          placeholder="Search for securities"
+                        />
+
                       </Form.Item>
                       {values.allocation === "Manual" &&
                         <Form.Item
@@ -183,7 +191,7 @@ const PortfolioForm = (props) => {
                         >
                           <InputNumber
                             min={0}
-                            formatter={value => value.length > 0 ? `${value}%`: ''}
+                            formatter={value => value.length > 0 ? `${value}%` : ''}
                             parser={value => value.replace('%', '')}
                             max={100} style={{ border: "none" }}
                             name={`holdings.${index}.weight`}
