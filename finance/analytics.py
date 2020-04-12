@@ -127,10 +127,10 @@ def get_returns(prices, meta_data):
     return (returns * meta_data).sum(axis=1)
 
 
-from flask_caching import Cache
-cache = Cache()
-
-@cache.memoize(timeout=300)
+# from flask_caching import Cache
+# cache = Cache()
+#
+# @cache.memoize(timeout=300)
 def create_full_tear_sheet(portfolio, start=None, end=None):
     tickers = list(portfolio.settings["holdings"].keys())
     prices = load_prices(tickers, start, end)
