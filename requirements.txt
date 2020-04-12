@@ -28,5 +28,6 @@ statsmodels==0.11.1
 urllib3==1.25.8
 Werkzeug==1.0.0
 yfinance==0.1.54
+Flask-Caching
 psycopg2
 uwsgi
