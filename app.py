@@ -12,10 +12,8 @@ from resources.user import (
     UserLogout)
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.analytics import Analytics
-# from finance.analytics import cache
 
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
-# cache.init_app(app, config={'CACHE_TYPE': 'simple'})
 
 
 
