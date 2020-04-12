@@ -103,7 +103,6 @@ const PortfolioForm = (props) => {
       initialValues={initialValues(props)}
       validationSchema={validationSchema}
       validateOnChange={false}
-      validateOnBlur={false}
     >
       {({ values, resetForm }) => (
 
@@ -144,10 +143,6 @@ const PortfolioForm = (props) => {
           }
 
           <hr />
-          {/* <pre>
-            {JSON.stringify(values, null, 2)}
-          </pre> */}
-
           <Button icon={<PlusOutlined />} type="dashed" onClick={openSecurityEntryForm}>
             Add Securities
         </Button>
