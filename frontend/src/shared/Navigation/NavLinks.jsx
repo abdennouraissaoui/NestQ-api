@@ -14,9 +14,9 @@ const NavLinks = () => {
                 <NavLink to="/auth" exact> Authenticate </NavLink>
             </li>}
             
-            <li>
+            {/* <li>
                 <NavLink to="/about" exact> About </NavLink>
-            </li>
+            </li> */}
 
             {auth.isLoggedIn && <li>
                 <button onClick={auth.logout}>Logout</button>
