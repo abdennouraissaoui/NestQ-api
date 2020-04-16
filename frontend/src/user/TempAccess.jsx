@@ -33,12 +33,19 @@ const TempAccess = () => {
         }
     }
     return (
-    <div className="form-container">
-        {error && <Alert> {error} </Alert>}
-        <Typography.Paragraph strong type={"warning"} copyable={false}>
-            All data created in this temporary session will be deleted when you log out.
+        <div className="form-container">
+            {error && <Alert
+                // message="Error"
+                description={error}
+                type="error"
+                showIcon
+                style={{ marginBottom: "5px" }}
+                className="tl"
+            />}
+            <Typography.Paragraph strong type={"warning"} copyable={false}>
+                All data created in this temporary session will be deleted when you log out.
         </Typography.Paragraph>
-        <Button type="danger" size="large" className="w-100 mv2" onClick={genTempAccount}>Continue with a temporary account</Button>
-    </div>)
+            <Button type="danger" size="large" className="w-100 mv2" onClick={genTempAccount}>Continue with a temporary account</Button>
+        </div>)
 }
 export default TempAccess;

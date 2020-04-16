@@ -17,9 +17,12 @@ import { Button, Alert, Modal } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
 import { string, object, array } from 'yup';
-const tickers = require("./tickers.json")
+const nameTickerMap = require("./name_ticker_map.json")
+const etf_names = require("./etf_options.json")
+const mf_names = require("./mf_options.json")
+const all_names = etf_names.concat(mf_names)
 const { MonthPicker } = DatePicker
-const { toDictOfHoldings } = DataFormatter
+const { toDictOfHoldings, renameKeys } = DataFormatter
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
   holdings: array().of(
@@ -49,14 +52,14 @@ const initialValues = (props) => {
 
 const PortfolioForm = (props) => {
   const initialName = props.name
-  const [isOpenSecurityEntry, setIsOpenSecurityEntry] = useState(false)
+  // const [isOpenSecurityEntry, setIsOpenSecurityEntry] = useState(false)
   const [initialFormData, setInitialFormData] = useState({
     optimizers: [],
     rebal_freqs: []
   })
 
-  const openSecurityEntryForm = () => setIsOpenSecurityEntry(true)
-  const closeSecurityEntryForm = () => setIsOpenSecurityEntry(false)
+  // const openSecurityEntryForm = () => setIsOpenSecurityEntry(true)
+  // const closeSecurityEntryForm = () => setIsOpenSecurityEntry(false)
   const { error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext)
 
@@ -78,6 +81,9 @@ const PortfolioForm = (props) => {
   const handleSubmit = async (values, initialName) => {
     const portfolioMeta = JSON.parse(JSON.stringify(values))
     portfolioMeta.holdings = toDictOfHoldings(values.holdings)
+    portfolioMeta.holdings = renameKeys(nameTickerMap, portfolioMeta.holdings)
+    console.log(portfolioMeta.holdings)
+
     try {
       const responseData = await sendRequest(
         `/api/portfolio/${initialName || portfolioMeta.name}`,
@@ -143,15 +149,15 @@ const PortfolioForm = (props) => {
           }
 
           <hr />
-          <Button icon={<PlusOutlined />} type="dashed" onClick={openSecurityEntryForm}>
+          {/* <Button icon={<PlusOutlined />} type="dashed" onClick={openSecurityEntryForm}>
             Add Securities
-        </Button>
-          <Modal
+        </Button> */}
+          {/* <Modal
             title="Security Entry Form"
             visible={isOpenSecurityEntry}
             onOk={closeSecurityEntryForm}
             onCancel={closeSecurityEntryForm}
-          >
+          > */}
             <FieldArray
               name="holdings"
               validateOnChange={false}
@@ -170,7 +176,7 @@ const PortfolioForm = (props) => {
                           filterOption={(inputValue, option) =>
                             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                           }
-                          options={tickers}
+                          options={all_names}
                           style={{ marginTop: "0px" }}
                           className="ticker w-60"
                           name={`holdings.${index}.ticker`}
@@ -208,7 +214,7 @@ const PortfolioForm = (props) => {
                 </div>
               )}
             />
-          </Modal>
+          {/* </Modal> */}
 
           <footer>
             <SubmitButton className="ma2" size="large" type="primary"> Submit </SubmitButton>

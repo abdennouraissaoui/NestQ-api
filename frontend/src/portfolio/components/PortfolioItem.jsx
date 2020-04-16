@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 
-
 const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, onDelete, onEdited }) => {
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
     const openEditForm = () => setEditFormIsOpen(true)
@@ -61,7 +60,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
                     />
                 </div>
             </Modal>
-                {isLoading ? <Spin size="large"> {portfolioCard} </Spin> : portfolioCard}
+            {isLoading ? <Spin size="large"> {portfolioCard} </Spin> : portfolioCard}
         </React.Fragment>
     )
 }

@@ -42,4 +42,23 @@ DataFormatter.toDictOfHoldings = (listOfHoldings) => {
   return holdings
 }
 
+
+DataFormatter.renameKeys = (keysMap, obj) =>
+  Object.keys(obj).reduce(
+    (acc, key) => ({
+      ...acc,
+      ...{ [keysMap[key] || key]: obj[key] }
+    }),
+    {}
+  );
+
+
+DataFormatter.swapKeyValue = (json) => {
+  var ret = {};
+  for (var key in json) {
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
 export default DataFormatter;
