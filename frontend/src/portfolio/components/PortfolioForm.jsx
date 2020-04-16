@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import DataFormatter from "../../shared/utils/DataFormatter"
 import { FieldArray, Formik } from "formik"
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons"
+import { DeleteOutlined } from "@ant-design/icons"
 import {
   Input,
   DatePicker,
@@ -13,7 +13,7 @@ import {
   InputNumber,
   AutoComplete
 } from "formik-antd"
-import { Button, Alert, Modal } from "antd"
+import { Button, Alert, Typography } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
 import { string, object, array } from 'yup';
@@ -52,14 +52,12 @@ const initialValues = (props) => {
 
 const PortfolioForm = (props) => {
   const initialName = props.name
-  // const [isOpenSecurityEntry, setIsOpenSecurityEntry] = useState(false)
   const [initialFormData, setInitialFormData] = useState({
     optimizers: [],
     rebal_freqs: []
   })
 
-  // const openSecurityEntryForm = () => setIsOpenSecurityEntry(true)
-  // const closeSecurityEntryForm = () => setIsOpenSecurityEntry(false)
+
   const { error, sendRequest } = useHttpClient();
   const auth = useContext(AuthContext)
 
@@ -149,15 +147,9 @@ const PortfolioForm = (props) => {
           }
 
           <hr />
-          {/* <Button icon={<PlusOutlined />} type="dashed" onClick={openSecurityEntryForm}>
-            Add Securities
-        </Button> */}
-          {/* <Modal
-            title="Security Entry Form"
-            visible={isOpenSecurityEntry}
-            onOk={closeSecurityEntryForm}
-            onCancel={closeSecurityEntryForm}
-          > */}
+            <Typography.Text strong>
+              Portfolio Holdings:
+            </Typography.Text >
             <FieldArray
               name="holdings"
               validateOnChange={false}
@@ -171,7 +163,6 @@ const PortfolioForm = (props) => {
                         hasFeedback={true}
                         className="w-60"
                       >
-                        {/* <Input style={{ marginTop: "0px" }} className="ticker w-60" name={`holdings.${index}.ticker`} placeholder="Search for securities" /> */}
                         <AutoComplete
                           filterOption={(inputValue, option) =>
                             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -180,7 +171,7 @@ const PortfolioForm = (props) => {
                           style={{ marginTop: "0px" }}
                           className="ticker w-60"
                           name={`holdings.${index}.ticker`}
-                          placeholder="Search for securities"
+                          placeholder="Search for an ETF or Mutual Fund"
                         />
 
                       </Form.Item>
@@ -214,8 +205,6 @@ const PortfolioForm = (props) => {
                 </div>
               )}
             />
-          {/* </Modal> */}
-
           <footer>
             <SubmitButton className="ma2" size="large" type="primary"> Submit </SubmitButton>
             <ResetButton className="ma2" size="large" > Reset </ResetButton>

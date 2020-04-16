@@ -4,7 +4,7 @@ import { Card } from 'antd';
 import Performance from "../components/Performance"
 import Attribution from "../components/Attribution"
 import RiskMetrics from "../components/RiskMetrics"
-import Correlation from "../components/Correlation"
+import Diversification from "../components/Diversification"
 import Recommendations from "../components/Recommendations"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { Spin, Alert } from "antd"
@@ -30,7 +30,7 @@ const Analytics = () => {
         { key: "performance", tab: "Performance" },
         { key: "attribution", tab: "Attribution" },
         { key: "riskMetrics", tab: "Risk Metrics" },
-        { key: "correlation", tab: "Correlation" },
+        { key: "diversification", tab: "Diversification" },
         { key: "recommendations", tab: "Recommendations" }
     ]
 
@@ -46,7 +46,7 @@ const Analytics = () => {
         riskMetrics: <RiskMetrics
             risk_metrics={portfolioTearsheet.risk_metrics}
         />,
-        correlation: <Correlation correlation={portfolioTearsheet.correlation}/>,
+        diversification: <Diversification correlation={portfolioTearsheet.correlation} pca={portfolioTearsheet.PCA}/>,
         recommendations: <Recommendations />
     }
 

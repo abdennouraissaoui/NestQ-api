@@ -22,7 +22,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
         }
     }
     let portfolioCard = (
-        <Card className="tc ma3 dib br3 pad3 bw2 shadow-5 grow">
+        <Card className="tc ma3 dib br3 pad3 bw2 shadow-5">
             <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
             <div>
                 <Link to={`/analytics/portfolio/${name}`}>

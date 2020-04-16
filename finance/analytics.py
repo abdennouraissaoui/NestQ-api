@@ -128,6 +128,15 @@ def get_ff_exposure(returns):
     return reg_summary
 
 
+def get_pca(returns):
+    from sklearn.decomposition import PCA
+    pca = PCA()
+    standardized_rets = (returns - returns.mean(axis=0)) / returns.std(axis=0)
+    pca.fit(standardized_rets)
+    return {"PC{}".format(i + 1): pct_explained * 100
+            for i, pct_explained in enumerate(list(pca.explained_variance_ratio_))}
+
+
 def get_returns(prices, meta_data):
     returns = prices.pct_change().dropna()
     return (returns * meta_data).sum(axis=1)
@@ -146,9 +155,11 @@ def create_full_tear_sheet(portfolio, start=None, end=None):
     drawdowns = stringify_date_index(get_drawdowns(rets))
     calendar_rets = tbl_col_rows(get_calendar_returns(rets))
     correlation = tbl_col_rows(round(rets.corr(), 2))
+    pca = get_pca(rets.drop(portfolio.name, axis=1))
     return {'risk_metrics': risk_metrics,
             'ff_exp': ff_exp,
             'inv_growth': inv_growth.to_dict(),
             'drawdowns': drawdowns.to_dict(),
             'calendar_rets': calendar_rets,
-            "correlation": correlation}
+            "correlation": correlation,
+            "PCA": pca}
