@@ -27,6 +27,18 @@ def load_prices(tickers, start=None, end=None):
     return prices
 
 
+def tbl_col_rows(df):
+    """Given a data frame column, this function provides a
+    dictionary with two keys: rows and columns.
+    Rows will be a list of lists. Each list represents a row
+    Columns will be a list of strings
+    """
+    columns = [""] + list(df.columns)
+    rows = df.values.tolist()
+    rows = [[df.index[i]] + rows[i] for i in range(len(rows))]
+    return {"columns": columns, "rows": rows}
+
+
 def _get_list_difference(left_list, right_list):
     """
     returns a list of elements that are in the left list but not the right one

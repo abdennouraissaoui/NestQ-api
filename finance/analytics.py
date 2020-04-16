@@ -1,20 +1,47 @@
 import pandas as pd
 import statsmodels.api as sm
-from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index
+from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index, tbl_col_rows
 from flask_caching import Cache
 
 cache = Cache()
+
 
 def form_portfolio(underlyings_returns, weights, rebalancing_frequency):
     # TODO: incorporate rebalancing frequency
     return (underlyings_returns * weights).sum(axis=1)
 
 
-def get_pct_positive(returns):
-    """
-    Returns the percentage of the positive numbers
-    """
+def pct_positive_periods(returns):
     return returns[returns > 0].count() / len(returns)
+
+
+def sharpe_ratio(ann_ret, ann_rf, ann_vol):
+    return (ann_ret - ann_rf) / ann_vol
+
+
+def downside_std_dev(rets, periods_per_year):
+    return rets[rets < 0].std() * periods_per_year ** .5
+
+
+def sortino_ratio(ann_ret, ann_rf, downside_std):
+    return (ann_ret - ann_rf) / downside_std
+
+
+def calmar_ratio(ann_ret, ann_rf, max_dd):
+    return (ann_ret - ann_rf) / max_dd
+
+
+def value_at_risk(rets, q=0.05):
+    return rets.quantile(q)
+
+
+def conditional_value_at_risk(rets, q=0.05):
+    cvar_rets = rets[rets <= rets.quantile(q)]
+    return (cvar_rets + 1).prod() ** (1 / cvar_rets.count()) - 1
+
+
+def tail_ratio(rets, q=0.05):
+    return rets.quantile(1-q) / abs(rets.quantile(q))
 
 
 def get_drawdowns(returns):
@@ -23,8 +50,8 @@ def get_drawdowns(returns):
     """
     cumil_rets = (returns + 1).cumprod()
     cumil_max = cumil_rets.cummax()
-    percent_diff = cumil_rets / cumil_max
-    return percent_diff * 100
+    percent_diff = cumil_rets / cumil_max - 1
+    return percent_diff
 
 
 def get_annualized_return(returns, periods_per_year):
@@ -34,19 +61,6 @@ def get_annualized_return(returns, periods_per_year):
 
 def get_annualized_vol(returns, periods_per_year):
     return returns.std() * periods_per_year ** .5
-
-
-def get_sharpe_ratio(returns, rf, periods_per_year):
-    annualized_ret = get_annualized_return(returns, periods_per_year)
-    annualized_vol = get_annualized_vol(returns, periods_per_year)
-    return (annualized_ret - rf) / annualized_vol
-
-
-def get_adj_sharpe_ratio(returns, rf, periods_per_year):
-    sharpe_ratio = get_sharpe_ratio(returns, rf, periods_per_year)
-    skew = returns.skew()
-    kurtosis = returns.kurtosis()
-    return sharpe_ratio * (1 + (skew / 6) * sharpe_ratio - ((kurtosis) / 24) * (sharpe_ratio ** 2))
 
 
 def get_reg_summary(X, y):
@@ -77,35 +91,25 @@ def get_inv_growth(returns, init_inv=1000):
     return round(gross_returns.cumprod(), 2)
 
 
-def tbl_col_rows(df):
-    """Given a data frame column, this function provides a
-    dictionary with two keys: rows and columns.
-    Rows will be a list of lists. Each list represents a row
-    Columns will be a list of strings
-    """
-    columns = [""] + list(df.columns)
-    rows = df.values.tolist()
-    rows = [[df.index[i]] + rows[i] for i in range(len(rows))]
-    return {"columns": columns, "rows": rows}
-
-
 def get_risk_metrics(returns, rf, periods_per_year):
-    annualized_return = get_annualized_return(returns, periods_per_year)
-    annualized_vol = get_annualized_vol(returns, periods_per_year)
-    sharpe_ratio = get_sharpe_ratio(returns, rf, periods_per_year)
-    skew = returns.skew()
-    kurtosis = returns.kurtosis()
-    adj_sharpe = get_adj_sharpe_ratio(returns, rf, periods_per_year)
-    hit_rate = get_pct_positive(returns)
-    labels = ['Average Annual Return',
-              'Volatility',
-              'Sharpe Ratio',
-              'Skewness',
-              'Kurtosis',
-              'Adjusted Sharpe Ratio',
-              '% of positive periods']
-    data = [annualized_return * 100, annualized_vol * 100, sharpe_ratio, skew, kurtosis, adj_sharpe, hit_rate * 100]
-    return round(pd.DataFrame(data, labels), 2)
+    ann_ret = get_annualized_return(returns, periods_per_year)
+    ann_vol = get_annualized_vol(returns, periods_per_year)
+    downside_vol = downside_std_dev(returns, periods_per_year)
+    data = {
+        "Average Annual Return (%)": ann_ret * 100,
+        "Annual Volatility (%)": ann_vol * 100,
+        "Sharpe Ratio": sharpe_ratio(ann_ret, rf, ann_vol),
+        "Positive Months Ratio (%)": pct_positive_periods(returns) * 100,
+        "Downside Volatility (%)": downside_vol,
+        "Sortino Ratio": sortino_ratio(ann_ret, rf, downside_vol),
+        "Calmar Ratio": calmar_ratio(ann_ret, rf, get_drawdowns(returns).min().abs()),
+        "Monthly 95% VAR (%)": value_at_risk(returns, 0.05) * 100,
+        "Monthly 95% CVAR (%)": conditional_value_at_risk(returns, 0.05) * 100,
+        "Tail Ratio": tail_ratio(returns),
+        "Skewness": returns.skew(),
+        "Excess Kurtosis": returns.kurtosis()
+    }
+    return pd.DataFrame(data).T.round(2)
 
 
 def get_calendar_returns(returns):
@@ -128,13 +132,14 @@ def get_returns(prices, meta_data):
     returns = prices.pct_change().dropna()
     return (returns * meta_data).sum(axis=1)
 
+
 @cache.memoize(timeout=300)
 def create_full_tear_sheet(portfolio, start=None, end=None):
     tickers = list(portfolio.settings["holdings"].keys())
     prices = load_prices(tickers, start, end)
     rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
     rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
-                                        portfolio.settings["rebalancingFrequency"])
+                                          portfolio.settings["rebalancingFrequency"])
     risk_metrics = tbl_col_rows(get_risk_metrics(rets, 0.02, 12))
     ff_exp = tbl_col_rows(get_ff_exposure(rets))
     inv_growth = stringify_date_index(get_inv_growth(rets))
