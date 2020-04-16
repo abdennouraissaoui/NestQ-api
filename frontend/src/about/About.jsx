@@ -1,7 +1,7 @@
 import React from "react"
 import "./About.css"
-import { Typography } from 'antd';
-// const { Title } = Typography;
+// import { Typography } from 'antd';
+// // const { Title } = Typography;
 
 
 const About = () => {

@@ -3,6 +3,7 @@ import Card from "../shared/Card/Card"
 import LoginForm from "./LoginForm"
 import { Tabs } from "antd"
 import SignupForm from "./SignupForm"
+import TempAccess from "./TempAccess"
 import logo from '../logo-161x48.png'
 const Auth = () => {
 
@@ -16,6 +17,9 @@ const Auth = () => {
         </TabPane>
         <TabPane tab="Register" key="register">
           <SignupForm />
+        </TabPane>
+        <TabPane tab="Temporary Access" key="temp-access">
+          <TempAccess />
         </TabPane>
       </Tabs>
     </Card>
