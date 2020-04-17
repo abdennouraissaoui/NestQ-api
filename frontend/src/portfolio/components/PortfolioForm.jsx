@@ -80,8 +80,6 @@ const PortfolioForm = (props) => {
     const portfolioMeta = JSON.parse(JSON.stringify(values))
     portfolioMeta.holdings = toDictOfHoldings(values.holdings)
     portfolioMeta.holdings = renameKeys(nameTickerMap, portfolioMeta.holdings)
-    console.log(portfolioMeta.holdings)
-
     try {
       const responseData = await sendRequest(
         `/api/portfolio/${initialName || portfolioMeta.name}`,

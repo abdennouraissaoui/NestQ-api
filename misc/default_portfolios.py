@@ -12,7 +12,7 @@ DEFAULT_PORTFOLIOS = [
         "rebalancingFrequency": "Monthly"
     },
     {
-        "name": "Sample portfolio: 60 Equity & 40 Fixed Income",
+        "name": "Sample portfolio: %60 Equity & %40 Fixed Income",
         "holdings": {
             "VTSMX": .40,
             "VBMFX": .60
