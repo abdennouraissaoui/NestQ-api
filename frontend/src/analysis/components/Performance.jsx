@@ -10,12 +10,14 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets}) => {
             <LineChart
                 datapoints={DataFormatter.toLineChart(inv_growth)}
                 title="Investment Growth $1,000 invested"
+                prefix="$"
             />
             <br/>
             <br/>  
             <LineChart
                 datapoints={DataFormatter.toLineChart(drawdowns)}
                 title="Drawdowns"
+                suffix="%"
             />
 
             <br/>

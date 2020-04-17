@@ -3,7 +3,7 @@ import CanvasJSReact from './canvasjs.react';
 let CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 
-const LineChart = ({ datapoints, title }) => {
+const LineChart = ({ datapoints, title, prefix, suffix }) => {
 
     const options = {
         animationEnabled: true,
@@ -12,7 +12,8 @@ const LineChart = ({ datapoints, title }) => {
         },
         animationDuration:1000,
         axisY: {
-            prefix: "$",
+            prefix: prefix || "",
+            suffix: suffix || "",
             includeZero: false
         },
         toolTip: {

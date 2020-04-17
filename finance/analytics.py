@@ -152,7 +152,7 @@ def create_full_tear_sheet(portfolio, start=None, end=None):
     risk_metrics = tbl_col_rows(get_risk_metrics(rets, 0.02, 12))
     ff_exp = tbl_col_rows(get_ff_exposure(rets))
     inv_growth = stringify_date_index(get_inv_growth(rets))
-    drawdowns = stringify_date_index(get_drawdowns(rets))
+    drawdowns = stringify_date_index(get_drawdowns(rets)*100)
     calendar_rets = tbl_col_rows(get_calendar_returns(rets))
     correlation = tbl_col_rows(round(rets.corr(), 2))
     pca = get_pca(rets.drop(portfolio.name, axis=1))

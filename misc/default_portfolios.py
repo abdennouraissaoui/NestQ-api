@@ -12,7 +12,7 @@ DEFAULT_PORTFOLIOS = [
         "rebalancingFrequency": "Monthly"
     },
     {
-        "name": "Sample portfolio: 60 Equity, 40&percnt Bonds",
+        "name": "Sample portfolio: 60 Equity & 40 Fixed Income",
         "holdings": {
             "VTSMX": .40,
             "VBMFX": .60
@@ -21,7 +21,7 @@ DEFAULT_PORTFOLIOS = [
         "rebalancingFrequency": "Monthly"
     },
     {
-        "name": "Sample portfolio: Yale Endowment",
+        "name": "Sample portfolio: David Swensen Yale Endowment",
         "holdings": {
             "TLT": .15,
             "VTSMX": .30,
