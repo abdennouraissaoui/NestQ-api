@@ -17,12 +17,9 @@ import { Button, Alert, Typography } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
 import { string, object, array } from 'yup';
-const nameTickerMap = require("./name_ticker_map.json")
 const etf_names = require("./etf_options.json")
-const mf_names = require("./mf_options.json")
-const all_names = etf_names.concat(mf_names)
 const { MonthPicker } = DatePicker
-const { toDictOfHoldings, renameKeys } = DataFormatter
+const { toDictOfHoldings } = DataFormatter
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
   holdings: array().of(
@@ -79,10 +76,10 @@ const PortfolioForm = (props) => {
   const handleSubmit = async (values, initialName) => {
     const portfolioMeta = JSON.parse(JSON.stringify(values))
     portfolioMeta.holdings = toDictOfHoldings(values.holdings)
-    portfolioMeta.holdings = renameKeys(nameTickerMap, portfolioMeta.holdings)
     try {
       const responseData = await sendRequest(
-        `/api/portfolio/${initialName || portfolioMeta.name}`,
+        // `/api/portfolio/${initialName || portfolioMeta.name}`,
+        `/api/portfolio/${initialName ? encodeURI(initialName) : encodeURI(portfolioMeta.name)}`,
         initialName ? "PUT" : 'POST',
         JSON.stringify(portfolioMeta),
         {
@@ -165,11 +162,11 @@ const PortfolioForm = (props) => {
                           filterOption={(inputValue, option) =>
                             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                           }
-                          options={all_names}
+                          options={etf_names}
                           style={{ marginTop: "0px" }}
                           className="ticker w-60"
                           name={`holdings.${index}.ticker`}
-                          placeholder="Search for an ETF or Mutual Fund"
+                          placeholder="Search for a U.S or Canadian ETF"
                         />
 
                       </Form.Item>

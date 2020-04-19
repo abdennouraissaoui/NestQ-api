@@ -12,7 +12,7 @@ const Diversification = ({ correlation, pca }) => {
                 data={DataFormatter.toPieChartFormat(pca)}
             />
             <br/>
-            <Typography.Title level="4" className="center"> Correlation Analysis </Typography.Title>
+            <Typography.Title level={3} className="center"> Correlation Analysis </Typography.Title>
             <Table rows={correlation.rows} columns={correlation.columns} />
         </React.Fragment>
     )

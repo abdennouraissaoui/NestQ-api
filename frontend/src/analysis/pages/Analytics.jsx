@@ -7,7 +7,7 @@ import RiskMetrics from "../components/RiskMetrics"
 import Diversification from "../components/Diversification"
 import Recommendations from "../components/Recommendations"
 import { useHttpClient } from "../../shared/hooks/http-hook"
-import { Spin, Alert } from "antd"
+import { Spin, Alert, Typography } from "antd"
 
 
 const Analytics = () => {
@@ -19,7 +19,7 @@ const Analytics = () => {
     useEffect(() => {
         const fetchPortfolioTearsheet = async () => {
             try {
-                let responseData = await sendRequest(`/api/tearsheet/${portfolioName}`)
+                let responseData = await sendRequest(`/api/tearsheet/${encodeURI(portfolioName)}`)
                 setPortfolioTearsheet(responseData)
             } catch (e) {}
         }
@@ -56,7 +56,7 @@ const Analytics = () => {
             {!isLoading && error && <Alert message={error}></Alert>}
             {Object.keys(portfolioTearsheet).length > 0 && !isLoading && !error && <Card
                 style={{ width: '95%' }}
-                title="Fund analysis"
+                title= {<Typography.Title level={3} className="center">Portfolio Analysis</Typography.Title>}
                 tabList={analyticsCategories}
                 activeTabKey={currentTab}
                 onTabChange={key => setCurrentTab(key)}

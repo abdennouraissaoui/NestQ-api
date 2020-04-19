@@ -2,20 +2,20 @@ DEFAULT_PORTFOLIOS = [
     {
         "name":"Sample portfolio: All-Weather",
         "holdings": {
-            "VTI": .30,
-            "TLT": .40,
-            "IEF": .15,
-            "DBC": .75,
-            "GLD": .75
+            "Vanguard Total Stock Market Index Fund ETF Shares": .30,
+            "iShares 20+ Year Treasury Bond ETF": .40,
+            "iShares 7-10 Year Treasury Bond ETF": .15,
+            "Invesco DB Commodity Index Tracking Fund": .75,
+            "SPDR Gold Shares": .75
         },
         "allocation": "Manual",
         "rebalancingFrequency": "Monthly"
     },
     {
-        "name": "Sample portfolio: %60 Equity & %40 Fixed Income",
+        "name": "Sample portfolio: 60% Equity & 40% Fixed Income",
         "holdings": {
-            "VTSMX": .40,
-            "VBMFX": .60
+            "Vanguard Total Stock Market Index Fund ETF Shares": .40,
+            "Vanguard Total Bond Market Index Fund ETF Shares": .60
         },
         "allocation": "Manual",
         "rebalancingFrequency": "Monthly"
@@ -23,12 +23,12 @@ DEFAULT_PORTFOLIOS = [
     {
         "name": "Sample portfolio: David Swensen Yale Endowment",
         "holdings": {
-            "TLT": .15,
-            "VTSMX": .30,
-            "VGSIX": .20,
-            "VTMGX": .15,
-            "VEIEX": .5,
-            "VIPSX": .15
+            "iShares 20+ Year Treasury Bond ETF": .15,
+            "Vanguard Total Stock Market Index Fund ETF Shares": .30,
+            "Vanguard Real Estate Index Fund ETF Shares": .20,
+            "iShares MSCI EAFE ETF": .15,
+            "iShares MSCI Emerging Markets ETF": .5,
+            "iShares TIPS Bond ETF": .15
         },
         "allocation": "Manual",
         "rebalancingFrequency": "Monthly"

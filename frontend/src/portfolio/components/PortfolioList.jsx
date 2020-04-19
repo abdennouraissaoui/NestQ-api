@@ -1,14 +1,11 @@
 import React from 'react';
 import PortfolioItem from "./PortfolioItem"
 import AddPortfolioCard from "./AddPortfolioCard"
-import DataFormatter from "../../shared/utils/DataFormatter"
 
-const tickerNameMap = DataFormatter.swapKeyValue(require("./name_ticker_map.json"))
 
 const PortfolioList = ({ portfolios, openPortForm, onDeletePortfolio, onEdited, closeForm }) => {
     let cards = []
     portfolios.forEach(portflolio => {
-        portflolio.settings.holdings = DataFormatter.renameKeys(tickerNameMap, portflolio.settings.holdings)
         cards.push(
             <PortfolioItem
                 key={portflolio.name}

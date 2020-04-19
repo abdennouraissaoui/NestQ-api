@@ -16,7 +16,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
     let { isLoading, sendRequest } = useHttpClient();
     const confirmDeleteHander = async () => {
         try {
-            await sendRequest(`/api/portfolio/${encodeURIComponent(name)}`, "DELETE")
+            await sendRequest(`/api/portfolio/${encodeURI(name)}`, "DELETE")
             onDelete(name)
         } catch (err) {
         }
@@ -25,7 +25,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
         <Card className="tc ma3 dib br3 pad3 bw2 shadow-5">
             <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
             <div>
-                <Link to={`/analytics/portfolio/${encodeURIComponent(name)}`}>
+                <Link to={`/analytics/portfolio/${encodeURI(name)}`}>
                     <Button icon={<StockOutlined />} className="ma2 ml4" size="large" type="primary"> Analyze </Button>
                 </Link>
                 <Button icon={<EditOutlined />} className="ma2" size="large" type="dashed" onClick={openEditForm} />

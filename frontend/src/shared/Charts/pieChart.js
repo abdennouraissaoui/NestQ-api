@@ -10,7 +10,8 @@ const PieChart = ({data, title }) => {
 		theme: "dark2",
 		// animationEnabled: true,
 		title:{
-			text: title
+			text: title,
+			fontSize: 17
 		},
 		data: [{
 			type: "pie",

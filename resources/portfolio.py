@@ -4,6 +4,7 @@ from models.portfolio import PortfolioModel
 from finance.optimizer import available_optimizers
 from finance.analytics import create_full_tear_sheet, cache
 
+
 def get_weights(tickers, method, start=None, end=None):
     if method in available_optimizers.keys():
         return available_optimizers[method](tickers, start, end)
@@ -57,6 +58,7 @@ class Portfolio(Resource):
         if PortfolioModel.find_by_name(name, get_jwt_identity()):
             return {'message': "A portfolio with name '{}' already exists.".format(name)}, 400
         data = self.get_data()
+
         try:
             portfolio = self.create_portfolio(name, data)
         except:

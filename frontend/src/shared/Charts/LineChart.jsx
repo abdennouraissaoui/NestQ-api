@@ -8,7 +8,8 @@ const LineChart = ({ datapoints, title, prefix, suffix }) => {
     const options = {
         animationEnabled: true,
         title: {
-            text: title
+            text: title,
+            fontSize:17
         },
         animationDuration:1000,
         axisY: {
