@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 
-const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, onDelete, onEdited }) => {
+const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
     const openEditForm = () => setEditFormIsOpen(true)
     const closeEditForm = () => setEditFormIsOpen(false)
@@ -56,6 +56,8 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
                         optimizationStartDate={optimizationStartDate}
                         optimizationEndDate={optimizationEndDate}
                         rebalancingFrequency={rebalancingFrequency}
+                        targetReturn={targetReturn}
+                        targetVolatility={targetVolatility}
                         onEdited={onEdited}
                     />
                 </div>

@@ -1,4 +1,4 @@
-import React, {useContext} from "react"
+import React, { useContext } from "react"
 import "./NavLinks.css"
 import { NavLink } from "react-router-dom"
 import { AuthContext } from "../Context/AuthContext"
@@ -10,16 +10,17 @@ const NavLinks = () => {
             {auth.isLoggedIn && <li>
                 <NavLink to="/portfolios" exact> My Portfolios </NavLink>
             </li>}
-            {!auth.isLoggedIn && <li>
-                <NavLink to="/auth" exact> Authenticate </NavLink>
+            {auth.isLoggedIn && <li>
+                <NavLink to="/portfolio-arena" exact> Portfolio Arena </NavLink>
             </li>}
-            
-            {/* <li>
+            <li>
                 <NavLink to="/about" exact> About </NavLink>
-            </li> */}
-
+            </li>
             {auth.isLoggedIn && <li>
                 <button onClick={auth.logout}>Logout</button>
+            </li>}
+            {!auth.isLoggedIn && <li>
+                <NavLink to="/auth" exact> Authenticate </NavLink>
             </li>}
 
         </ul>

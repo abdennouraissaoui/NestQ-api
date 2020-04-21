@@ -21,7 +21,7 @@ const Analytics = () => {
             try {
                 let responseData = await sendRequest(`/api/tearsheet/${encodeURI(portfolioName)}`)
                 setPortfolioTearsheet(responseData)
-            } catch (e) {}
+            } catch (e) { }
         }
         fetchPortfolioTearsheet();
     }, [sendRequest, portfolioName])
@@ -46,7 +46,7 @@ const Analytics = () => {
         riskMetrics: <RiskMetrics
             risk_metrics={portfolioTearsheet.risk_metrics}
         />,
-        diversification: <Diversification correlation={portfolioTearsheet.correlation} pca={portfolioTearsheet.PCA}/>,
+        diversification: <Diversification correlation={portfolioTearsheet.correlation} pca={portfolioTearsheet.PCA} />,
         recommendations: <Recommendations />
     }
 
@@ -54,16 +54,22 @@ const Analytics = () => {
         <React.Fragment>
             {isLoading && <Spin size="large"></Spin>}
             {!isLoading && error && <Alert message={error}></Alert>}
-            {Object.keys(portfolioTearsheet).length > 0 && !isLoading && !error && <Card
-                style={{ width: '95%' }}
-                title= {<Typography.Title level={3} className="center">Portfolio Analysis</Typography.Title>}
-                tabList={analyticsCategories}
-                activeTabKey={currentTab}
-                onTabChange={key => setCurrentTab(key)}
-                type="inner"
-            >
-                {contentList[currentTab]}
-            </Card>}
+            {Object.keys(portfolioTearsheet).length > 0 && !isLoading && !error &&
+                <Card
+                    style={{ width: '95%' }}
+                    title={
+                        <React.Fragment>
+                            <Typography.Title level={3} className="center">Portfolio Analysis</Typography.Title>
+                            <Typography.Text className="center"> For the period: {portfolioTearsheet.analysis_range.start} to {portfolioTearsheet.analysis_range.end}, using monthly returns</Typography.Text>
+                        </React.Fragment>
+                    }
+                    tabList={analyticsCategories}
+                    activeTabKey={currentTab}
+                    onTabChange={key => setCurrentTab(key)}
+                    type="inner"
+                >
+                    {contentList[currentTab]}
+                </Card>}
 
         </React.Fragment>
     )

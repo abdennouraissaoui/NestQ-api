@@ -41,7 +41,9 @@ const initialValues = (props) => {
     closeForm: props.closeForm,
     optimizationStartDate: props.optimizationStartDate || dateNYearsAgo(3),
     optimizationEndDate: props.optimizationEndDate || new Date(),
-    rebalancingFrequency: props.rebalancingFrequency || ""
+    rebalancingFrequency: props.rebalancingFrequency || "",
+    targetVolatility: props.targetVolatility || "",
+    targetReturn: props.targetReturn || ""
   }
 }
 
@@ -78,7 +80,6 @@ const PortfolioForm = (props) => {
     portfolioMeta.holdings = toDictOfHoldings(values.holdings)
     try {
       const responseData = await sendRequest(
-        // `/api/portfolio/${initialName || portfolioMeta.name}`,
         `/api/portfolio/${initialName ? encodeURI(initialName) : encodeURI(portfolioMeta.name)}`,
         initialName ? "PUT" : 'POST',
         JSON.stringify(portfolioMeta),
@@ -113,24 +114,41 @@ const PortfolioForm = (props) => {
             style={{ marginBottom: "5px" }}
             className="tl"
           />}
-          <Form.Item
-            name="name"
-            hasFeedback={true}
-          >
+          <Form.Item name="name" hasFeedback={true}>
             <Input name="name" placeholder="Portfolio name" />
           </Form.Item>
           <Select name="allocation" placeholder="Allocation" showArrow className="w-90">
-            <Select.Option value="Manual"> Manual </Select.Option>
             {initialFormData.optimizers.map((optimizer, index) => {
               return (<Select.Option key={index} value={optimizer}> {optimizer} </Select.Option>)
             })}
           </Select>
+
+          {values.allocation === "Efficient Return" &&
+            <InputNumber
+              min={0}
+              formatter={value => value > 0 ? `${value}%` : ''}
+              parser={value => value.replace('%', '')}
+              name="targetReturn"
+              placeholder="Target Return" />
+          }
+
+          {values.allocation === "Efficient Volatility" &&
+            <InputNumber
+              min={0}
+              formatter={value => value > 0 ? `${value}%` : ''}
+              parser={value => value.replace('%', '')}
+              name="targetVolatility"
+              placeholder="Target Volatility" />
+          }
+
           <Select name="rebalancingFrequency" placeholder="Rebalancing Frequency" showArrow className="w-90">
+
             {initialFormData.rebal_freqs.map((frequency, index) => {
               return (<Select.Option key={index} value={frequency}> {frequency} </Select.Option>)
             })}
           </Select>
-          {values.allocation !== "Manual" &&
+
+          {values.allocation !== "Manual" && values.allocation !== "Equal Allocation" &&
             <div>
               <p>Optimization Period:</p>
               <MonthPicker
@@ -142,64 +160,63 @@ const PortfolioForm = (props) => {
           }
 
           <hr />
-            <Typography.Text strong>
-              Portfolio Holdings:
+          <Typography.Text strong>
+            Portfolio Holdings:
             </Typography.Text >
-            <FieldArray
-              name="holdings"
-              validateOnChange={false}
-              subscription={{}}
-              render={arrayHelpers => (
-                <div>
-                  {values.holdings.map((entry, index) => (
-                    <div key={index} className="flex">
-                      <Form.Item
+          <FieldArray
+            name="holdings"
+            validateOnChange={false}
+            subscription={{}}
+            render={arrayHelpers => (
+              <div>
+                {values.holdings.map((entry, index) => (
+                  <div key={index} className="flex">
+                    <Form.Item
+                      name={`holdings.${index}.ticker`}
+                      hasFeedback={true}
+                      className="w-60"
+                    >
+                      <AutoComplete
+                        filterOption={(inputValue, option) =>
+                          option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                        options={etf_names}
+                        style={{ marginTop: "0px" }}
+                        className="ticker w-60"
                         name={`holdings.${index}.ticker`}
+                        placeholder="Search for a U.S or Canadian ETF"
+                      />
+
+                    </Form.Item>
+                    {values.allocation === "Manual" &&
+                      <Form.Item
+                        name={`holdings.${index}.weight`}
                         hasFeedback={true}
-                        className="w-60"
+                        className="w-35"
                       >
-                        <AutoComplete
-                          filterOption={(inputValue, option) =>
-                            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                          }
-                          options={etf_names}
-                          style={{ marginTop: "0px" }}
-                          className="ticker w-60"
-                          name={`holdings.${index}.ticker`}
-                          placeholder="Search for a U.S or Canadian ETF"
-                        />
-
-                      </Form.Item>
-                      {values.allocation === "Manual" &&
-                        <Form.Item
+                        <InputNumber
+                          min={0}
+                          formatter={value => value > 0 ? `${value}%` : ''}
+                          parser={value => value.replace('%', '')}
+                          max={100} style={{ border: "none" }}
                           name={`holdings.${index}.weight`}
-                          hasFeedback={true}
-                          className="w-35"
-                        >
-                          <InputNumber
-                            min={0}
-                            formatter={value => value.length > 0 ? `${value}%` : ''}
-                            parser={value => value.replace('%', '')}
-                            max={100} style={{ border: "none" }}
-                            name={`holdings.${index}.weight`}
-                            placeholder="Weight (%)"
-                            className="weight w-35" />
+                          placeholder="Weight (%)"
+                          className="weight w-35" />
 
-                        </Form.Item>}
-                      {< RemoveRowButton
-                        style={{ border: "none" }}
-                        icon={<DeleteOutlined />}
-                        name="holdings"
-                        index={index}
-                        onClick={() => arrayHelpers.remove(index)}
-                      />}
-                    </div>
-                  ))}
-                  <Button type="button" onClick={() => arrayHelpers.push({ ticker: "", weight: "" })} size="small"> Add </Button>
-
-                </div>
-              )}
-            />
+                      </Form.Item>}
+                    {< RemoveRowButton
+                      style={{ border: "none" }}
+                      icon={<DeleteOutlined />}
+                      name="holdings"
+                      index={index}
+                      onClick={() => arrayHelpers.remove(index)}
+                    />}
+                  </div>
+                ))}
+                <Button type="button" onClick={() => arrayHelpers.push({ ticker: "", weight: "" })} size="small"> Add </Button>
+              </div>
+            )}
+          />
           <footer>
             <SubmitButton className="ma2" size="large" type="primary"> Submit </SubmitButton>
             <ResetButton className="ma2" size="large" > Reset </ResetButton>

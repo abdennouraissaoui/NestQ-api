@@ -15,6 +15,8 @@ const PortfolioList = ({ portfolios, openPortForm, onDeletePortfolio, onEdited, 
                 optimizationStartDate={portflolio.settings.optimizationStartDate}
                 optimizationEndDate={portflolio.settings.optimizationEndDate}
                 rebalancingFrequency={portflolio.settings.rebalancingFrequency}
+                targetReturn={portflolio.settings.targetReturn}
+                targetVolatility={portflolio.settings.targetVolatility}
                 onDelete={onDeletePortfolio}
                 onEdited={onEdited}
             />
