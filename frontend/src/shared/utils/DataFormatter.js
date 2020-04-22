@@ -28,8 +28,8 @@ DataFormatter.toLineChart = (data) => {
 
 DataFormatter.toListOfHoldings = (holdings) => {
   let entries = []
-  for (let [ticker, weight] of Object.entries(holdings)) {
-    entries.push({ ticker, weight })
+  for (let [securityName, weight] of Object.entries(holdings)) {
+    entries.push({ securityName, weight })
   }
   return entries
 }
@@ -37,7 +37,7 @@ DataFormatter.toListOfHoldings = (holdings) => {
 DataFormatter.toDictOfHoldings = (listOfHoldings) => {
   let holdings = {}
   listOfHoldings.forEach(entry => {
-    holdings[entry['ticker']] = entry['weight']
+    holdings[entry['securityName']] = entry['weight']
   })
   return holdings
 }

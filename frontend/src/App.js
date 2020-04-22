@@ -17,16 +17,14 @@ import TermsOfService from "./shared/Legal/TermsOfService"
 function App() {
   const { accessToken, login, logout, refreshToken } = useAuth();
   let routes;
-  let sharedRoutes = (
-    <React.Fragment>
-      <Route path="/privacy-policy" exact>
-        <PrivacyPolicy />
-      </Route>
-      <Route path="/terms-of-service" exact>
-        <TermsOfService />
-      </Route>
-    </React.Fragment>
-  )
+  let sharedRoutes = [
+    <Route path="/privacy-policy" exact>
+      <PrivacyPolicy />
+    </Route>,
+    <Route path="/terms-of-service" exact>
+      <TermsOfService />
+    </Route>
+  ]
   if (accessToken) {
     routes = (
       <Switch>
@@ -42,7 +40,9 @@ function App() {
         <Route path="/about" exact>
           <About />
         </Route>
-        {sharedRoutes}
+        {sharedRoutes.map(route =>{
+          return route
+        })}
         <Redirect to="/portfolios" />
       </Switch>
     )
@@ -58,7 +58,9 @@ function App() {
         <Route path="/about" exact>
           <About />
         </Route>
-        {sharedRoutes}
+        {sharedRoutes.map(route =>{
+          return route
+        })}
         <Redirect to="/" />
       </Switch>
     )

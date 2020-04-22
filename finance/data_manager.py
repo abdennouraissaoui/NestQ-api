@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+from misc.name_ticker_map import NAME_TICKER_MAP
 
 
 def load_ff(frequency="M"):
@@ -21,13 +22,15 @@ def load_ff(frequency="M"):
     return FF
 
 
-def load_prices(tickers, start=None, end=None):
+def load_prices(securities_names, start=None, end=None):
     # TODO: handle exception where optimization period unavailable
+    tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
     prices = yf.download(tickers,
-                         start= start,
+                         start=start,
                          end=end,
                          interval="1mo",
                          progress=False)['Adj Close'].dropna()
+    prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
     prices.index = prices.index + pd.tseries.offsets.MonthEnd(1)
     return prices
 

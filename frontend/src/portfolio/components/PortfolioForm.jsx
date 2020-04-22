@@ -16,16 +16,31 @@ import {
 import { Button, Alert, Typography } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
-import { string, object, array } from 'yup';
-const etf_names = require("./etf_options.json")
+import { string, object, array, mixed } from 'yup';
+const etfOptions = require("./etf_options.json")
+const etfList = etfOptions.map(etf =>{
+  return etf.value
+})
 const { MonthPicker } = DatePicker
 const { toDictOfHoldings } = DataFormatter
+
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
-  holdings: array().of(
-    object()).required("Must have at least one security").min(1)
-})
-
+  holdings: array()
+    .of(
+      object().shape({ 
+        securityName: string()
+          .required('Required')
+          .oneOf(etfList, "Cannot find this security"),
+        // weight: mixed().required("Please enter a weight")
+      })
+    )
+    .required("Must have at least one security").min(1, "Must have at least one security"),
+    allocation: mixed().required("Please choose an allocation method"),
+    rebalancingFrequency: mixed().required("Please choose a portfolio rebalancing frequency"),
+    // targetVolatility: number("Must be a number").required("Please enter the desired level of volatility"),
+    // targetReturn: number("Must be a number").required("Please enter the desired level of return"),
+  });
 
 const dateNYearsAgo = (N) => {
   var date = new Date();
@@ -37,7 +52,7 @@ const initialValues = (props) => {
   return {
     name: props.name || "",
     allocation: props.allocation || "",
-    holdings: props.holdings || [{ ticker: "", weight: "" }],
+    holdings: props.holdings || [{ securityName: "", weight: "" }],
     closeForm: props.closeForm,
     optimizationStartDate: props.optimizationStartDate || dateNYearsAgo(3),
     optimizationEndDate: props.optimizationEndDate || new Date(),
@@ -172,7 +187,7 @@ const PortfolioForm = (props) => {
                 {values.holdings.map((entry, index) => (
                   <div key={index} className="flex">
                     <Form.Item
-                      name={`holdings.${index}.ticker`}
+                      name={`holdings.${index}.securityName`}
                       hasFeedback={true}
                       className="w-60"
                     >
@@ -180,10 +195,10 @@ const PortfolioForm = (props) => {
                         filterOption={(inputValue, option) =>
                           option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                         }
-                        options={etf_names}
+                        options={etfOptions}
                         style={{ marginTop: "0px" }}
-                        className="ticker w-60"
-                        name={`holdings.${index}.ticker`}
+                        className="w-60"
+                        name={`holdings.${index}.securityName`}
                         placeholder="Search for a U.S or Canadian ETF"
                       />
 
@@ -213,7 +228,7 @@ const PortfolioForm = (props) => {
                     />}
                   </div>
                 ))}
-                <Button type="button" onClick={() => arrayHelpers.push({ ticker: "", weight: "" })} size="small"> Add </Button>
+                <Button type="button" onClick={() => arrayHelpers.push({ securityName: "", weight: "" })} size="small"> Add </Button>
               </div>
             )}
           />
