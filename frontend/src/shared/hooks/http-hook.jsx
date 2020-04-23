@@ -31,6 +31,7 @@ export const useHttpClient = () => {
                 );
 
                 if (!response.ok) {
+                    
                     throw new Error(responseData.message);
                 }
 

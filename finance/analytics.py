@@ -2,10 +2,10 @@ import pandas as pd
 import statsmodels.api as sm
 
 from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index, tbl_col_rows
-from flask_caching import Cache
+# from flask_caching import Cache
 from datetime import datetime
 
-cache = Cache()
+# cache = Cache()
 
 
 def form_portfolio(underlyings_returns, weights, rebalancing_frequency):
@@ -144,30 +144,49 @@ def get_returns(prices, meta_data):
     return (returns * meta_data).sum(axis=1)
 
 
-@cache.memoize(timeout=300)
-def create_full_tear_sheet(portfolio, start=None, end=datetime.today() + pd.tseries.offsets.MonthEnd(-1)):
-    securities_names = list(portfolio.settings["holdings"].keys())
-    prices = load_prices(securities_names, start, end)
-
-    rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
-    rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
-                                          portfolio.settings["rebalancingFrequency"])
+def create_tearsheet(rets):
     risk_metrics = tbl_col_rows(get_risk_metrics(rets, 0.02, 12))
     ff_exp = tbl_col_rows(get_ff_exposure(rets))
     inv_growth = stringify_date_index(get_inv_growth(rets))
     drawdowns = stringify_date_index(get_drawdowns(rets)*100)
     calendar_rets = tbl_col_rows(get_calendar_returns(rets))
     correlation = tbl_col_rows(round(rets.corr(), 2))
-    pca = get_pca(rets.drop(portfolio.name, axis=1))
     return {'risk_metrics': risk_metrics,
             'ff_exp': ff_exp,
             'inv_growth': inv_growth.to_dict(),
             'drawdowns': drawdowns.to_dict(),
             'calendar_rets': calendar_rets,
             "correlation": correlation,
-            "PCA": pca,
             "analysis_range": {"start": rets.index[0].replace(day=1).strftime("%Y-%m-%d"),
                                "end": rets.index[-1].strftime("%Y-%m-%d")}}
         
         
-    
+# @cache.memoize(timeout=300)
+def create_portfolio_tearsheet(portfolio, start=None, end=datetime.today() + pd.tseries.offsets.MonthEnd(-1)):
+    securities_names = list(portfolio.settings["holdings"].keys())
+    prices = load_prices(securities_names, start, end)
+
+    rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
+    rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
+                                          portfolio.settings["rebalancingFrequency"])
+
+    tearsheet = create_tearsheet(rets)
+    tearsheet['PCA'] = get_pca(rets.drop(portfolio.name, axis=1))
+    return tearsheet
+
+
+def create_comparison_tearsheet(portfolios, start=None, end=datetime.today() + pd.tseries.offsets.MonthEnd(-1)):
+    securities_names = []
+    for portfolio in portfolios:
+        securities_names += list(portfolio.settings["holdings"].keys())
+
+    prices = load_prices(list(set(securities_names)), start, end)
+    rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
+    ports_rets = pd.DataFrame()
+    for portfolio in portfolios:
+        port_rets = form_portfolio(rets[portfolio.settings['holdings'].keys()],
+                                   portfolio.settings['holdings'],
+                                   portfolio.settings["rebalancingFrequency"])
+        ports_rets[portfolio.name] = port_rets
+
+    return create_tearsheet(ports_rets)

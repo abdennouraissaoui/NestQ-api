@@ -18,10 +18,10 @@ function App() {
   const { accessToken, login, logout, refreshToken } = useAuth();
   let routes;
   let sharedRoutes = [
-    <Route path="/privacy-policy" exact>
+    <Route path="/privacy-policy" key={1} exact>
       <PrivacyPolicy />
     </Route>,
-    <Route path="/terms-of-service" exact>
+    <Route path="/terms-of-service" key={2} exact>
       <TermsOfService />
     </Route>
   ]
@@ -34,13 +34,13 @@ function App() {
         <Route path="/analytics/portfolio/:portfolioName" exact>
           <Analytics />
         </Route>
-        <Route path="/portfolio-arena" exact>
+        <Route path="/analytics/portfolio-comparison/:portfolioName" exact>
           <PortfolioArena />
         </Route>
         <Route path="/about" exact>
           <About />
         </Route>
-        {sharedRoutes.map(route =>{
+        {sharedRoutes.map(route => {
           return route
         })}
         <Redirect to="/portfolios" />
@@ -58,7 +58,7 @@ function App() {
         <Route path="/about" exact>
           <About />
         </Route>
-        {sharedRoutes.map(route =>{
+        {sharedRoutes.map(route => {
           return route
         })}
         <Redirect to="/" />

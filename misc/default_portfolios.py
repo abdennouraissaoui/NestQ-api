@@ -21,6 +21,15 @@ DEFAULT_PORTFOLIOS = [
         "rebalancingFrequency": "Monthly"
     },
     {
+        "name": "test",
+        "holdings": {
+            "Vanguard Total Stock Market Index Fund ETF Shares": .40,
+            "Vanguard Total Bond Market Index Fund ETF Shares": .60
+        },
+        "allocation": "Manual",
+        "rebalancingFrequency": "Monthly"
+    },
+    {
         "name": "Sample portfolio: David Swensen Yale Endowment",
         "holdings": {
             "iShares 20+ Year Treasury Bond ETF": .15,

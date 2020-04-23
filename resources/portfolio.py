@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.portfolio import PortfolioModel
 from finance.optimizer import available_optimizers
-from finance.analytics import create_full_tear_sheet, cache
+# from finance.analytics import create_portfolio_tearsheet, cache
 
 
 class Portfolio(Resource):
@@ -67,8 +67,8 @@ class Portfolio(Resource):
     def post(self, name):
         if PortfolioModel.find_by_name(name, get_jwt_identity()):
             return {'message': "A portfolio with name '{}' already exists.".format(name)}, 400
-        data = self.get_data()
         try:
+            data = self.get_data()
             portfolio = self.create_portfolio(name, data)
         except:
             return {"message": "An error occured when inserting a portfolio"}, 500
@@ -78,22 +78,22 @@ class Portfolio(Resource):
     def put(self, name):
         portfolio = PortfolioModel.find_by_name(name, get_jwt_identity())
         if portfolio:
-            cache.delete_memoized(create_full_tear_sheet)
-            data = self.get_data(additional_reqs={"name": str})
+            # cache.delete_memoized(create_portfolio_tearsheet)
             try:
+                data = self.get_data(additional_reqs={"name": str})
                 original_create_date = portfolio.date_created
                 portfolio.delete_from_db()
                 portfolio = self.create_portfolio(data['name'], data)
                 portfolio.date_created = original_create_date
 
             except:
-                return {"Message": "An error occured updating the portfolio"}, 500
+                return {"Message": "An error occurred when updating the portfolio"}, 500
         else:
-            data = self.get_data()
             try:
+                data = self.get_data()
                 portfolio = self.create_portfolio(name, data)
             except:
-                return {"Message": "An error occured creating the portfolio"}, 500
+                return {"Message": "An error occurred creating the portfolio"}, 500
 
         portfolio.save_to_db()
         return portfolio.json(), 200
@@ -104,6 +104,7 @@ class Portfolio(Resource):
         if portfolio:
             portfolio.delete_from_db()
         return {'message': 'Successfully deleted {}'.format(name)}, 200
+
 
 class PortfolioConstructionOptions(Resource):
     @jwt_required

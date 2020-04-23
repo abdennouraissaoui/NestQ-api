@@ -3,17 +3,19 @@ import Card from '../../shared/Card/Card'
 import DataFormatter from "../../shared/utils/DataFormatter"
 import PieChart from "../../shared/Charts/pieChart"
 import PortfolioForm from "./PortfolioForm"
-import { Button, Spin, Modal, Popconfirm } from "antd"
-import { StockOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons"
+import { Button, Modal, Popconfirm } from "antd"
+import { StockOutlined, DeleteOutlined, EditOutlined, CalculatorOutlined } from "@ant-design/icons"
 import { Link } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 
-const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
+const PortfolioItem = ({ name, portfolioNames, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
     const openEditForm = () => setEditFormIsOpen(true)
     const closeEditForm = () => setEditFormIsOpen(false)
-    let { isLoading, sendRequest } = useHttpClient();
+
+
+    let { sendRequest } = useHttpClient();
     const confirmDeleteHander = async () => {
         try {
             await sendRequest(`/api/portfolio/${encodeURI(name)}`, "DELETE")
@@ -22,12 +24,16 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
         }
     }
     let portfolioCard = (
-        <Card className="tc ma3 dib br3 pad3 bw2 shadow-5">
+        <Card className="tc ma3 dib br3 pad3 bw2 shadow-2">
             <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
             <div>
                 <Link to={`/analytics/portfolio/${encodeURI(name)}`}>
-                    <Button icon={<StockOutlined />} className="ma2 ml4" size="large" type="primary"> Analyze </Button>
+                    <Button icon={<StockOutlined />} className="ma2" size="large" type="primary"> Analyze </Button>
                 </Link>
+                <Link to={`/analytics/portfolio-comparison/${encodeURI(name)}`}>
+                    <Button icon={<CalculatorOutlined />} className="ma2" size="large" type="primary"> Compare </Button>
+                </Link>
+
                 <Button icon={<EditOutlined />} className="ma2" size="large" type="dashed" onClick={openEditForm} />
                 <Popconfirm
                     title="Are you sure you want to delete this portfolio?"
@@ -35,7 +41,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
                     okText="Yes"
                     cancelText="No"
                 >
-                    <Button icon={<DeleteOutlined />} className="ma2 mr4" size="large" danger />
+                    <Button icon={<DeleteOutlined />} className="ma2" size="large" danger />
                 </Popconfirm>
             </div>
         </Card>)
@@ -62,7 +68,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
                     />
                 </div>
             </Modal>
-            {isLoading ? <Spin size="large"> {portfolioCard} </Spin> : portfolioCard}
+            {portfolioCard}
         </React.Fragment>
     )
 }

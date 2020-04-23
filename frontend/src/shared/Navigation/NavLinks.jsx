@@ -10,9 +10,6 @@ const NavLinks = () => {
             {auth.isLoggedIn && <li>
                 <NavLink to="/portfolios" exact> My Portfolios </NavLink>
             </li>}
-            {auth.isLoggedIn && <li>
-                <NavLink to="/portfolio-arena" exact> Portfolio Arena </NavLink>
-            </li>}
             <li>
                 <NavLink to="/about" exact> About </NavLink>
             </li>

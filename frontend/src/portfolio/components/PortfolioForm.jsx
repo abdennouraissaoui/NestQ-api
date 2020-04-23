@@ -16,9 +16,9 @@ import {
 import { Button, Alert, Typography } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
-import { string, object, array, mixed } from 'yup';
+import { string, object, array, mixed, number } from 'yup';
 const etfOptions = require("./etf_options.json")
-const etfList = etfOptions.map(etf =>{
+const etfList = etfOptions.map(etf => {
   return etf.value
 })
 const { MonthPicker } = DatePicker
@@ -26,21 +26,29 @@ const { toDictOfHoldings } = DataFormatter
 
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
-  holdings: array()
-    .of(
-      object().shape({ 
+  allocation: mixed().required("Please choose an allocation method"),
+  holdings: mixed().when("allocation", {
+    is: "Manual", then: array().of(
+      object().shape({
         securityName: string()
           .required('Required')
           .oneOf(etfList, "Cannot find this security"),
-        // weight: mixed().required("Please enter a weight")
+        weight: mixed().required("Please enter a weight")
+      })
+    ).min(2, "Please insert at least two securities"),
+    otherwise: array().of(
+      object().shape({
+        securityName: string()
+          .required('Required')
+          .oneOf(etfList, "Cannot find this security"),
       })
     )
-    .required("Must have at least one security").min(1, "Must have at least one security"),
-    allocation: mixed().required("Please choose an allocation method"),
-    rebalancingFrequency: mixed().required("Please choose a portfolio rebalancing frequency"),
-    // targetVolatility: number("Must be a number").required("Please enter the desired level of volatility"),
-    // targetReturn: number("Must be a number").required("Please enter the desired level of return"),
-  });
+  }),
+  rebalancingFrequency: mixed().required("Please choose a portfolio rebalancing frequency"),
+  targetVolatility: mixed().when("allocation", { is: "Efficient Volatility", then: number("Must be a number").required("Please enter the desired level of volatility") }),
+  targetReturn: mixed().when("allocation", { is: "Efficient Return", then: number("Must be a number").required("Please enter the desired level of return") })
+});
+
 
 const dateNYearsAgo = (N) => {
   var date = new Date();
@@ -219,7 +227,7 @@ const PortfolioForm = (props) => {
                           className="weight w-35" />
 
                       </Form.Item>}
-                    {< RemoveRowButton
+                    {values.holdings.length > 1 && < RemoveRowButton
                       style={{ border: "none" }}
                       icon={<DeleteOutlined />}
                       name="holdings"

@@ -30,7 +30,12 @@ def load_prices(securities_names, start=None, end=None):
                          end=end,
                          interval="1mo",
                          progress=False)['Adj Close'].dropna()
-    prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
+
+    if not isinstance(prices, pd.DataFrame):
+        prices = pd.DataFrame(prices)
+        prices.columns = securities_names
+    else:
+        prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
     prices.index = prices.index + pd.tseries.offsets.MonthEnd(1)
     return prices
 

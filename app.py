@@ -11,8 +11,8 @@ from resources.user import (
     TokenRefresh,
     UserLogout)
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
-from resources.analytics import Analytics
-
+from resources.portfolioanalytics import PortfolioAnalytics
+from resources.portfolioanalytics import PortfolioComparison
 
 
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
@@ -57,8 +57,8 @@ def check_if_token_in_blacklist(decrypted_token):
     return decrypted_token['jti'] in BLACKLIST
 
 
-from finance.analytics import cache
-cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+# from finance.analytics import cache
+# cache.init_app(app, config={'CACHE_TYPE': 'simple'})
 
 api.add_resource(UserRegister, '/api/register')
 api.add_resource(Portfolio, '/api/portfolio/<string:name>')
@@ -67,5 +67,6 @@ api.add_resource(UserPortfolios, '/api/user/portfolios')
 api.add_resource(UserLogin, "/api/login")
 api.add_resource(TokenRefresh, '/api/refresh')
 api.add_resource(UserLogout, "/api/logout")
-api.add_resource(Analytics, "/api/tearsheet/<string:portfolio_name>")
+api.add_resource(PortfolioComparison, "/api/tearsheet/portfolio-comparison")
+api.add_resource(PortfolioAnalytics, "/api/tearsheet/portfolio/<string:portfolio_name>")
 

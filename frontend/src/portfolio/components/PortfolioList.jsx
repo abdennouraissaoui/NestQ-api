@@ -1,9 +1,8 @@
 import React from 'react';
 import PortfolioItem from "./PortfolioItem"
-import AddPortfolioCard from "./AddPortfolioCard"
 
 
-const PortfolioList = ({ portfolios, openPortForm, onDeletePortfolio, onEdited, closeForm }) => {
+const PortfolioList = ({ portfolios, portfolioNames, onDeletePortfolio, onEdited }) => {
     let cards = []
     portfolios.forEach(portflolio => {
         cards.push(
@@ -17,17 +16,16 @@ const PortfolioList = ({ portfolios, openPortForm, onDeletePortfolio, onEdited, 
                 rebalancingFrequency={portflolio.settings.rebalancingFrequency}
                 targetReturn={portflolio.settings.targetReturn}
                 targetVolatility={portflolio.settings.targetVolatility}
+                portfolioNames={portfolioNames}
                 onDelete={onDeletePortfolio}
                 onEdited={onEdited}
             />
         )
     });
 
-    const addPortfolioCard = (<AddPortfolioCard openPortForm={openPortForm} closeForm={closeForm} />)
     return (
         <div>
             {portfolios.length === 0 && <h2> No portfolios found. Maybe create one? </h2>}
-            {addPortfolioCard}
             {cards}
         </div>
     )

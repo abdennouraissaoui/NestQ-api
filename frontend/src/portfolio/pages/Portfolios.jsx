@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import PortfolioForm from "../components/PortfolioForm"
 import SearchBox from "../../shared/SearchBox/SearchBox"
 import PortfoliosList from "../components/PortfolioList"
-import { Spin, Alert, Modal } from "antd"
+import { Spin, Alert, Modal, Button } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 const Portfolios = () => {
@@ -13,7 +13,6 @@ const Portfolios = () => {
     const closePortfolioForm = () => setIsPortfolioFormOpen(false)
 
     const { isLoading, error, sendRequest } = useHttpClient();
-
 
     useEffect(() => {
         const fetchPortfolios = async () => {
@@ -77,8 +76,12 @@ const Portfolios = () => {
             }
             {!isLoading && !error && <div style={{margin:"auto", width:"80%"}}>
                 <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
+                <Button onClick={openPortfolioForm}>Create a new portfolio</Button>
                 <PortfoliosList
                     portfolios={filteredPortfolios}
+                    portfolioNames={loadedPortfolios.map(port =>{
+                        return port.name
+                    })}
                     openPortForm={openPortfolioForm}
                     closeForm={closePortfolioForm}
                     onEdited={portfolioEditedHandler}
