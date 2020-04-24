@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, send_from_directory, request, redirect
+from flask import Flask, render_template, send_from_directory
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from blacklist import BLACKLIST
@@ -16,12 +16,6 @@ from resources.portfolioanalytics import PortfolioComparison
 
 
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
-# @app.before_request
-# def before_request():
-#     if request.url.startswith('http://'):
-#         url = request.url.replace('http://', 'https://', 1)
-#         code = 301
-#         return redirect(url, code=code)
 
 
 class RegexConverter(BaseConverter):
@@ -36,8 +30,11 @@ app.url_map.converters['regex'] = RegexConverter
 def public(file):
     return send_from_directory('./frontend/build', file)
 
+
 @app.route("/")
 @app.route("/portfolios")
+@app.route("/about")
+@app.route("/FAQ")
 def react_app():
     return render_template('index.html')
 

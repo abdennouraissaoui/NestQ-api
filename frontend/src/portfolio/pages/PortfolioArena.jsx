@@ -11,7 +11,7 @@ function isEmpty(obj) {
 }
 
 const PortfolioArena = () => {
-    const portfolioName = useParams().portfolioName;
+    const portfolioName = decodeURIComponent(useParams().portfolioName);
     const [comparisonPortfolios, setComparisonPortfolios] = useState({ compPortfolios: [portfolioName] })
     const [portfolioNames, setPortfolioNames] = useState([]);
     const [tearsheet, setTearsheet] = useState({})

@@ -14,7 +14,7 @@ const Analytics = () => {
     const [currentTab, setCurrentTab] = useState('performance')
     const [portfolioTearsheet, setPortfolioTearsheet] = useState({})
     const { error, sendRequest, isLoading } = useHttpClient();
-    const portfolioName = useParams().portfolioName;
+    const portfolioName = decodeURIComponent(useParams().portfolioName);
 
     useEffect(() => {
         const fetchPortfolioTearsheet = async () => {
