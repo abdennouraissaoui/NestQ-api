@@ -18,7 +18,7 @@ const PortfolioItem = ({ name, portfolioNames, holdings, allocation, rebalancing
     let { sendRequest } = useHttpClient();
     const confirmDeleteHander = async () => {
         try {
-            await sendRequest(`/api/portfolio/${encodeURI(name)}`, "DELETE")
+            await sendRequest(`/api/portfolio/${encodeURIComponent(name)}`, "DELETE")
             onDelete(name)
         } catch (err) {
         }
@@ -27,21 +27,21 @@ const PortfolioItem = ({ name, portfolioNames, holdings, allocation, rebalancing
         <Card className="tc ma3 dib br3 pad3 bw2 shadow-2">
             <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
             <div>
-                <Link to={`/analytics/portfolio/${encodeURI(name)}`}>
-                    <Button icon={<StockOutlined />} className="ma2" size="large" type="primary"> Analyze </Button>
+                <Link to={`/analytics/portfolio/${encodeURIComponent(name)}`}>
+                    <Button icon={<StockOutlined />} className="ma1" size="large" type="primary"> Analyze </Button>
                 </Link>
-                <Link to={`/analytics/portfolio-comparison/${encodeURI(name)}`}>
-                    <Button icon={<CalculatorOutlined />} className="ma2" size="large" type="primary"> Compare </Button>
+                <Link to={`/analytics/portfolio-comparison/${encodeURIComponent(name)}`}>
+                    <Button icon={<CalculatorOutlined />} className="ma1" size="large" type="primary"> Compare </Button>
                 </Link>
 
-                <Button icon={<EditOutlined />} className="ma2" size="large" type="dashed" onClick={openEditForm} />
+                <Button icon={<EditOutlined />} className="ma1 mv2" size="large" type="dashed" onClick={openEditForm} />
                 <Popconfirm
                     title="Are you sure you want to delete this portfolio?"
                     onConfirm={confirmDeleteHander}
                     okText="Yes"
                     cancelText="No"
                 >
-                    <Button icon={<DeleteOutlined />} className="ma2" size="large" danger />
+                    <Button icon={<DeleteOutlined />} className="ma1" size="large" danger />
                 </Popconfirm>
             </div>
         </Card>)

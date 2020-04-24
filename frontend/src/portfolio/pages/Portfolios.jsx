@@ -4,6 +4,8 @@ import SearchBox from "../../shared/SearchBox/SearchBox"
 import PortfoliosList from "../components/PortfolioList"
 import { Spin, Alert, Modal, Button } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
+import { Row } from "antd"
+import { PlusOutlined } from '@ant-design/icons';
 
 const Portfolios = () => {
     const [isPortfolioFormOpen, setIsPortfolioFormOpen] = useState(false)
@@ -40,12 +42,12 @@ const Portfolios = () => {
         }))
     }
 
-    const portfolioCreatedHandler= ( newPortfolio ) =>{
+    const portfolioCreatedHandler = (newPortfolio) => {
         closePortfolioForm()
         setLoadedPortfolios(loadedPortfolios.concat(newPortfolio))
     }
 
-    const portfolioEditedHandler = ( updatedPortfolio, initialName ) => {
+    const portfolioEditedHandler = (updatedPortfolio, initialName) => {
         setLoadedPortfolios(loadedPortfolios.filter(portfolio => {
             return portfolio.name !== initialName
         }).concat(updatedPortfolio))
@@ -59,9 +61,9 @@ const Portfolios = () => {
                 onCancel={closePortfolioForm}
                 footer={false}
             >
-                <div>
-                    <PortfolioForm onCreated={portfolioCreatedHandler} closeForm={closePortfolioForm}/>
-                </div>
+                {/* <div style={{width:"50%", margin:"auto"}}> */}
+                    <PortfolioForm onCreated={portfolioCreatedHandler} closeForm={closePortfolioForm} />
+                {/* </div> */}
             </Modal>
             {isLoading && <Spin size="large" />}
             {!isLoading && error &&
@@ -74,12 +76,15 @@ const Portfolios = () => {
                     className="tl"
                 />
             }
-            {!isLoading && !error && <div style={{margin:"auto", width:"80%"}}>
-                <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
-                <Button onClick={openPortfolioForm}>Create a new portfolio</Button>
+            {!isLoading && !error && <div style={{ margin: "auto", width: "80%" }}>
+                <Row justify="space-between">
+                        <Button icon={<PlusOutlined />} size="large" style={{margin:"10px"}} onClick={openPortfolioForm}>Create a new portfolio</Button>
+                        <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
+                </Row>
+
                 <PortfoliosList
                     portfolios={filteredPortfolios}
-                    portfolioNames={loadedPortfolios.map(port =>{
+                    portfolioNames={loadedPortfolios.map(port => {
                         return port.name
                     })}
                     openPortForm={openPortfolioForm}
