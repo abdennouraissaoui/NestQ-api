@@ -120,7 +120,7 @@ const PortfolioForm = (props) => {
     portfolioMeta.holdings = toDictOfHoldings(values.holdings)
     try {
       const responseData = await sendRequest(
-        `/api/portfolio/${initialName ? encodeURI(initialName) : encodeURI(portfolioMeta.name)}`,
+        `/api/portfolio/${initialName ? encodeURIComponent(initialName) : encodeURIComponent(portfolioMeta.name)}`,
         initialName ? "PUT" : 'POST',
         JSON.stringify(portfolioMeta),
         {

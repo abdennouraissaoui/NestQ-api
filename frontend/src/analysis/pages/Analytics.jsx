@@ -19,7 +19,7 @@ const Analytics = () => {
     useEffect(() => {
         const fetchPortfolioTearsheet = async () => {
             try {
-                let responseData = await sendRequest(`/api/tearsheet/portfolio/${encodeURI(portfolioName)}`)
+                let responseData = await sendRequest(`/api/tearsheet/portfolio/${encodeURIComponent(portfolioName)}`)
                 setPortfolioTearsheet(responseData)
             } catch (e) { }
         }
