@@ -34,6 +34,7 @@ class PortfolioComparison(Resource):
         start = data['start'][:10] if data["start"] else None
         end = data['end'][:10] if data["end"] else None
         portfolios = []
+        print(data)
         for portfolio_name in data['compPortfolios']:
             portfolio = PortfolioModel.find_by_name(portfolio_name, get_jwt_identity())
             if not portfolio:
@@ -41,7 +42,6 @@ class PortfolioComparison(Resource):
             else:
                 portfolios.append(portfolio)
         try:
-            print(data)
             return create_comparison_tearsheet(portfolios, start, end)
         except Exception as e:
             return {"message": "Oops, an error occurred on our end"}, 500

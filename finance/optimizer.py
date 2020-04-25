@@ -1,4 +1,4 @@
-from finance.data_manager import load_prices
+from finance.data_manager import load_returns
 from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
@@ -6,7 +6,7 @@ from pypfopt.hierarchical_risk_parity import HRPOpt
 
 
 def markowitz(tickers, start=None, end=None):
-    prices = load_prices(tickers, start, end)
+    prices = load_returns(tickers, start, end)
     mu = expected_returns.mean_historical_return(prices, frequency=12)
     S = risk_models.sample_cov(prices, frequency=12)
     ef = EfficientFrontier(mu, S)
@@ -38,7 +38,7 @@ def max_sharpe(tickers, start=None, end=None):
 
 
 def hierarchical_risk_parity(tickers, start=None, end=None):
-    hrp = HRPOpt(load_prices(tickers, start, end))
+    hrp = HRPOpt(load_returns(tickers, start, end))
     return hrp.hrp_portfolio()
 
 

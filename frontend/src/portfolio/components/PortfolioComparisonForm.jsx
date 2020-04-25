@@ -44,8 +44,9 @@ const PortfolioComparisonForm = ({ userPortfolioNames, initialPortfolio, onGo, a
         })
         const start = values.analysisStartDate
         const end = values.analysisEndDate
+        console.log({ compPortfolios: portfolioNames, start, end })
         try {
-            onGo({ compPortfolios: portfolioNames, start , end })
+            onGo({ compPortfolios: portfolioNames, start, end })
         } catch (e) { }
         actions.setSubmitting(false)
     }
@@ -64,9 +65,13 @@ const PortfolioComparisonForm = ({ userPortfolioNames, initialPortfolio, onGo, a
             >
                 {({ values }) => (
                     <Form>
-                        <MonthPicker name="analysisStartDate" />
-                        <MonthPicker name="analysisEndDate" />
-
+                        <Form.Item  name="analysisStartDate" label="Report Period">
+                            <MonthPicker size="small" name="analysisStartDate" />
+                            <MonthPicker size="small" name="analysisEndDate" />
+                        </Form.Item>
+                        <Typography.Text strong>
+                            Comparison Portfolios:
+                        </Typography.Text>
                         <FieldArray
                             name="compPortfolios"
                             subscription={{}}

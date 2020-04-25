@@ -31,12 +31,6 @@ def public(file):
     return send_from_directory('./frontend/build', file)
 
 
-@app.route("/")
-@app.route("/portfolios")
-@app.route("/about")
-@app.route("/FAQ")
-def react_app():
-    return render_template('index.html')
 
 
 app.config['PROPAGATE_EXCEPTIONS'] = True  # To allow flask propagating exception even if debug is set to false on app
@@ -67,3 +61,9 @@ api.add_resource(UserLogout, "/api/logout")
 api.add_resource(PortfolioComparison, "/api/tearsheet/portfolio-comparison")
 api.add_resource(PortfolioAnalytics, "/api/tearsheet/portfolio/<string:portfolio_name>")
 
+@app.route("/")
+@app.route("/portfolios")
+@app.route("/about")
+@app.route("/FAQ")
+def react_app():
+    return render_template('index.html')

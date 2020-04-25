@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Layout, Alert, Spin, Typography, Card } from 'antd';
+import { Layout, Alert, Spin, Typography } from 'antd';
 import PortfolioComparisonForm from "../components/PortfolioComparisonForm"
 import Analytics from "../../analysis/pages/Analytics2"
 import { useHttpClient } from "../../shared/hooks/http-hook"

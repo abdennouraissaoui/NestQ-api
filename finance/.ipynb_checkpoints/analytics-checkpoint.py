@@ -1,7 +1,7 @@
 import pandas as pd
 import statsmodels.api as sm
 
-from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index, tbl_col_rows
+from finance.data_manager import load_returns, match_df, load_ff, stringify_date_index, tbl_col_rows
 from flask_caching import Cache
 from misc.name_ticker_map import NAME_TICKER_MAP
 from datetime import datetime
@@ -150,11 +150,11 @@ def create_full_tear_sheet(portfolio, start=None, end=datetime.today() + pd.tser
     securities_names = list(portfolio.settings["holdings"].keys())
     try:
         tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
-        prices = load_prices(tickers, start, end)
+        prices = load_returns(tickers, start, end)
         prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
 
     except KeyError:
-        prices = load_prices(securities_names, start, end)
+        prices = load_returns(securities_names, start, end)
 
     rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
     rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],

@@ -22,26 +22,22 @@ def load_ff(frequency="M"):
     return FF
 
 
-def load_prices(securities_names, start=None, end=None):
-    if end is None:
-        end = datetime.today() + pd.tseries.offsets.MonthEnd(-1)
-    else:
-        end = datetime.strptime(end, "%Y-%m-%d") + pd.tseries.offsets.Day(-1)
+def load_returns(securities_names, start=None, end=None):
 
-    # TODO: handle exception where optimization period unavailable
     tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
     prices = yf.download(tickers,
-                         start=start,
-                         end=end,
                          interval="1mo",
                          progress=False)['Adj Close'].dropna()
-    if not isinstance(prices, pd.DataFrame):
-        prices = pd.DataFrame(prices)
-        prices.columns = securities_names
+    returns = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
+    if not end:
+        end = datetime.today() + pd.tseries.offsets.MonthEnd(-1)
+    returns = returns.loc[start:end]
+    if not isinstance(returns, pd.DataFrame):
+        returns = pd.DataFrame(returns)
+        returns.columns = securities_names
     else:
-        prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
-    prices.index = prices.index + pd.tseries.offsets.MonthEnd(1)
-    return prices
+        returns.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
+    return returns
 
 
 def tbl_col_rows(df):

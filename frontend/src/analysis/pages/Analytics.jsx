@@ -10,12 +10,11 @@ import { useHttpClient } from "../../shared/hooks/http-hook"
 import { Spin, Alert, Typography } from "antd"
 
 
-const Analytics = () => {
+const Analytics = (props) => {
     const [currentTab, setCurrentTab] = useState('performance')
     const [portfolioTearsheet, setPortfolioTearsheet] = useState({})
     const { error, sendRequest, isLoading } = useHttpClient();
     const portfolioName = decodeURIComponent(useParams().portfolioName);
-
     useEffect(() => {
         const fetchPortfolioTearsheet = async () => {
             try {

@@ -1,7 +1,7 @@
 import pandas as pd
 import statsmodels.api as sm
 
-from finance.data_manager import load_prices, match_df, load_ff, stringify_date_index, tbl_col_rows
+from finance.data_manager import load_returns, match_df, load_ff, stringify_date_index, tbl_col_rows
 # from flask_caching import Cache
 from datetime import datetime
 
@@ -102,7 +102,7 @@ def get_risk_metrics(returns, rf, periods_per_year):
         "Annual Volatility (%)": ann_vol * 100,
         "Sharpe Ratio": sharpe_ratio(ann_ret, rf, ann_vol),
         "Positive Months Ratio (%)": pct_positive_periods(returns) * 100,
-        "Downside Volatility (%)": downside_vol,
+        "Downside Volatility (%)": downside_vol * 100,
         "Sortino Ratio": sortino_ratio(ann_ret, rf, downside_vol),
         "Calmar Ratio": calmar_ratio(ann_ret, rf, get_drawdowns(returns).min().abs()),
         "Monthly 95% VAR (%)": value_at_risk(returns, 0.05) * 100,
@@ -164,9 +164,8 @@ def create_tearsheet(rets):
 # @cache.memoize(timeout=300)
 def create_portfolio_tearsheet(portfolio, start=None, end=None):
     securities_names = list(portfolio.settings["holdings"].keys())
-    prices = load_prices(securities_names, start, end)
+    rets = load_returns(securities_names, start, end)
 
-    rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
     rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
                                           portfolio.settings["rebalancingFrequency"])
 
@@ -180,8 +179,7 @@ def create_comparison_tearsheet(portfolios, start=None, end=None):
     for portfolio in portfolios:
         securities_names += list(portfolio.settings["holdings"].keys())
 
-    prices = load_prices(list(set(securities_names)), start, end)
-    rets = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
+    rets = load_returns(list(set(securities_names)), start, end)
     ports_rets = pd.DataFrame()
     for portfolio in portfolios:
         port_rets = form_portfolio(rets[portfolio.settings['holdings'].keys()],

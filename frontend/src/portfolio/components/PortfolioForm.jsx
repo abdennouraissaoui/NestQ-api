@@ -13,7 +13,7 @@ import {
   InputNumber,
   AutoComplete
 } from "formik-antd"
-import { Divider, Row, Typography } from "antd"
+import { Divider, Row } from "antd"
 import { Button, Alert, notification } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
@@ -158,6 +158,7 @@ const PortfolioForm = (props) => {
             style={{ marginBottom: "5px" }}
             className="tl"
           />}
+          <Divider>Construction Settings</Divider>
           <Form.Item label="Portfolio Name" name="name" hasFeedback={true} required>
             <Input name="name" placeholder="Ex: 80% Equity and 20% Gold" />
           </Form.Item>
@@ -213,10 +214,8 @@ const PortfolioForm = (props) => {
             </div>
           }
 
-          <hr />
-          <Typography.Text strong>
-            Portfolio Holdings:
-            </Typography.Text >
+          <Divider>Portfolio Holdings</Divider>
+
           <FieldArray
             name="holdings"
             validateOnChange={false}
@@ -253,6 +252,7 @@ const PortfolioForm = (props) => {
                             max={100}
                             name={`holdings.${index}.weight`}
                             placeholder="Weight"
+                            className="w-15"
                           />
                         </Form.Item>}
                       {values.holdings.length > 1 && < RemoveRowButton

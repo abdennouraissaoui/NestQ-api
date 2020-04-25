@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 
-const PortfolioItem = ({ name, portfolioNames, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
+const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
     const openEditForm = () => setEditFormIsOpen(true)
     const closeEditForm = () => setEditFormIsOpen(false)
@@ -23,15 +23,26 @@ const PortfolioItem = ({ name, portfolioNames, holdings, allocation, rebalancing
         } catch (err) {
         }
     }
+    
     let portfolioCard = (
         <Card className="tc ma3 dib br3 pad3 bw2 shadow-2">
             <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
             <div>
-                <Link to={`/analytics/portfolio/${encodeURIComponent(name)}`}>
-                    <Button icon={<StockOutlined />} className="ma1" size="large" type="primary"> Analyze </Button>
+                <Link to={`/analytics/portfolio/${encodeURIComponent(encodeURI(name))}`}>
+                    <Button
+                        icon={<StockOutlined />}
+                        className="ma1"
+                        size="large"
+                        type="primary"
+                    > Analyze </Button>
                 </Link>
-                <Link to={`/analytics/portfolio-comparison/${encodeURIComponent(name)}`}>
-                    <Button icon={<CalculatorOutlined />} className="ma1" size="large" type="primary"> Compare </Button>
+                <Link to={`/analytics/portfolio-comparison/${encodeURIComponent(encodeURI(name))}`}>
+                    <Button
+                        icon={<CalculatorOutlined />}
+                        className="ma1"
+                        size="large"
+                        type="primary"
+                    > Compare </Button>
                 </Link>
 
                 <Button icon={<EditOutlined />} className="ma1 mv2" size="large" type="dashed" onClick={openEditForm} />
