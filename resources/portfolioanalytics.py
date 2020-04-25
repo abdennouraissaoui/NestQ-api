@@ -27,7 +27,12 @@ class PortfolioComparison(Resource):
                                  action='append',
                                  required=True,
                                  help="You must provide a list of portfolios")
+        data_parser.add_argument("end")
+        data_parser.add_argument("start")
         data = data_parser.parse_args()
+
+        start = data['start'][:10] if data["start"] else None
+        end = data['end'][:10] if data["end"] else None
         portfolios = []
         for portfolio_name in data['compPortfolios']:
             portfolio = PortfolioModel.find_by_name(portfolio_name, get_jwt_identity())
@@ -36,6 +41,7 @@ class PortfolioComparison(Resource):
             else:
                 portfolios.append(portfolio)
         try:
-            return create_comparison_tearsheet(portfolios)
+            print(data)
+            return create_comparison_tearsheet(portfolios, start, end)
         except Exception as e:
             return {"message": "Oops, an error occurred on our end"}, 500

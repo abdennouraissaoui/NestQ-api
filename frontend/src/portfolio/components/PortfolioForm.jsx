@@ -13,7 +13,8 @@ import {
   InputNumber,
   AutoComplete
 } from "formik-antd"
-import { Button, Alert, Typography, Row } from "antd"
+import { Divider, Row, Typography } from "antd"
+import { Button, Alert, notification } from "antd"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { AuthContext } from "../../shared/Context/AuthContext"
 import { string, object, array, mixed, number } from 'yup';
@@ -24,7 +25,12 @@ const etfList = etfOptions.map(etf => {
 const { MonthPicker } = DatePicker
 const { toDictOfHoldings } = DataFormatter
 
-
+const openNotificationWithIcon = (type, message, description) => {
+  notification[type]({
+    message: message,
+    description: description
+  });
+};
 
 const validationSchema = object().shape({
   name: string().required('Portfolio name is required'),
@@ -77,16 +83,11 @@ const layout = {
     span: 9,
   },
   wrapperCol: {
-    span: 13,
+    span: 0,
   },
 };
 
-const tailLayout = {
-  wrapperCol: {
-    offset: 0,
-    span: 35,
-  }
-}
+
 
 
 const PortfolioForm = (props) => {
@@ -131,8 +132,11 @@ const PortfolioForm = (props) => {
       if (initialName) {
         props.closeForm()
         props.onEdited(responseData, initialName)
+        openNotificationWithIcon("success", "Success", "Portfolio modified successfully")
       } else {
         props.onCreated(responseData)
+        openNotificationWithIcon("success", "Success", "Portfolio created successfully")
+
       }
     } catch (e) { }
   }
@@ -277,12 +281,140 @@ const PortfolioForm = (props) => {
   )
 }
 
-export default PortfolioForm;
+ export default PortfolioForm;
+//<Formik
+//       onSubmit={(values) => handleSubmit(values, initialName)}
+//       initialValues={initialValues(props)}
+//       validationSchema={validationSchema}
+//       validateOnChange={false}
+//     >
+//       {({ values, resetForm }) => (
 
+//         <Form {...layout}>
+//           {error && <Alert
+//             description={error}
+//             type="error"
+//             showIcon
+//             style={{ marginBottom: "5px" }}
+//             className="tl"
+//           />}
 
+//           <Divider style={{ marginTop: 0 }}>Construction Settings</Divider>
+//           <Form.Item label="Portfolio Name" name="name" hasFeedback={true} required>
+//             <Input name="name" placeholder="Ex: 80% Equity and 20% Gold" />
+//           </Form.Item>
+//           <Form.Item label="Allocation Type" name="allocation" hasFeedback={true} required>
+//             <Select name="allocation" placeholder="Ex: Minimum Volatility" showArrow >
+//               {initialFormData.optimizers.map((optimizer, index) => {
+//                 return (<Select.Option key={index} value={optimizer}> {optimizer} </Select.Option>)
+//               })}
+//             </Select>
+//           </Form.Item>
 
+//           {values.allocation === "Efficient Return" &&
+//             <Form.Item label="Target Return" name="targetReturn" hasFeedback={true} required>
+//               <InputNumber
+//                 min={0}
+//                 formatter={value => value > 0 ? `${value}%` : ''}
+//                 parser={value => value.replace('%', '')}
+//                 name="targetReturn"
+//                 placeholder="Ex: 8%" />
+//             </Form.Item>
+//           }
 
+//           {values.allocation === "Efficient Volatility" &&
+//             <Form.Item label="Target Volatility" name="targetVolatility" hasFeedback={true} required>
+//               <InputNumber
+//                 min={0}
+//                 formatter={value => value > 0 ? `${value}%` : ''}
+//                 parser={value => value.replace('%', '')}
+//                 name="targetVolatility"
+//                 placeholder="Ex: 7%" />
+//             </Form.Item>
+//           }
+//           <Form.Item label="Rebalancing Frequency" name="rebalancingFrequency" hasFeedback={true} required>
 
+//             <Select name="rebalancingFrequency" placeholder="Ex: Monthly" showArrow>
+//               {initialFormData.rebal_freqs.map((frequency, index) => {
+//                 return (<Select.Option key={index} value={frequency}> {frequency} </Select.Option>)
+//               })}
+//             </Select>
+//           </Form.Item>
 
+//           {values.allocation !== "Manual" && values.allocation !== "Equal Allocation" &&
+//             <div>
+//               <Form.Item label="Optimization Period" name="optimizationStartDate" hasFeedback={true} required>
+//                 <MonthPicker
+//                   name="optimizationStartDate"
+//                   placeholder="Start Date"
+//                 />
+//                 <MonthPicker name="optimizationEndDate" placeholder="End Date" />
 
+//               </Form.Item>
 
+//             </div>
+//           }
+
+//           <Divider>Portfolio Holdings</Divider>
+//           <FieldArray
+//             name="holdings"
+//             validateOnChange={false}
+//             subscription={{}}
+//             render={arrayHelpers => (
+//               <div>
+//                 {values.holdings.map((entry, index) => (
+//                   <div key={index}>
+//                     <Form.Item
+//                       name={`holdings.${index}.securityName`}
+//                       hasFeedback={true}
+//                     >
+//                       <AutoComplete
+//                         filterOption={(inputValue, option) =>
+//                           option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+//                         }
+//                         options={etfOptions}
+//                         name={`holdings.${index}.securityName`}
+//                         placeholder="Search for a U.S or Canadian ETF"
+//                       />
+//                     </Form.Item>
+//                     {values.allocation === "Manual" &&
+//                       <Form.Item
+//                         name={`holdings.${index}.weight`}
+//                         hasFeedback={true}
+//                         style={{ display: 'inline-block', margin: '0 8px' }}
+//                       >
+//                         <InputNumber
+//                           min={0}
+//                           formatter={value => value > 0 ? `${value}%` : ''}
+//                           parser={value => value.replace('%', '')}
+//                           max={100}
+//                           name={`holdings.${index}.weight`}
+//                           placeholder="Weight"
+                          
+//                         />
+//                       </Form.Item>}
+//                     {values.holdings.length > 1 &&
+//                       < RemoveRowButton
+//                         // style={{ border: "none" }}
+//                         icon={<DeleteOutlined />}
+//                         name="holdings"
+//                         index={index}
+//                         onClick={() => arrayHelpers.remove(index)}
+//                       />
+//                     }
+//                   </div>
+
+//                 ))}
+//                 <Button type="button" onClick={() => arrayHelpers.push({ securityName: "", weight: "" })} size="small"> Add </Button>
+
+//               </div>
+//             )}
+//           />
+//           <footer>
+//             <SubmitButton className="ma2" size="large" type="primary"> Submit </SubmitButton>
+//             <ResetButton className="ma2" size="large" > Reset </ResetButton>
+//             <Button className="ma2" danger size="large" onClick={() => { props.closeForm(); resetForm(initialFormData) }} > Cancel </Button>
+//           </footer>
+//         </Form>
+//       )}
+//     </Formik>

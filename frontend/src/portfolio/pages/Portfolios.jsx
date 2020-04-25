@@ -61,7 +61,7 @@ const Portfolios = () => {
                 onCancel={closePortfolioForm}
                 footer={false}
             >
-                {/* <div style={{width:"50%", margin:"auto"}}> */}
+                {/* <div style={{ margin:"auto", width:"50%", border:"solid gray 1px"}}> */}
                     <PortfolioForm onCreated={portfolioCreatedHandler} closeForm={closePortfolioForm} />
                 {/* </div> */}
             </Modal>

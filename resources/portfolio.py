@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.portfolio import PortfolioModel
 from finance.optimizer import available_optimizers
 # from finance.analytics import create_portfolio_tearsheet, cache
+import traceback
 
 
 class Portfolio(Resource):
@@ -16,6 +17,8 @@ class Portfolio(Resource):
         for requirement, type in additional_reqs.items():
             parser.add_argument(requirement, type=type, required=True, help="This field cannot be left blank!")
         data = parser.parse_args()
+        opt_start = ""
+        opt_end = ""
         # get the weights
         # TODO: Handle cases where the allocation type is not supported
         if data['allocation'] in ["Manual", "Equal Allocation"]:
@@ -24,29 +27,29 @@ class Portfolio(Resource):
             parser.add_argument('optimizationStartDate', required=True, help="This field cannot be left blank!")
             parser.add_argument('optimizationEndDate', required=True, help="This field cannot be left blank!")
             data = parser.parse_args()
-            data['optimizationStartDate'] = data['optimizationStartDate'][:10]
-            data['optimizationEndDate'] = data['optimizationEndDate'][:10]
+            opt_start = data['optimizationStartDate'][:10]
+            opt_end = data['optimizationEndDate'][:10]
 
         if data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio"]:
             data["holdings"] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
-                                                                        data['optimizationStartDate'],
-                                                                        data['optimizationEndDate'])
+                                                                        opt_start,
+                                                                        opt_end)
 
         elif data['allocation'] == "Efficient Volatility":
             parser.add_argument('targetVolatility', required=True, help="This field cannot be left blank!")
             data = parser.parse_args()
             data['holdings'] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         float(data["targetVolatility"]) / 100,
-                                                                        data['optimizationStartDate'],
-                                                                        data['optimizationEndDate'])
+                                                                        opt_start,
+                                                                        opt_end)
 
-        elif data['allocation'] == "Efficient Volatility":
+        elif data['allocation'] == "Efficient Return":
             parser.add_argument('targetReturn', required=True, help="This field cannot be left blank!")
             data = parser.parse_args()
             data['holdings'] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         float(data["targetReturn"]) / 100,
-                                                                        data['optimizationStartDate'],
-                                                                        data['optimizationEndDate'])
+                                                                        opt_start,
+                                                                        opt_end)
         return data
 
     @classmethod
@@ -71,6 +74,7 @@ class Portfolio(Resource):
             data = self.get_data()
             portfolio = self.create_portfolio(name, data)
         except:
+            traceback.print_exc()
             return {"message": "An error occured when inserting a portfolio"}, 500
         return portfolio.json(), 201
 
@@ -87,13 +91,16 @@ class Portfolio(Resource):
                 portfolio.date_created = original_create_date
 
             except:
-                return {"Message": "An error occurred when updating the portfolio"}, 500
+                traceback.print_exc()
+
+                return {"message": "An error occurred when updating the portfolio"}, 500
         else:
             try:
                 data = self.get_data()
                 portfolio = self.create_portfolio(name, data)
             except:
-                return {"Message": "An error occurred creating the portfolio"}, 500
+                traceback.print_exc()
+                return {"message": "An error occurred creating the portfolio"}, 500
 
         portfolio.save_to_db()
         return portfolio.json(), 200

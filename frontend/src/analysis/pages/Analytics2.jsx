@@ -34,11 +34,12 @@ const Analytics = ({ tearsheet, isLoading, title }) => {
             {
                 <Card
                     style={{ marginTop: 0 }}
+                    type="inner"
                     title={title}
                     tabList={analyticsCategories}
                     activeTabKey={currentTab}
                     onTabChange={key => setCurrentTab(key)}
-                    type="inner"
+                    
                 >
                     {isLoading && <h2>Loading...</h2>}
                     {contentList[currentTab]}

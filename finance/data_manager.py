@@ -1,7 +1,7 @@
 import pandas as pd
 import yfinance as yf
 from misc.name_ticker_map import NAME_TICKER_MAP
-
+from datetime import datetime
 
 def load_ff(frequency="M"):
     import urllib.request
@@ -23,6 +23,11 @@ def load_ff(frequency="M"):
 
 
 def load_prices(securities_names, start=None, end=None):
+    if end is None:
+        end = datetime.today() + pd.tseries.offsets.MonthEnd(-1)
+    else:
+        end = datetime.strptime(end, "%Y-%m-%d") + pd.tseries.offsets.Day(-1)
+
     # TODO: handle exception where optimization period unavailable
     tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
     prices = yf.download(tickers,
@@ -30,7 +35,6 @@ def load_prices(securities_names, start=None, end=None):
                          end=end,
                          interval="1mo",
                          progress=False)['Adj Close'].dropna()
-
     if not isinstance(prices, pd.DataFrame):
         prices = pd.DataFrame(prices)
         prices.columns = securities_names

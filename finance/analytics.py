@@ -162,7 +162,7 @@ def create_tearsheet(rets):
         
         
 # @cache.memoize(timeout=300)
-def create_portfolio_tearsheet(portfolio, start=None, end=datetime.today() + pd.tseries.offsets.MonthEnd(-1)):
+def create_portfolio_tearsheet(portfolio, start=None, end=None):
     securities_names = list(portfolio.settings["holdings"].keys())
     prices = load_prices(securities_names, start, end)
 
@@ -175,7 +175,7 @@ def create_portfolio_tearsheet(portfolio, start=None, end=datetime.today() + pd.
     return tearsheet
 
 
-def create_comparison_tearsheet(portfolios, start=None, end=datetime.today() + pd.tseries.offsets.MonthEnd(-1)):
+def create_comparison_tearsheet(portfolios, start=None, end=None):
     securities_names = []
     for portfolio in portfolios:
         securities_names += list(portfolio.settings["holdings"].keys())
