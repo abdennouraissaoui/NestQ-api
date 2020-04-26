@@ -35,7 +35,7 @@ class UserRegister(Resource):
             portfolio = PortfolioModel(portfolio_meta["name"], new_user.id, portfolio_meta)
             portfolio.save_to_db()
 
-        access_token = create_access_token(identity=new_user.id, fresh=True, expires_delta=timedelta(hours=1))
+        access_token = create_access_token(identity=new_user.id, fresh=True, expires_delta=timedelta(hours=3))
         refresh_token = create_refresh_token(new_user.id)
         return {
                    'access_token': access_token,
@@ -53,7 +53,7 @@ class UserLogin(Resource):
         data = cls.user_parser.parse_args()
         user = UserModel.find_by_email(data['email'])
         if user and check_password_hash(user.password, data['password']):
-            access_token = create_access_token(identity=user.id, fresh=True, expires_delta=timedelta(hours=1))
+            access_token = create_access_token(identity=user.id, fresh=True, expires_delta=timedelta(hours=3))
             refresh_token = create_refresh_token(user.id)
             return {
                 'access_token': access_token,

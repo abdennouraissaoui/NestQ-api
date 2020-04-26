@@ -10,7 +10,7 @@ export const useAuth = () => {
   const login = useCallback((accessToken, refreshToken, expirationDate) => {
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
-    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 3);
     setTokenExpirationDate(tokenExpirationDate);
     localStorage.setItem(
       'userData',
