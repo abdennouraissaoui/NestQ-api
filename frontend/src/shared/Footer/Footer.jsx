@@ -1,5 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom"
+import { GithubOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { Space } from "antd"
+
+
 
 const footerStyle = {
     padding: "20px",
@@ -10,7 +14,7 @@ const footerStyle = {
     boxShadow: "0 2px 6px rgba(0, 0, 0, 0.26)",
     left: "0",
     bottom: "0",
-    height: "3rem",
+    height: "4rem",
     width: "100%"
 };
 
@@ -32,7 +36,7 @@ const linksStyle = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    color:"white"
+    color: "white"
 }
 
 
@@ -41,14 +45,29 @@ const Footer = () => {
         <React.Fragment>
             <div style={phantomStyle}></div>
             <div style={footerStyle}>
+                <Space direction="vertical" style={{marginLeft: "auto", marginRight:"auto"}}> 
                 <ul style={linksStyle}>
-                    <li style={{padding: 5}}>
-                        <NavLink style={{color:"#ccc"}} to="/terms-of-service" exact>Terms of Service </NavLink>
-                    </li>
-                    <li>
-                        <NavLink style={{color:"#ccc"}} to="/privacy-policy" exact> Privacy Policy</NavLink>
-                    </li>
-                </ul>
+                        <li style={{ marginRight: 10 }}>
+                            <a href="https://github.com/abdennouraissaoui">
+                                <GithubOutlined style={{ fontSize: '28px', color: '#ccc' }} />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/abdennouraissaoui/">
+                                <LinkedinOutlined style={{ fontSize: '28px', color: '#ccc' }} />
+                            </a>
+                        </li>
+                    </ul>
+                    <ul style={linksStyle}>
+                        <li style={{ marginRight: 10 }}>
+                            <NavLink style={{ color: "#ccc" }} to="/terms-of-service" exact>Terms of Service </NavLink>
+                        </li>
+                        <li>
+                            <NavLink style={{ color: "#ccc" }} to="/privacy-policy" exact> Privacy Policy</NavLink>
+                        </li>
+                    </ul>
+                </Space>
+
             </div>
         </React.Fragment>
 
