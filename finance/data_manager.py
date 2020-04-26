@@ -22,12 +22,26 @@ def load_ff(frequency="M"):
     return FF
 
 
+def load_prices(securities_names, start=None, end=None):
+    tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
+    prices = yf.download(tickers,
+                         interval="1mo",
+                         progress=False)['Adj Close'].dropna()
+    if not isinstance(prices, pd.DataFrame):
+        returns = pd.DataFrame(prices)
+        returns.columns = securities_names
+    else:
+        prices.rename({ticker: name for ticker, name in zip(tickers, securities_names)}, axis=1, inplace=True)
+    return prices.loc[start:end]
+
+
 def load_returns(securities_names, start=None, end=None):
 
     tickers = [NAME_TICKER_MAP[security_name] for security_name in securities_names]
     prices = yf.download(tickers,
                          interval="1mo",
                          progress=False)['Adj Close'].dropna()
+
     returns = (prices.pct_change().dropna() + 1).resample("M").prod() - 1
     if not end:
         end = datetime.today() + pd.tseries.offsets.MonthEnd(-1)

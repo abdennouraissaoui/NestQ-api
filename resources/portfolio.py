@@ -73,6 +73,8 @@ class Portfolio(Resource):
         try:
             data = self.get_data()
             portfolio = self.create_portfolio(name, data)
+        except ValueError as e:
+            return {"message": str(e)}, 500
         except:
             traceback.print_exc()
             return {"message": "An error occured when inserting a portfolio"}, 500
@@ -90,9 +92,10 @@ class Portfolio(Resource):
                 portfolio = self.create_portfolio(data['name'], data)
                 portfolio.date_created = original_create_date
 
-            except:
+            except ValueError as e:
+                return {"message": str(e)}, 500
+            except Exception as e:
                 traceback.print_exc()
-
                 return {"message": "An error occurred when updating the portfolio"}, 500
         else:
             try:
