@@ -1,7 +1,7 @@
 import pandas as pd
 import statsmodels.api as sm
 
-from finance.data_manager import load_returns, match_df, load_ff, stringify_date_index, tbl_col_rows
+from finance.data_manager import load_returns, match_df, load_ff, stringify_date_index, to_antd_tbl
 # from flask_caching import Cache
 from datetime import datetime
 
@@ -145,12 +145,12 @@ def get_returns(prices, meta_data):
 
 
 def create_tearsheet(rets):
-    risk_metrics = tbl_col_rows(get_risk_metrics(rets, 0.02, 12))
-    ff_exp = tbl_col_rows(get_ff_exposure(rets))
+    risk_metrics = to_antd_tbl(get_risk_metrics(rets, 0.02, 12))
+    ff_exp = to_antd_tbl(get_ff_exposure(rets))
     inv_growth = stringify_date_index(get_inv_growth(rets))
     drawdowns = stringify_date_index(get_drawdowns(rets)*100)
-    calendar_rets = tbl_col_rows(get_calendar_returns(rets))
-    correlation = tbl_col_rows(round(rets.corr(), 2))
+    calendar_rets = to_antd_tbl(get_calendar_returns(rets))
+    correlation = to_antd_tbl(round(rets.corr(), 2))
     return {'risk_metrics': risk_metrics,
             'ff_exp': ff_exp,
             'inv_growth': inv_growth.to_dict(),

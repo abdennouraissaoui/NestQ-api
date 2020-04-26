@@ -52,6 +52,23 @@ def tbl_col_rows(df):
     return {"columns": columns, "rows": rows}
 
 
+def to_antd_tbl(df):
+    column_list = [column for column in ["Index"] + list(df.columns)]
+    columns = [{"title":column, "dataIndex":column, "key":"column"}
+               for column in column_list]
+    rows_list = df.values.tolist()
+    rows_list = [[df.index[i]] + rows_list[i] for i in range(len(rows_list))]
+
+    data_source = []
+    for j, row in enumerate(rows_list):
+        row_info = {"key": j}
+        for i, column in enumerate(column_list):
+            row_info[column] = row[i]
+        data_source.append(row_info)
+
+    return {"columns": columns, "rows":data_source}
+
+
 def _get_list_difference(left_list, right_list):
     """
     returns a list of elements that are in the left list but not the right one

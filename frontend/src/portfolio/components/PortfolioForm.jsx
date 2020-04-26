@@ -238,6 +238,7 @@ const PortfolioForm = (props) => {
                           options={etfOptions}
                           name={`holdings.${index}.securityName`}
                           placeholder="Search for a U.S or Canadian ETF"
+                          style={{width:"100%"}}
                         />
                       </Form.Item>
                       {values.allocation === "Manual" &&

@@ -5,7 +5,6 @@ import Performance from "../components/Performance"
 import Attribution from "../components/Attribution"
 import RiskMetrics from "../components/RiskMetrics"
 import Diversification from "../components/Diversification"
-import Recommendations from "../components/Recommendations"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { Spin, Alert, Typography } from "antd"
 
@@ -30,7 +29,6 @@ const Analytics = (props) => {
         { key: "attribution", tab: "Attribution" },
         { key: "riskMetrics", tab: "Risk Metrics" },
         { key: "diversification", tab: "Diversification" },
-        { key: "recommendations", tab: "Recommendations" }
     ]
 
     const contentList = {
@@ -46,7 +44,6 @@ const Analytics = (props) => {
             risk_metrics={portfolioTearsheet.risk_metrics}
         />,
         diversification: <Diversification correlation={portfolioTearsheet.correlation} pca={portfolioTearsheet.PCA} />,
-        recommendations: <Recommendations />
     }
 
     return (
