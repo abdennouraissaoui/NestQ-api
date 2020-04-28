@@ -2,7 +2,6 @@ from db import db
 from datetime import datetime
 from copy import deepcopy
 
-
 class PortfolioModel(db.Model):
     __tablename__ = "portfolios"
     id = db.Column(db.Integer, primary_key=True)
@@ -28,7 +27,8 @@ class PortfolioModel(db.Model):
         return {'name': self.name,
                 'settings': port_settings,
                 'date_created': self.date_created.isoformat(),
-                'date_modified': self.date_modified.isoformat()}
+                'date_modified': self.date_modified.isoformat()
+                }
 
     @classmethod
     def find_by_id(cls, _id):

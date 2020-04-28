@@ -11,6 +11,7 @@ const Portfolios = () => {
     const [isPortfolioFormOpen, setIsPortfolioFormOpen] = useState(false)
     const [searchField, setSearchField] = useState("")
     const [loadedPortfolios, setLoadedPortfolios] = useState([]);
+    const [colors, setColors] = useState([])
     const openPortfolioForm = () => setIsPortfolioFormOpen(true)
     const closePortfolioForm = () => setIsPortfolioFormOpen(false)
 
@@ -21,6 +22,7 @@ const Portfolios = () => {
             try {
                 let responseData = await sendRequest("/api/user/portfolios")
                 setLoadedPortfolios(responseData.portfolios)
+                setColors(responseData.colors)
             } catch (error) { }
         }
         fetchPortfolios();
@@ -61,9 +63,7 @@ const Portfolios = () => {
                 onCancel={closePortfolioForm}
                 footer={false}
             >
-                {/* <div style={{ margin:"auto", width:"50%", border:"solid gray 1px"}}> */}
-                    <PortfolioForm onCreated={portfolioCreatedHandler} closeForm={closePortfolioForm} />
-                {/* </div> */}
+                <PortfolioForm onCreated={portfolioCreatedHandler} closeForm={closePortfolioForm} />
             </Modal>
             {isLoading && <Spin size="large" />}
             {!isLoading && error &&
@@ -78,8 +78,8 @@ const Portfolios = () => {
             }
             {!isLoading && !error && <div style={{ margin: "auto", width: "80%" }}>
                 <Row justify="space-between">
-                        <Button icon={<PlusOutlined />} size="large" style={{margin:"10px"}} onClick={openPortfolioForm}>Create a new portfolio</Button>
-                        <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
+                    <Button icon={<PlusOutlined />} size="large" style={{ margin: "10px" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
+                    <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
                 </Row>
 
                 <PortfoliosList
@@ -91,6 +91,7 @@ const Portfolios = () => {
                     closeForm={closePortfolioForm}
                     onEdited={portfolioEditedHandler}
                     onDeletePortfolio={portfolioDeletedHandler}
+                    colors={colors}
                 />
             </div>}
 

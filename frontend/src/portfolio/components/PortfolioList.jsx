@@ -2,7 +2,7 @@ import React from 'react';
 import PortfolioItem from "./PortfolioItem"
 
 
-const PortfolioList = ({ portfolios, portfolioNames, onDeletePortfolio, onEdited }) => {
+const PortfolioList = ({ portfolios, portfolioNames, onDeletePortfolio, onEdited, colors }) => {
     let cards = []
     portfolios.forEach(portflolio => {
         cards.push(
@@ -17,6 +17,7 @@ const PortfolioList = ({ portfolios, portfolioNames, onDeletePortfolio, onEdited
                 targetReturn={portflolio.settings.targetReturn}
                 targetVolatility={portflolio.settings.targetVolatility}
                 portfolioNames={portfolioNames}
+                colors={colors}
                 onDelete={onDeletePortfolio}
                 onEdited={onEdited}
             />

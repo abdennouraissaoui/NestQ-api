@@ -14,6 +14,7 @@ from flask_jwt_extended import (
     get_raw_jwt)
 from datetime import timedelta
 from misc.default_portfolios import DEFAULT_PORTFOLIOS
+from finance.data_manager import get_colors
 
 class UserRegister(Resource):
     user_parser = reqparse.RequestParser()
@@ -82,5 +83,11 @@ class UserPortfolios(Resource):
     @jwt_required
     def get(self):
         user = UserModel.find_by_id(get_jwt_identity())
-        return user.portfolios_json()
+        user_portfolios = user.portfolios_json()
+        max_num_holdings = 0
+        for portfolio in user_portfolios["portfolios"]:
+            num_holdings = len(portfolio["settings"]["holdings"])
+            max_num_holdings = num_holdings if num_holdings > max_num_holdings else max_num_holdings
+        user_portfolios["colors"] = get_colors(max_num_holdings)
+        return user_portfolios
 

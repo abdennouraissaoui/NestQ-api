@@ -1,6 +1,5 @@
 import React from "react"
 import LineChart from "../../shared/Charts/LineChart"
-import DataFormatter from "../../shared/utils/DataFormatter"
 import { Table, Typography } from "antd"
 
 

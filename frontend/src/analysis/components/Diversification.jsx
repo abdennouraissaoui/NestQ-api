@@ -1,6 +1,6 @@
 import React from "react"
 import DataFormatter from "../../shared/utils/DataFormatter"
-import PieChart from "../../shared/Charts/pieChart"
+import BarChart from "../../shared/Charts/BarChart"
 import { Typography, Table } from "antd"
 
 const Diversification = ({ correlation, pca }) => {
@@ -9,8 +9,9 @@ const Diversification = ({ correlation, pca }) => {
             {pca &&
                 <React.Fragment>
                     <Typography.Title level={3} className="center"> Principal Component Analysis </Typography.Title>
-                    <PieChart
-                        data={DataFormatter.toPieChartFormat(pca)}
+                    <BarChart
+                        data={DataFormatter.toCategoricalChart(pca)}
+                        tickFormatter={tick => tick + "%"}
                     />
                 </React.Fragment>}
 

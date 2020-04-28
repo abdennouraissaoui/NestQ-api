@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { useHttpClient } from "../../shared/hooks/http-hook"
 
 
-const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
+const PortfolioItem = ({ name, holdings, colors, allocation, rebalancingFrequency, optimizationStartDate, optimizationEndDate, targetReturn, targetVolatility, onDelete, onEdited }) => {
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
     const openEditForm = () => setEditFormIsOpen(true)
     const closeEditForm = () => setEditFormIsOpen(false)
@@ -26,7 +26,7 @@ const PortfolioItem = ({ name, holdings, allocation, rebalancingFrequency, optim
     
     let portfolioCard = (
         <Card className="tc ma3 dib br3 pad3 bw2 shadow-2">
-            <PieChart title={name} data={DataFormatter.toPieChartFormat(holdings)} />
+            <PieChart title={name} colors={colors} data={DataFormatter.toCategoricalChart(holdings)} />
             <div>
                 <Link to={`/analytics/portfolio/${encodeURIComponent(encodeURI(name))}`}>
                     <Button

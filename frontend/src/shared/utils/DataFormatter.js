@@ -1,9 +1,9 @@
 let DataFormatter = {}
 
-DataFormatter.toPieChartFormat = (data) => {
+DataFormatter.toCategoricalChart = (data) => {
   var data_points = [];
-  for (let label in data) {
-    data_points.push({ label: label, y: data[label] });
+  for (let name in data) {
+    data_points.push({ name: name, value: data[name] });
   }
   return (data_points);
 }

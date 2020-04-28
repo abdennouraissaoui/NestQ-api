@@ -3,37 +3,18 @@ import "./About.css"
 import { Typography, Space } from 'antd';
 import Me from "./me.png"
 
-import {
-    PieChart,
-    ResponsiveContainer,
-    Tooltip,
-    Legend,
-    Pie
-} from "recharts"
+
 
 const paragraphStyle = {
     fontSize: "16px"
 }
 
 
-const holdings = {
-    "Vanguard Total Stock Market Index Fund ETF Shares": 20.0,
-    "Vanguard Total Bond Market Index Fund ETF Shares": 20.0,
-    "Vanguard FTSE Developed Markets Index Fund ETF Shares": 60.0
-}
-
 const About = () => {
     return (
         <div className="container">
-            <ResponsiveContainer width='100%' aspect={3.0 / 3.0}>
-                <PieChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
-                    <Tooltip/>
-                    <Legend/>
-                    <Pie data={holdings}/>
-                </PieChart>
-            </ResponsiveContainer>
 
-            {/* <img src={Me} style={{ maxWidth: "200px", borderRadius: "70%" }} className="center" alt="Me" /> */}
+            <img src={Me} style={{ maxWidth: "200px", borderRadius: "70%" }} className="center" alt="Me" />
             <br />
             <br />
             <Space direction="vertical" size="small">
