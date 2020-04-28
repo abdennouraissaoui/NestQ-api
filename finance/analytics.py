@@ -1,7 +1,12 @@
 import pandas as pd
 import statsmodels.api as sm
 
-from finance.data_manager import load_returns, match_df, load_ff, stringify_date_index, to_antd_tbl
+from finance.data_manager import (load_returns,
+                                  match_df,
+                                  load_ff,
+                                  stringify_date_index,
+                                  to_antd_tbl,
+                                  to_line_chart)
 # from flask_caching import Cache
 from datetime import datetime
 
@@ -144,23 +149,23 @@ def get_returns(prices, meta_data):
     return (returns * meta_data).sum(axis=1)
 
 
-def create_tearsheet(rets):
+def create_tearsheet(rets, weights=None):
     risk_metrics = to_antd_tbl(get_risk_metrics(rets, 0.02, 12))
     ff_exp = to_antd_tbl(get_ff_exposure(rets))
-    inv_growth = stringify_date_index(get_inv_growth(rets))
-    drawdowns = stringify_date_index(get_drawdowns(rets)*100)
+    inv_growth = to_line_chart(stringify_date_index(get_inv_growth(rets)), weights)
+    drawdowns = to_line_chart(stringify_date_index(get_drawdowns(rets)*100), weights)
     calendar_rets = to_antd_tbl(get_calendar_returns(rets))
     correlation = to_antd_tbl(round(rets.corr(), 2))
     return {'risk_metrics': risk_metrics,
             'ff_exp': ff_exp,
-            'inv_growth': inv_growth.to_dict(),
-            'drawdowns': drawdowns.to_dict(),
+            'inv_growth': inv_growth,
+            'drawdowns': drawdowns,
             'calendar_rets': calendar_rets,
             "correlation": correlation,
             "analysis_range": {"start": rets.index[0].replace(day=1).strftime("%Y-%m-%d"),
                                "end": rets.index[-1].strftime("%Y-%m-%d")}}
         
-        
+
 # @cache.memoize(timeout=300)
 def create_portfolio_tearsheet(portfolio, start=None, end=None):
     securities_names = list(portfolio.settings["holdings"].keys())
@@ -169,7 +174,8 @@ def create_portfolio_tearsheet(portfolio, start=None, end=None):
     rets[portfolio.name] = form_portfolio(rets, portfolio.settings['holdings'],
                                           portfolio.settings["rebalancingFrequency"])
 
-    tearsheet = create_tearsheet(rets)
+    weights = dict(portfolio.settings["holdings"], **{portfolio.name: 1})
+    tearsheet = create_tearsheet(rets, weights)
     tearsheet['PCA'] = get_pca(rets.drop(portfolio.name, axis=1))
     return tearsheet
 

@@ -70,6 +70,7 @@ def to_antd_tbl(df):
     column_list = [column for column in ["Index"] + list(df.columns)]
     columns = [{"title":column, "dataIndex":column, "key":"column"}
                for column in column_list]
+    columns[0]['title'] = ""
     rows_list = df.values.tolist()
     rows_list = [[df.index[i]] + rows_list[i] for i in range(len(rows_list))]
 
@@ -122,6 +123,60 @@ def match_df(df1, df2):
     _merge_with_next_row(matched_df, rows_to_remove)
     return matched_df
 
+
 def stringify_date_index(df):
     df.index = df.index.strftime('%Y-%m-%d')
     return df
+
+
+def to_table_orient(data):
+    data = data.to_dict(orient="index")
+    for key, value in data.items():
+        value["Index"] = key
+    return list(data.values())
+
+
+def random_colors(n:int) -> list:
+    """
+    Generates n random HEX colors
+    """
+    import random
+    r = lambda: random.randint(0,255)
+    colors = []
+    i = 0
+    while i < n:
+        colors.append('#%02X%02X%02X' % (r(),r(),r()))
+        i +=1
+    return colors
+
+
+def get_colors(n):
+    colors = ['#06ACB0', # teal
+     '#FF672E', # orange
+     '#676766', # gray dark
+     '#FFCE50', # dark yellow
+     '#006C52', # dark green
+     '#592924', # brown
+     '#D8262C', # dark red
+     '#A22676', # purple
+     '#FFAB80', # orange light
+     '#A5A8AA', # gray light
+     '#A5D5D7', # light teal
+     '#FFE8B5', # light yellow
+     '#A6DF93', # light green
+     '#FF9B99', # light pink
+     '#CFB2D3', # light purple
+     '#C5EBC8', # light green
+     '#FEFFBB'  # bright yellow
+    ]
+    if n > len(colors):
+        colors += random_colors(n-len(colors))
+    return colors[:n]
+
+
+def to_line_chart(df, line_weights=None, lw_min=1, lw_max= 4):
+    settings = {line: {"color":color} for line, color in zip(df.columns, get_colors(len(df.columns)))}
+    for line in settings.keys():
+        settings[line]["width"] = lw_min + (lw_max - lw_min) * line_weights[line] if line_weights else 2
+    return {"linesSettings" : settings,
+           "dataPoints": to_table_orient(df)}

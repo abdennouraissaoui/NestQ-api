@@ -7,13 +7,13 @@ import { Table, Typography } from "antd"
 const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
     return (
         <React.Fragment >
-            {drawdowns &&
+            {inv_growth &&
                 <React.Fragment>
                     <Typography.Title level={3} className="center"> Investment Growth of a $1,000 investment </Typography.Title>
                     <LineChart
-                        datapoints={DataFormatter.toLineChart(inv_growth)}
-                        // title="Investment Growth of a $1,000 investment"
-                        prefix="$"
+                        dataPoints={inv_growth.dataPoints}
+                        linesSettings={inv_growth.linesSettings}
+                        formatTick={tick => "$" + tick}
                     />
                 </React.Fragment>
             }
@@ -24,8 +24,9 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
                 <React.Fragment>
                     <Typography.Title level={3} className="center"> Drawdowns </Typography.Title>
                     <LineChart
-                        datapoints={DataFormatter.toLineChart(drawdowns)}
-                        suffix="%"
+                        dataPoints={drawdowns.dataPoints}
+                        linesSettings={drawdowns.linesSettings}
+                        formatTick={tick => tick + "%"}
                     />
                 </React.Fragment>
             }
@@ -34,7 +35,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
 
             {calendar_rets &&
                 <React.Fragment>
-                    <Typography.Title level={3} className="center"> Calendar Year returns </Typography.Title>
+                    <Typography.Title level={3} className="center"> Calendar Year Returns </Typography.Title>
                     <Table
                         pagination={false}
                         size="middle"

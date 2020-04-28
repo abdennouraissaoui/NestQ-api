@@ -77,7 +77,7 @@ class Portfolio(Resource):
             return {"message": str(e)}, 500
         except:
             traceback.print_exc()
-            return {"message": "An error occured when inserting a portfolio"}, 500
+            return {"message": "An error occurred when inserting a portfolio"}, 500
         return portfolio.json(), 201
 
     @jwt_required
@@ -120,5 +120,5 @@ class PortfolioConstructionOptions(Resource):
     @jwt_required
     def get(self):
         return {"optimizers": list(available_optimizers.keys()),
-                "rebal_freqs": ["Monthly", "Annualy"]}
+                "rebal_freqs": ["Monthly", "Annually"]}
 

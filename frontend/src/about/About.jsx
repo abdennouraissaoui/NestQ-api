@@ -2,17 +2,38 @@ import React from "react"
 import "./About.css"
 import { Typography, Space } from 'antd';
 import Me from "./me.png"
-// // const { Title } = Typography;
+
+import {
+    PieChart,
+    ResponsiveContainer,
+    Tooltip,
+    Legend,
+    Pie
+} from "recharts"
 
 const paragraphStyle = {
     fontSize: "16px"
 }
 
+
+const holdings = {
+    "Vanguard Total Stock Market Index Fund ETF Shares": 20.0,
+    "Vanguard Total Bond Market Index Fund ETF Shares": 20.0,
+    "Vanguard FTSE Developed Markets Index Fund ETF Shares": 60.0
+}
+
 const About = () => {
     return (
         <div className="container">
+            <ResponsiveContainer width='100%' aspect={3.0 / 3.0}>
+                <PieChart margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+                    <Tooltip/>
+                    <Legend/>
+                    <Pie data={holdings}/>
+                </PieChart>
+            </ResponsiveContainer>
 
-            <img src={Me} style={{ maxWidth: "200px", borderRadius: "70%" }} className="center" alt="Me" />
+            {/* <img src={Me} style={{ maxWidth: "200px", borderRadius: "70%" }} className="center" alt="Me" /> */}
             <br />
             <br />
             <Space direction="vertical" size="small">
@@ -32,7 +53,7 @@ const About = () => {
                             The Black–Litterman model which allows investors to incorporate their beliefs of future asset class returns
                             </li>
                         <li>
-                            Finally, I will include more tools that apply machine learning to investing. Marcos M. Lopez De Prado’s book, “Machine Learning for Managers”, is full of just that. Very excited to read it!
+                            Finally, I will include more tools that apply machine learning to investing. Marcos M. Lopez De Prado’s book, “Machine Learning for Asset Managers”, is full of just that. Very excited to read it!
                             </li>
                     </ul>
                 </Typography.Paragraph>

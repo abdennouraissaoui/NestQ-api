@@ -15,7 +15,7 @@ const Analytics = ({ tearsheet, isLoading, title }) => {
         { key: "performance", tab: "Performance" },
         { key: "attribution", tab: "Attribution" },
         { key: "riskMetrics", tab: "Risk Metrics" },
-        { key: "diversification", tab: "Diversification" }
+        { key: "diversification", tab: "Correlation" }
     ]
 
     const contentList = {
