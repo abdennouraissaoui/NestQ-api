@@ -7,6 +7,7 @@ import RiskMetrics from "../components/RiskMetrics"
 import Diversification from "../components/Diversification"
 import { useHttpClient } from "../../shared/hooks/http-hook"
 import { Spin, Alert, Typography } from "antd"
+import "./Analytics.css"
 
 
 const Analytics = (props) => {
@@ -51,21 +52,24 @@ const Analytics = (props) => {
             {isLoading && <Spin size="large"></Spin>}
             {!isLoading && error && <Alert message={error}></Alert>}
             {Object.keys(portfolioTearsheet).length > 0 && !isLoading && !error &&
-                <Card
-                    style={{ width: '95%' }}
-                    title={
-                        <React.Fragment>
-                            <Typography.Title level={3} className="center">Portfolio Analysis</Typography.Title>
-                            <Typography.Text className="center"> For the period: {portfolioTearsheet.analysis_range.start} to {portfolioTearsheet.analysis_range.end}, using monthly returns</Typography.Text>
-                        </React.Fragment>
-                    }
-                    tabList={analyticsCategories}
-                    activeTabKey={currentTab}
-                    onTabChange={key => setCurrentTab(key)}
-                    type="inner"
-                >
-                    {contentList[currentTab]}
-                </Card>}
+                <div className="card-container">
+                    <Card
+                        style={{ width: '95%' }}
+                        title={
+                            <React.Fragment>
+                                <Typography.Title level={3} className="center">Portfolio Analysis</Typography.Title>
+                                <Typography.Text className="center"> For the period: {portfolioTearsheet.analysis_range.start} to {portfolioTearsheet.analysis_range.end}, using monthly returns</Typography.Text>
+                            </React.Fragment>
+                        }
+                        tabList={analyticsCategories}
+                        activeTabKey={currentTab}
+                        onTabChange={key => setCurrentTab(key)}
+                        type="inner"
+                    >
+                        {contentList[currentTab]}
+                    </Card>
+                </div>
+            }
 
         </React.Fragment>
     )

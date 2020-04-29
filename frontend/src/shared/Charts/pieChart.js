@@ -1,8 +1,8 @@
 import React from 'react';
 import CanvasJSReact from './canvasjs.react';
 
-
 let CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 
 const PieChart = ({ data, title, colors }) => {
 
@@ -13,7 +13,7 @@ const PieChart = ({ data, title, colors }) => {
 			text: title,
 			fontSize: 17
 		},
-		colorSet: colors,
+		colorSet: "customColorSet1",
 		data: [{
 			type: "pie",
 			toolTipContent: "{label}: <strong>{y}%</strong>",

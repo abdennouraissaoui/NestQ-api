@@ -3,10 +3,10 @@
   background-color: #2C3334;
   width: 100%;
   text-align: center;
-  position:fixed;
+  position: absolute;
   width:100%;
   height:100%;
-  top:45px;
+  top:0px;
   left:0px;
   z-index:1000;
 }

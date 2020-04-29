@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import MainNavigation from "./shared/Navigation/MainNavigation"
@@ -13,8 +13,13 @@ import { useAuth } from './shared/hooks/auth-hook';
 import About from "./about/About"
 import PrivacyPolicy from "./shared/Legal/PrivacyPolicy"
 import TermsOfService from "./shared/Legal/TermsOfService"
+import ReactGa from "react-ga"
 
 function App() {
+  useEffect(() => {
+    ReactGa.initialize("UA-164944506-1")
+    ReactGa.pageview(window.location.pathname)
+  })
   const { accessToken, login, logout, refreshToken } = useAuth();
   let routes;
   let sharedRoutes = [
