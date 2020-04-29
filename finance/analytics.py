@@ -86,7 +86,7 @@ def get_reg_summary(X, y):
         reg_output.loc[sec] = reg.params
         t_stats.loc[sec] = reg.tvalues
         r_sq.append(reg.rsquared)
-    reg_output['R2'] = r_sq
+    reg_output['R-squared'] = r_sq
     return round(reg_output, 2)
 
 

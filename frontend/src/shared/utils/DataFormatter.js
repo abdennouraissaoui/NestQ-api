@@ -3,7 +3,7 @@ let DataFormatter = {}
 DataFormatter.toCategoricalChart = (data) => {
   var data_points = [];
   for (let name in data) {
-    data_points.push({ name: name, value: data[name] });
+    data_points.push({ label: name, y: data[name] });
   }
   return (data_points);
 }
