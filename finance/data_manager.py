@@ -151,23 +151,25 @@ def random_colors(n:int) -> list:
 
 
 def get_colors(n):
-    colors = ['#06ACB0', # teal
-     '#FF672E', # orange
-     '#676766', # gray dark
-     '#FFCE50', # dark yellow
-     '#006C52', # dark green
-     '#592924', # brown
-     '#D8262C', # dark red
-     '#A22676', # purple
-     '#FFAB80', # orange light
-     '#A5A8AA', # gray light
-     '#A5D5D7', # light teal
-     '#FFE8B5', # light yellow
-     '#A6DF93', # light green
-     '#FF9B99', # light pink
-     '#CFB2D3', # light purple
-     '#C5EBC8', # light green
-     '#FEFFBB'  # bright yellow
+    colors = [
+     '#06ACB0',  # teal
+     '#FF672E',  # orange
+     '#676766',  # gray dark
+     '#006C52',  # dark green
+     '#D8262C',  # dark red
+     '#A22676',  # purple
+     '#000000',  # Black
+     '#592924',  # brown
+     '#FFAB80',  # orange light
+     '#A5A8AA',  # gray light
+     '#FFCE50',  # light yellow
+     '#A5D5D7',  # light teal
+     '#FFE8B5',  # light yellow
+     '#A6DF93',  # light green
+     '#FF9B99',  # light pink
+     '#CFB2D3',  # light purple
+     '#C5EBC8',  # light green
+     '#FEFFBB',  # bright yellow
     ]
     if n > len(colors):
         colors += random_colors(n-len(colors))

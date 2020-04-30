@@ -32,10 +32,15 @@ def min_vol(tickers, start=None, end=None):
 
 def max_sharpe(tickers, start=None, end=None):
     ef = markowitz(tickers, start, end)
-    ef.gamma = 1
     # TODO: replace the rf with actual values
     return ef.max_sharpe(risk_free_rate=0.015)
 
+
+def max_sharpe_regularized(tickers, start=None, end=None):
+    ef = markowitz(tickers, start, end)
+    ef.gamma = 1
+    # TODO: replace the rf with actual values
+    return ef.max_sharpe(risk_free_rate=0.015)
 
 def hierarchical_risk_parity(tickers, start=None, end=None):
     hrp = HRPOpt(load_prices(tickers, start, end))
@@ -58,6 +63,7 @@ available_optimizers = {
     "Manual": manual_allocation,
     "Equal Allocation": equally_weighted,
     "Maximum Sharpe Ratio": max_sharpe,
+    "Maximum Sharpe Ratio (Regularized)": max_sharpe,
     "Efficient Return": efficient_return,
     "Efficient Volatility": efficient_vol,
     "Minimum Volatility": min_vol,

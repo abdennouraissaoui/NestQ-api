@@ -21,7 +21,7 @@ const CustomLineChart = ({ formatTick, linesSettings, dataPoints }) => {
                 <XAxis dataKey="Index" domain={['auto', 'auto']} />
                 <YAxis domain={['auto', 'auto']} tickFormatter={formatTick} />
                 <Tooltip />
-                <Legend />
+                <Legend iconType="plainline" height="30%"/>
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
                 {Object.keys(linesSettings).map((line, index) => {
                     return <Line

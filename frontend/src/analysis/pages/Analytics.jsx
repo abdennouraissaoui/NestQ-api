@@ -24,7 +24,7 @@ const Analytics = ({ tearsheet, title, analyticsCategories }) => {
         <React.Fragment>
             {
                 <Card
-                    style={{ marginTop: 0 }}
+                    style={{ marginTop: 0, width:"100%" }}
                     type="inner"
                     title={title}
                     tabList={analyticsCategories}

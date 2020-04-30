@@ -39,7 +39,6 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
                         pagination={false}
                         size="middle"
                         align="center"
-                        tableLayout="fixed"
                         bordered
                         dataSource={calendar_rets.rows}
                         columns={calendar_rets.columns}

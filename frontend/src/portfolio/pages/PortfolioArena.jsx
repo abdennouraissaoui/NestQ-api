@@ -61,44 +61,42 @@ const PortfolioArena = () => {
     }
 
     return (
-        <Layout style={{ backgroundColor: "white" }}>
-            {!isEmpty(tearsheet) && <Sider
-                breakpoint="md"
-                collapsedWidth="0"
-                theme="light"
-                width={350}
-                style={{ padding: 15 }}
-            >
-                <PortfolioComparisonForm
-                    userPortfolioNames={portfolioNames}
-                    initialPortfolio={portfolioName}
-                    onGo={handleGo}
-                    analysisStartDate={tearsheet.analysis_range.start}
-                    analysisEndDate={tearsheet.analysis_range.end}
-                />
-            </Sider>}
-            {error && <Alert
-                description={error}
-                type="error"
-                showIcon
-                style={{ marginBottom: "5px" }}
-            />}
-            {isLoading && <Spin size="large"></Spin>}
-            {!isEmpty(tearsheet) && !error && !isLoading && <Content style={{ margin: 0, padding: 15, backgroundColor: "white", maxWidth: "1000px" }}>
-                <Analytics
-                    analyticsCategories={analyticsCategories}
-                    tearsheet={tearsheet}
-                    isLoading={isLoading}
-                    title={
-                        <React.Fragment>
-                            <Typography.Title level={3} className="center">Portfolio Comparison </Typography.Title>
-                            <Typography.Text className="center"> For the period: {tearsheet.analysis_range.start} to {tearsheet.analysis_range.end}, using monthly returns</Typography.Text>
-                        </React.Fragment>
-                    } />
-
-            </Content>}
-
-        </Layout>
+            <Layout style={{ backgroundColor: "white" }}>
+                {!isEmpty(tearsheet) && <Sider
+                    breakpoint="md"
+                    collapsedWidth="0"
+                    theme="light"
+                    width={350}
+                    style={{ padding: 10 }}
+                >
+                    <PortfolioComparisonForm
+                        userPortfolioNames={portfolioNames}
+                        initialPortfolio={portfolioName}
+                        onGo={handleGo}
+                        analysisStartDate={tearsheet.analysis_range.start}
+                        analysisEndDate={tearsheet.analysis_range.end}
+                    />
+                </Sider>}
+                {error && <Alert
+                    description={error}
+                    type="error"
+                    showIcon
+                    style={{ marginBottom: "5px" }}
+                />}
+                {isLoading && <Spin size="large"></Spin>}
+                {!isEmpty(tearsheet) && !error && !isLoading && <Content style={{ margin: 0, paddingTop: 10, backgroundColor: "white", maxWidth: "1000px" }}>
+                    <Analytics
+                        analyticsCategories={analyticsCategories}
+                        tearsheet={tearsheet}
+                        isLoading={isLoading}
+                        title={
+                            <React.Fragment>
+                                <Typography.Title level={3} className="center">Portfolio Comparison </Typography.Title>
+                                <Typography.Text className="center"> For the period: {tearsheet.analysis_range.start} to {tearsheet.analysis_range.end}, using monthly returns</Typography.Text>
+                            </React.Fragment>
+                        } />
+                </Content>}
+            </Layout>
     )
 }
 

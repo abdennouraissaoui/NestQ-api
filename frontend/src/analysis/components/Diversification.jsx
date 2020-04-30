@@ -21,7 +21,6 @@ const Diversification = ({ correlation, pca }) => {
                 <React.Fragment>
                     <Typography.Title level={3} className="center"> Correlation Analysis </Typography.Title>
                     <Table pagination={false}
-                    tableLayout="fixed"
                         size="middle"
                         align="center" bordered dataSource={correlation.rows} columns={correlation.columns} />
                 </React.Fragment>
