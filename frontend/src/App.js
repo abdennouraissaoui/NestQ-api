@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import MainNavigation from "./shared/Navigation/MainNavigation"
 import Portfolios from "./portfolio/pages/Portfolios"
 import PortfolioArena from "./portfolio/pages/PortfolioArena"
+import PortfolioBreakdown from "./portfolio/pages/PortfolioBreakdown"
 import Footer from "./shared/Footer/Footer"
 import Auth from "./user/Auth"
 import { AuthContext } from "./shared/Context/AuthContext"
 import Home from "./home/Home"
-import Analytics from "./analysis/pages/Analytics"
 import { useAuth } from './shared/hooks/auth-hook';
 import About from "./about/About"
 import PrivacyPolicy from "./shared/Legal/PrivacyPolicy"
@@ -37,7 +37,7 @@ function App() {
           <Portfolios />
         </Route>
         <Route path="/analytics/portfolio/:portfolioName" exact>
-          <Analytics />
+          <PortfolioBreakdown />
         </Route>
         <Route path="/analytics/portfolio-comparison/:portfolioName" exact>
           <PortfolioArena />

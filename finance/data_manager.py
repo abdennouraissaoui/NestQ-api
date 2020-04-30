@@ -1,6 +1,6 @@
 import pandas as pd
 import yfinance as yf
-from misc.name_ticker_map import NAME_TICKER_MAP
+from misc.name_w_ticker_map import NAME_TICKER_MAP
 from datetime import datetime
 
 def load_ff(frequency="M"):

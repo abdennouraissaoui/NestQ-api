@@ -14,7 +14,7 @@ const footerStyle = {
     boxShadow: "0 2px 6px rgba(0, 0, 0, 0.26)",
     left: "0",
     bottom: "0",
-    height: "4rem",
+    height: "3.3rem",
     width: "100%"
 };
 
@@ -45,16 +45,16 @@ const Footer = () => {
         <React.Fragment>
             <div style={phantomStyle}></div>
             <div style={footerStyle}>
-                <Space direction="vertical" style={{marginLeft: "auto", marginRight:"auto"}}> 
+                <Space size={0} direction="vertical" style={{marginLeft: "auto", marginRight:"auto"}}> 
                 <ul style={linksStyle}>
                         <li style={{ marginRight: 10 }}>
                             <a href="https://github.com/abdennouraissaoui">
-                                <GithubOutlined style={{ fontSize: '28px', color: '#ccc' }} />
+                                <GithubOutlined style={{ fontSize: '24px', color: '#ccc' }} />
                             </a>
                         </li>
                         <li>
                             <a href="https://www.linkedin.com/in/abdennouraissaoui/">
-                                <LinkedinOutlined style={{ fontSize: '28px', color: '#ccc' }} />
+                                <LinkedinOutlined style={{ fontSize: '24px', color: '#ccc' }} />
                             </a>
                         </li>
                     </ul>
