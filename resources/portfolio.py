@@ -30,7 +30,7 @@ class Portfolio(Resource):
             opt_start = data['optimizationStartDate'][:10]
             opt_end = data['optimizationEndDate'][:10]
 
-        if data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio"]:
+        if data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio", "Maximum Sharpe Ratio (Regularized)"]:
             data["holdings"] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         opt_start,
                                                                         opt_end)

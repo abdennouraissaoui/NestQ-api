@@ -63,7 +63,7 @@ available_optimizers = {
     "Manual": manual_allocation,
     "Equal Allocation": equally_weighted,
     "Maximum Sharpe Ratio": max_sharpe,
-    "Maximum Sharpe Ratio (Regularized)": max_sharpe,
+    "Maximum Sharpe Ratio (Regularized)": max_sharpe_regularized,
     "Efficient Return": efficient_return,
     "Efficient Volatility": efficient_vol,
     "Minimum Volatility": min_vol,
