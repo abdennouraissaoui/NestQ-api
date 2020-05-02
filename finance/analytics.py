@@ -117,7 +117,7 @@ def get_risk_metrics(returns, rf, periods_per_year):
         "Skewness": returns.skew(),
         "Excess Kurtosis": returns.kurtosis()
     }
-    return pd.DataFrame(data).fillna("-").replace([np.inf, -np.inf], "-").T.round(2)
+    return pd.DataFrame(data).round(2).replace([np.inf, -np.inf, np.nan], "-").T
 
 
 def get_calendar_returns(returns):
