@@ -11,6 +11,7 @@ const Analytics = ({ tearsheet, title, analyticsCategories }) => {
 
     const contentList = {
         performance: <Performance
+            portSimulation={tearsheet.port_simulation}
             inv_growth={tearsheet.inv_growth}
             drawdowns={tearsheet.drawdowns}
             calendar_rets={tearsheet.calendar_rets}

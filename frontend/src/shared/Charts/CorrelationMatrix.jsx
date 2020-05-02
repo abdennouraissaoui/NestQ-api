@@ -1,8 +1,14 @@
 import React from "react"
 import ReactApexChart from 'react-apexcharts'
+import {
+    // BrowserView,
+    // MobileView,
+    // isBrowser,
+    isMobile
+  } from "react-device-detect";
 
 const corrColors = {
-    "No correlation": "#f0f6ff",
+    "Insignificant": "#f0f6ff",
     "Low (+)": "#adceff",
     "Medium (+)": "#63a2ff",
     "High (+)": "#0067ff",
@@ -19,12 +25,15 @@ const options = {
     },
     xaxis:{
         labels:{
-            show:false
+            show: isMobile ? false : true,
+            maxHeight:200,
+            trim:true
         }
     },
     yaxis:{
         labels:{
-            show:false
+            show:isMobile ? false : true,
+            maxWidth: 300
         }
     },
     plotOptions: {
@@ -51,8 +60,8 @@ const options = {
                 {
                     from: -.14,
                     to: .14,
-                    color: corrColors["No correlation"],
-                    name: 'No correlation',
+                    color: corrColors["Insignificant"],
+                    name: 'Insignificant',
                 },
                 {
                     from: .15,

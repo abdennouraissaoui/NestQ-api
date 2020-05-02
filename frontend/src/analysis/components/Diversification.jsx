@@ -2,7 +2,7 @@ import React from "react"
 import DataFormatter from "../../shared/utils/DataFormatter"
 import BarChart from "../../shared/Charts/BarChart"
 import CorrelationMatrix from "../../shared/Charts/CorrelationMatrix"
-import { Typography, Table } from "antd"
+import { Typography } from "antd"
 
 const Diversification = ({ correlation, pca }) => {
     return (

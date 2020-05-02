@@ -166,7 +166,27 @@ def create_tearsheet(rets, weights=None):
             "correlation": correlation,
             "analysis_range": {"start": rets.index[0].replace(day=1).strftime("%Y-%m-%d"),
                                "end": rets.index[-1].strftime("%Y-%m-%d")}}
-        
+
+
+def port_monte_carlo(mean, std, init_price=1000, num_periods=12, num_sim=150):
+    simulation_df = pd.DataFrame()
+    for x in range(num_sim):
+        period_count = 0
+        price_series = [init_price]
+        for y in range(num_periods):
+            if period_count == num_periods:
+                break
+            price = price_series[period_count] * (1 + np.random.normal(mean, std))
+            price_series.append(price)
+            period_count += 1
+        simulation_df[x] = price_series
+
+    percentiles = [.05, .1, .25, .5, .75, .9, .95]
+    simulation_df = simulation_df.T.describe(percentiles=percentiles)
+    simulation_df = simulation_df.loc[[str(int(percentile * 100)) + "%" for percentile in percentiles]]
+    simulation_df.index = [str(int(percentile * 100)) + "th Percentile" for percentile in percentiles]
+    return simulation_df.T
+
 
 # @cache.memoize(timeout=300)
 def create_portfolio_tearsheet(portfolio, start=None, end=None):
@@ -179,6 +199,9 @@ def create_portfolio_tearsheet(portfolio, start=None, end=None):
     weights = dict(portfolio.settings["holdings"], **{portfolio.name: 1})
     tearsheet = create_tearsheet(rets, weights)
     tearsheet['PCA'] = get_pca(rets.drop(portfolio.name, axis=1))
+    mean = rets[portfolio.name].mean()
+    std = rets[portfolio.name].std()
+    tearsheet["port_simulation"] = to_line_chart(port_monte_carlo(mean, std))
     return tearsheet
 
 

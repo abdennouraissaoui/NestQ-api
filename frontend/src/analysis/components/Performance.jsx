@@ -3,7 +3,7 @@ import LineChart from "../../shared/Charts/LineChart"
 import { Table, Typography } from "antd"
 
 
-const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
+const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) => {
     return (
         <React.Fragment >
             {inv_growth &&
@@ -42,6 +42,19 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets }) => {
                         bordered
                         dataSource={calendar_rets.rows}
                         columns={calendar_rets.columns}
+                    />
+                </React.Fragment>
+            }
+
+            <br/>
+            <br/>
+            {portSimulation &&
+                <React.Fragment>
+                    <Typography.Title level={3} className="center"> Monte Carlo simulation of a $1,000 invested in the portfolio </Typography.Title>
+                    <LineChart
+                        dataPoints={portSimulation.dataPoints}
+                        linesSettings={portSimulation.linesSettings}
+                        formatTick={tick => "$" + tick}
                     />
                 </React.Fragment>
             }
