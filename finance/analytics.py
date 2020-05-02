@@ -168,7 +168,7 @@ def create_tearsheet(rets, weights=None):
                                "end": rets.index[-1].strftime("%Y-%m-%d")}}
 
 
-def port_monte_carlo(mean, std, init_price=1000, num_periods=12, num_sim=150):
+def port_monte_carlo(mean, std, init_price=1000, num_periods=24, num_sim=150):
     simulation_df = pd.DataFrame()
     for x in range(num_sim):
         period_count = 0
@@ -185,6 +185,7 @@ def port_monte_carlo(mean, std, init_price=1000, num_periods=12, num_sim=150):
     simulation_df = simulation_df.T.describe(percentiles=percentiles)
     simulation_df = simulation_df.loc[[str(int(percentile * 100)) + "%" for percentile in percentiles]]
     simulation_df.index = [str(int(percentile * 100)) + "th Percentile" for percentile in percentiles]
+    simulation_df.columns = [datetime.today() + pd.DateOffset(months=i) for i in simulation_df.columns]
     return simulation_df.T
 
 
@@ -201,7 +202,7 @@ def create_portfolio_tearsheet(portfolio, start=None, end=None):
     tearsheet['PCA'] = get_pca(rets.drop(portfolio.name, axis=1))
     mean = rets[portfolio.name].mean()
     std = rets[portfolio.name].std()
-    tearsheet["port_simulation"] = to_line_chart(port_monte_carlo(mean, std))
+    tearsheet["port_simulation"] = to_line_chart(stringify_date_index(port_monte_carlo(mean, std)))
     return tearsheet
 
 
