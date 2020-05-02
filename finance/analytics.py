@@ -7,7 +7,8 @@ from finance.data_manager import (load_returns,
                                   load_ff,
                                   stringify_date_index,
                                   to_antd_tbl,
-                                  to_line_chart)
+                                  to_line_chart,
+                                  apexcharts_corr_matrix)
 # from flask_caching import Cache
 from datetime import datetime
 
@@ -156,7 +157,7 @@ def create_tearsheet(rets, weights=None):
     inv_growth = to_line_chart(stringify_date_index(get_inv_growth(rets)), weights)
     drawdowns = to_line_chart(stringify_date_index(get_drawdowns(rets)*100), weights)
     calendar_rets = to_antd_tbl(get_calendar_returns(rets))
-    correlation = to_antd_tbl(round(rets.corr(), 2))
+    correlation = apexcharts_corr_matrix(round(rets.corr(), 2))
     return {'risk_metrics': risk_metrics,
             'ff_exp': ff_exp,
             'inv_growth': inv_growth,

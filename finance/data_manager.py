@@ -136,6 +136,17 @@ def to_table_orient(data):
     return list(data.values())
 
 
+def apexcharts_corr_matrix(corr_matrix):
+    apexchart_corr_matrix = []
+    for name, row in corr_matrix.items():
+        row_data = []
+        row_name = name
+        for name, correlation in row[::-1].items():
+            row_data.append({"x": name, "y": correlation})
+        apexchart_corr_matrix.append({"name": row_name, "data": row_data})
+
+    return apexchart_corr_matrix
+
 def random_colors(n:int) -> list:
     """
     Generates n random HEX colors

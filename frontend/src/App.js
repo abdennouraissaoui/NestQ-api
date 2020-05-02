@@ -14,6 +14,7 @@ import About from "./about/About"
 import PrivacyPolicy from "./shared/Legal/PrivacyPolicy"
 import TermsOfService from "./shared/Legal/TermsOfService"
 import ReactGa from "react-ga"
+import Testing from "./testing/Testing"
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,9 @@ function App() {
     </Route>,
     <Route path="/terms-of-service" key={2} exact>
       <TermsOfService />
+    </Route>,
+    <Route path="/testing" key={3} exact>
+      <Testing />
     </Route>
   ]
   if (accessToken) {

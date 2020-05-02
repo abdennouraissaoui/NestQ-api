@@ -1,6 +1,7 @@
 import React from "react"
 import DataFormatter from "../../shared/utils/DataFormatter"
 import BarChart from "../../shared/Charts/BarChart"
+import CorrelationMatrix from "../../shared/Charts/CorrelationMatrix"
 import { Typography, Table } from "antd"
 
 const Diversification = ({ correlation, pca }) => {
@@ -20,9 +21,12 @@ const Diversification = ({ correlation, pca }) => {
             {correlation &&
                 <React.Fragment>
                     <Typography.Title level={3} className="center"> Correlation Analysis </Typography.Title>
-                    <Table pagination={false}
-                        size="middle"
-                        align="center" bordered dataSource={correlation.rows} columns={correlation.columns} />
+                    <CorrelationMatrix
+                        data={correlation}
+                        // pagination={false}
+                        // size="middle"
+                        // align="center" bordered dataSource={correlation.rows} columns={correlation.columns} 
+                    />
                 </React.Fragment>
             }
 
