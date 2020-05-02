@@ -1,5 +1,6 @@
 import pandas as pd
 import statsmodels.api as sm
+import numpy as np
 
 from finance.data_manager import (load_returns,
                                   match_df,
@@ -116,7 +117,7 @@ def get_risk_metrics(returns, rf, periods_per_year):
         "Skewness": returns.skew(),
         "Excess Kurtosis": returns.kurtosis()
     }
-    return pd.DataFrame(data).T.round(2)
+    return pd.DataFrame(data).fillna("-").replace([np.inf, -np.inf], "-").T.round(2)
 
 
 def get_calendar_returns(returns):
