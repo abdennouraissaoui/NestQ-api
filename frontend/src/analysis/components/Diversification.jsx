@@ -23,9 +23,6 @@ const Diversification = ({ correlation, pca }) => {
                     <Typography.Title level={3} className="center"> Correlation Analysis </Typography.Title>
                     <CorrelationMatrix
                         data={correlation}
-                        // pagination={false}
-                        // size="middle"
-                        // align="center" bordered dataSource={correlation.rows} columns={correlation.columns} 
                     />
                 </React.Fragment>
             }

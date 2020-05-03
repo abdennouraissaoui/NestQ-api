@@ -66,8 +66,8 @@ const PortfolioComparisonForm = ({ userPortfolioNames, initialPortfolio, onGo, a
                 {({ values }) => (
                     <Form>
                         <Form.Item  name="analysisStartDate" label="Report Period">
-                            <MonthPicker size="small" name="analysisStartDate" />
-                            <MonthPicker size="small" name="analysisEndDate" />
+                            <MonthPicker size="small" name="analysisStartDate" placeholder="Start Date" />
+                            <MonthPicker size="small" name="analysisEndDate" placeholder="End Date"/>
                         </Form.Item>
                         <Typography.Text strong>
                             Comparison Portfolios:

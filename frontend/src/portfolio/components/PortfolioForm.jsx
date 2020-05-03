@@ -58,20 +58,14 @@ const validationSchema = object().shape({
 });
 
 
-const dateNYearsAgo = (N) => {
-  var date = new Date();
-  date.setFullYear(date.getFullYear() - N);
-  return date
-}
-
 const initialValues = (props) => {
   return {
     name: props.name || "",
     allocation: props.allocation || "",
     holdings: props.holdings || [{ securityName: "", weight: "" }],
     closeForm: props.closeForm,
-    optimizationStartDate: props.optimizationStartDate || dateNYearsAgo(3),
-    optimizationEndDate: props.optimizationEndDate || new Date(),
+    optimizationStartDate: props.optimizationStartDate || "",
+    optimizationEndDate: props.optimizationEndDate || "",
     rebalancingFrequency: props.rebalancingFrequency || "",
     targetVolatility: props.targetVolatility || "",
     targetReturn: props.targetReturn || ""
@@ -202,7 +196,7 @@ const PortfolioForm = (props) => {
 
           {values.allocation !== "Manual" && values.allocation !== "Equal Allocation" &&
             <div>
-              <Form.Item label="Optimization Period" name="optimizationStartDate" hasFeedback={true} required>
+              <Form.Item label="Optimization Period" name="optimizationStartDate" hasFeedback={true}>
                 <MonthPicker
                   name="optimizationStartDate"
                   placeholder="Start Date"
@@ -238,7 +232,7 @@ const PortfolioForm = (props) => {
                           options={etfOptions}
                           name={`holdings.${index}.securityName`}
                           placeholder="Search for a U.S or Canadian ETF"
-                          style={{width:"100%"}}
+                          style={{ width: "100%" }}
                         />
                       </Form.Item>
                       {values.allocation === "Manual" &&
@@ -282,7 +276,7 @@ const PortfolioForm = (props) => {
   )
 }
 
- export default PortfolioForm;
+export default PortfolioForm;
 //<Formik
 //       onSubmit={(values) => handleSubmit(values, initialName)}
 //       initialValues={initialValues(props)}
@@ -391,7 +385,7 @@ const PortfolioForm = (props) => {
 //                           max={100}
 //                           name={`holdings.${index}.weight`}
 //                           placeholder="Weight"
-                          
+
 //                         />
 //                       </Form.Item>}
 //                     {values.holdings.length > 1 &&

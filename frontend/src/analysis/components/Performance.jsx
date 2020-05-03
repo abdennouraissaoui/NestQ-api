@@ -8,7 +8,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
         <React.Fragment >
             {inv_growth &&
                 <React.Fragment>
-                    <Typography.Title level={3} className="center"> Investment Growth of a $1,000 investment </Typography.Title>
+                    <Typography.Title level={3} className="center"> Compounded growth of a $1,000 investment </Typography.Title>
                     <LineChart
                         dataPoints={inv_growth.dataPoints}
                         linesSettings={inv_growth.linesSettings}
@@ -34,7 +34,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
 
             {calendar_rets &&
                 <React.Fragment>
-                    <Typography.Title level={3} className="center"> Calendar Year Returns </Typography.Title>
+                    <Typography.Title level={3} className="center"> Annual Returns </Typography.Title>
                     <Table
                         pagination={false}
                         size="middle"
@@ -50,7 +50,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
             <br/>
             {portSimulation &&
                 <React.Fragment>
-                    <Typography.Title level={3} className="center"> Monte Carlo simulation of a $1,000 invested in the portfolio </Typography.Title>
+                    <Typography.Title level={3} className="center"> Monte Carlo simulation of $1,000 invested in the portfolio </Typography.Title>
                     <LineChart
                         dataPoints={portSimulation.dataPoints}
                         linesSettings={portSimulation.linesSettings}

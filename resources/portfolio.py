@@ -2,7 +2,6 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.portfolio import PortfolioModel
 from finance.optimizer import available_optimizers
-# from finance.analytics import create_portfolio_tearsheet, cache
 import traceback
 
 
@@ -27,10 +26,13 @@ class Portfolio(Resource):
             parser.add_argument('optimizationStartDate', required=True, help="This field cannot be left blank!")
             parser.add_argument('optimizationEndDate', required=True, help="This field cannot be left blank!")
             data = parser.parse_args()
-            opt_start = data['optimizationStartDate'][:10]
-            opt_end = data['optimizationEndDate'][:10]
+            opt_start = data['optimizationStartDate'][:10] if data['optimizationStartDate'] else None
+            opt_end = data['optimizationEndDate'][:10] if data['optimizationEndDate'] else None
 
-        if data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio", "Maximum Sharpe Ratio (Regularized)"]:
+        if len(data['holdings']) == 1 and data['allocation'] not in ["Manual", "Equal Allocation"]:
+            print(data['holdings'].keys())
+            data['holdings'] = {list(data['holdings'].keys())[0]: 1}
+        elif data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio", "Maximum Sharpe Ratio (Regularized)"]:
             data["holdings"] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         opt_start,
                                                                         opt_end)

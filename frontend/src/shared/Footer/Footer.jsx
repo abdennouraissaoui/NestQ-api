@@ -47,6 +47,9 @@ const Footer = () => {
             <div style={footerStyle}>
                 <Space size={0} direction="vertical" style={{marginLeft: "auto", marginRight:"auto"}}> 
                 <ul style={linksStyle}>
+                        <li style={{ marginRight: 10, color: "#ccc" }}>
+                            Find me:
+                        </li>
                         <li style={{ marginRight: 10 }}>
                             <a href="https://github.com/abdennouraissaoui">
                                 <GithubOutlined style={{ fontSize: '24px', color: '#ccc' }} />

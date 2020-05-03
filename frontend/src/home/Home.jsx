@@ -16,7 +16,7 @@ const Home = () => {
             <img src={Logo} alt="NestQ logo" style={{marginTop: "30px"}}/>
                 <div style={{width:"70%", marginLeft:"auto", marginRight:"auto", marginBottom:"50px"}}>
                     <Title style={{ color: "white", marginTop: "50px" }} level={1}> The Ultimate Portfolio Construction and Analytics Platform</Title>
-                    <Title style={{ color: "#ccc", marginBottom: "50px" }} level={4}>NestQ is an investment analysis platform designed to help investors make better asset allocation decisions. It includes several portfolio construction techniques and many risks analytics tools to identify blind spots</Title>
+                    <Title style={{ color: "#ccc", marginBottom: "50px" }} level={4}>NestQ is an investments platform designed to help investors make better asset allocation decisions. It includes several portfolio construction techniques and many risks analytics tools to identify blind spots</Title>
                     <NavLink to="/auth" exact> <Button style={{ color: "white", fontWeight: "bold" }} size="large" type="ghost"> Try it now! </Button> </NavLink>
                 </div>
                 <img src={nestegg} style={{ maxWidth: "500px", width: "70%" }} alt="Nest Egg" />

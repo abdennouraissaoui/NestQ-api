@@ -34,10 +34,10 @@ const About = () => {
                             The Black–Litterman model which allows investors to incorporate their beliefs of future asset class returns
                             </li>
                             <li>
-                                Monte Carlo portfolio simulation
+                                Portfolio scenario analysis 
                             </li>
                         <li>
-                            Finally, I will include more tools that apply machine learning to investing. Marcos M. Lopez De Prado’s book, “Machine Learning for Asset Managers”, is full of just that. Very excited to read it!
+                            Finally, I will include more tools that apply machine learning to investing. Marcos M. Lopez De Prado’s book, “Machine Learning for Asset Managers”, is full of just that. Very excited to read it and share my findings!
                             </li>
                     </ul>
                 </Typography.Paragraph>

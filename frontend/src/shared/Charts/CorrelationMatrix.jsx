@@ -36,6 +36,9 @@ const options = {
             maxWidth: 300
         }
     },
+    legend:{
+        show:false
+    },
     plotOptions: {
         heatmap: {
             colorScale: {
