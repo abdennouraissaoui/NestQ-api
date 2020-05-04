@@ -13,7 +13,6 @@ import { Tabs } from 'antd';
 import {
     isMobile
 } from "react-device-detect";
-import Analytics from "../analysis/pages/Analytics"
 
 import {
     RiseOutlined,
@@ -25,15 +24,6 @@ import {
 } from "@ant-design/icons"
 
 
-const sampleTearsheet = require("./sample_tearsheet.json")
-
-const analyticsCategories = [
-    { key: "performance", tab: "Performance" },
-    { key: "attribution", tab: "Attribution" },
-    { key: "riskMetrics", tab: "Risk Metrics" },
-    { key: "diversification", tab: "Diversification" }
-]
-
 const iconStyle = { fontSize: "60px", marginTop: "10px" }
 
 const optimizers = {
@@ -42,7 +32,7 @@ const optimizers = {
         icon: <RiseOutlined style={iconStyle} />
     },
     "L2-Regularized Maximum Sharpe": {
-        description: "Maximize the return per unit of risk and prevent overfitting ",
+        description: "Maximize the return per unit of risk and prevent over fitting ",
         icon: <RadarChartOutlined style={iconStyle} />
     },
     "Minimum Risk": {
@@ -105,7 +95,7 @@ const Home = () => {
                     <img src={NestqMain} style={{ maxWidth: "1000px", width: "100%", marginTop: "50px", }} alt="NestQ's main page" />
                 </div>
 
-                <div style={{ backgroundColor: "#FFFFFF", width: "100%", marginLeft: "auto", marginRight: "auto", marginTop: "200px", marginBottom: "50px" }}>
+                <div style={{ backgroundColor: "#FFFFFF", width: "100%", marginLeft: "auto", marginRight: "auto", marginTop: "300px", marginBottom: "50px" }}>
                     <div style={{ width: "90%", maxWidth: "1000px", marginLeft: "auto", marginRight: "auto" }}>
                         <Typography.Title style={{ color: "#495354", marginTop: "100px" }} level={isMobile ? 3 : 1}> State of the art optimizers for efficient asset allocation</Typography.Title>
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
@@ -125,7 +115,7 @@ const Home = () => {
                             }
                         </div>
                         <Typography.Title style={{ color: "#495354", marginTop: "100px" }} level={isMobile ? 3 : 1}> Powerful portfolio analytics delivered in an intuitive interface</Typography.Title>
-                        <div style={{ margin: "auto" }}>
+                        <div style={{ margin: "auto", marginBottom:"150px" }}>
                             <Tabs defaultActiveKey={1}>
 
                                 {Object.keys(analytics).map((tab, index) => {
@@ -133,8 +123,8 @@ const Home = () => {
                                         <Tabs.TabPane tab={tab} key={index}>
                                             <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
                                                 <div style={{ margin: 10, display: "flex", flexDirection: "column", textAlign: "left", verticalAlign: "middle" }}>
-                                                    <Typography.Text style={{ fontSize:  isMobile? "17px": "20px", fontWeight: "bold" }}>{analytics[tab].summary}</Typography.Text>
-                                                    <Typography.Text style={{ fontSize: isMobile? "13px": "15px" }}>{analytics[tab].description}</Typography.Text>
+                                                    <Typography.Text style={{ fontSize:  isMobile? "17px": "20px", fontWeight: "bold", color:"#4b5354" }}>{analytics[tab].summary}</Typography.Text>
+                                                    <Typography.Text style={{ fontSize: isMobile? "13px": "15px", color:"#4b5354" }}>{analytics[tab].description}</Typography.Text>
                                                 </div>
                                                 <img style={{ width: isMobile ? "100%" : "60%" }} src={analytics[tab].screenshot} alt={tab} />
                                             </div>

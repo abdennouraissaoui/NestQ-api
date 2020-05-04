@@ -13,6 +13,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
                         dataPoints={inv_growth.dataPoints}
                         linesSettings={inv_growth.linesSettings}
                         formatTick={tick => "$" + tick}
+                        ylabel={"Portfolio Balance"}
                     />
                 </React.Fragment>
             }
@@ -26,6 +27,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
                         dataPoints={drawdowns.dataPoints}
                         linesSettings={drawdowns.linesSettings}
                         formatTick={tick => tick + "%"}
+                        ylabel="Portfolio Loss"
                     />
                 </React.Fragment>
             }
@@ -34,7 +36,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
 
             {calendar_rets &&
                 <React.Fragment>
-                    <Typography.Title level={3} className="center"> Annual Returns </Typography.Title>
+                    <Typography.Title level={3} className="center"> Annual returns </Typography.Title>
                     <Table
                         pagination={false}
                         size="middle"
@@ -55,6 +57,7 @@ const Performance = ({ inv_growth, drawdowns, calendar_rets, portSimulation }) =
                         dataPoints={portSimulation.dataPoints}
                         linesSettings={portSimulation.linesSettings}
                         formatTick={tick => "$" + tick}
+                        ylabel="Portfolio Balance"
                     />
                 </React.Fragment>
             }

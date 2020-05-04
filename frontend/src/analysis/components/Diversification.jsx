@@ -13,6 +13,8 @@ const Diversification = ({ correlation, pca }) => {
                     <BarChart
                         data={DataFormatter.toCategoricalChart(pca)}
                         tickFormatter={tick => tick + "%"}
+                        ylabel="% of portfolio variance explained"
+                        xlabel="Unique risks (Principal Components)"
                     />
                 </React.Fragment>}
 
