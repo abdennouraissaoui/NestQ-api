@@ -76,24 +76,25 @@ const Portfolios = () => {
                     className="tl"
                 />
             }
-            {!isLoading && !error && <div style={{ margin: "auto", width: "80%" }}>
-                <Row justify="space-between">
-                    <Button icon={<PlusOutlined />} size="large" style={{ margin: "10px" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
-                    <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
-                </Row>
+            {!isLoading && !error &&
+                <div style={{ margin: "auto", width: "80%" }}>
+                    <Row justify="space-between">
+                        <Button icon={<PlusOutlined />} size="large" style={{ margin: "10px" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
+                        <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
+                    </Row>
 
-                <PortfoliosList
-                    portfolios={filteredPortfolios}
-                    portfolioNames={loadedPortfolios.map(port => {
-                        return port.name
-                    })}
-                    openPortForm={openPortfolioForm}
-                    closeForm={closePortfolioForm}
-                    onEdited={portfolioEditedHandler}
-                    onDeletePortfolio={portfolioDeletedHandler}
-                    colors={colors}
-                />
-            </div>}
+                    <PortfoliosList
+                        portfolios={filteredPortfolios}
+                        portfolioNames={loadedPortfolios.map(port => {
+                            return port.name
+                        })}
+                        openPortForm={openPortfolioForm}
+                        closeForm={closePortfolioForm}
+                        onEdited={portfolioEditedHandler}
+                        onDeletePortfolio={portfolioDeletedHandler}
+                        colors={colors}
+                    />
+                </div>}
 
         </React.Fragment>
 

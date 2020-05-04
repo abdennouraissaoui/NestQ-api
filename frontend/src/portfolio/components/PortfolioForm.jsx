@@ -104,7 +104,6 @@ const PortfolioForm = (props) => {
         const rebal_freqs = responseData.rebal_freqs
         setInitialFormData({ optimizers, rebal_freqs })
       } catch (e) {
-        window.alert(e)
       }
     }
     fetchFormInitialData();

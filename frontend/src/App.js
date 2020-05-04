@@ -74,6 +74,7 @@ function App() {
       </Switch>
     )
   }
+
   return (
     <AuthContext.Provider
       value={{

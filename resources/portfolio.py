@@ -119,7 +119,6 @@ class Portfolio(Resource):
 
 
 class PortfolioConstructionOptions(Resource):
-    @jwt_required
     def get(self):
         return {"optimizers": list(available_optimizers.keys()),
                 "rebal_freqs": ["Monthly", "Annually"]}
