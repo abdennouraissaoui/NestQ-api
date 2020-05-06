@@ -121,5 +121,5 @@ class Portfolio(Resource):
 class PortfolioConstructionOptions(Resource):
     def get(self):
         return {"optimizers": list(available_optimizers.keys()),
-                "rebal_freqs": ["Monthly", "Annually"]}
+                "rebal_freqs": ["Monthly", "Quarterly", "Semi-Annually", "Annually"]}
 

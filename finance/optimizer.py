@@ -1,4 +1,4 @@
-from finance.data_manager import load_prices
+from finance.data_manager import load_prices, load_returns
 from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
@@ -42,8 +42,9 @@ def max_sharpe_regularized(tickers, start=None, end=None):
     # TODO: replace the rf with actual values
     return ef.max_sharpe(risk_free_rate=0.015)
 
+
 def hierarchical_risk_parity(tickers, start=None, end=None):
-    hrp = HRPOpt(load_prices(tickers, start, end))
+    hrp = HRPOpt(load_returns(tickers, start, end))
     return hrp.hrp_portfolio()
 
 

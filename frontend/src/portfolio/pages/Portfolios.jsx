@@ -45,7 +45,6 @@ const Portfolios = () => {
     }
 
     const portfolioCreatedHandler = (newPortfolio) => {
-        closePortfolioForm()
         setLoadedPortfolios(loadedPortfolios.concat(newPortfolio))
     }
 
@@ -79,20 +78,18 @@ const Portfolios = () => {
             {!isLoading && !error &&
                 <div style={{ margin: "auto", width: "80%" }}>
                     <Row justify="space-between">
-                        <Button icon={<PlusOutlined />} size="large" style={{ margin: "10px" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
+                        <Button icon={<PlusOutlined />} size="large"  style={{ margin: "13px",fontWeight: "bold" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
                         <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
                     </Row>
 
                     <PortfoliosList
                         portfolios={filteredPortfolios}
-                        portfolioNames={loadedPortfolios.map(port => {
-                            return port.name
-                        })}
                         openPortForm={openPortfolioForm}
                         closeForm={closePortfolioForm}
                         onEdited={portfolioEditedHandler}
                         onDeletePortfolio={portfolioDeletedHandler}
                         colors={colors}
+                        onCreated={portfolioCreatedHandler}
                     />
                 </div>}
 

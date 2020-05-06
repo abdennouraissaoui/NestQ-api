@@ -13,7 +13,6 @@ import {
 
 
 const CustomBarChart = ({ data, tickFormatter, ylabel, xlabel }) => {
-    console.log(data)
     return (
         <ResponsiveContainer width={"100%"} aspect={6.0 / 3.0}>
             <BarChart data={data} margin={{ top: 5, right: 10, left: 15, bottom: 15 }}>

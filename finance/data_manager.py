@@ -3,6 +3,7 @@ import yfinance as yf
 from misc.name_w_ticker_map import NAME_TICKER_MAP
 from datetime import datetime
 
+
 def load_ff(frequency="M"):
     import urllib.request
     import zipfile
@@ -10,15 +11,17 @@ def load_ff(frequency="M"):
     from datetime import datetime
     cur_date = datetime.now().strftime("%Y-%m")
     if not path.exists('FF_{}.zip'.format(cur_date)):
-        link = "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
+        link = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors_daily_CSV.zip"
         urllib.request.urlretrieve(link, "FF_{}.zip".format(cur_date))
     compressed_file = zipfile.ZipFile("FF_{}.zip".format(cur_date))
-    csv_file = compressed_file.open('F-F_Research_Data_5_Factors_2x3_daily.CSV')
-    FF = pd.read_csv(csv_file, skiprows=2, index_col=0)
+    csv_file = compressed_file.open('F-F_Research_Data_Factors_daily.CSV')
+    FF = pd.read_csv(csv_file, skiprows=4, index_col=0)
+    FF.drop(FF.tail(1).index, inplace=True)
     FF.index = pd.to_datetime(FF.index, format='%Y%m%d')
     FF /= 100
     if frequency:
         FF = (FF + 1).resample(frequency).prod() - 1
+    FF.columns = ["Market (Mkt-RF)", "Size (SMB)", "Value (HML)", "RF"]
     return FF
 
 

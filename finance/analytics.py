@@ -89,7 +89,7 @@ def get_reg_summary(X, y):
         t_stats.loc[sec] = reg.tvalues
         r_sq.append(reg.rsquared)
     reg_output['R-squared'] = r_sq
-    return round(reg_output, 2)
+    return reg_output
 
 
 def get_inv_growth(returns, init_inv=1000):
@@ -109,11 +109,11 @@ def get_risk_metrics(returns, rf, periods_per_year):
         "Annual Volatility (%)": ann_vol * 100,
         "Sharpe Ratio": sharpe_ratio(ann_ret, rf, ann_vol),
         "Positive Months Ratio (%)": pct_positive_periods(returns) * 100,
-        "Downside Volatility (%)": downside_vol * 100,
-        "Sortino Ratio": sortino_ratio(ann_ret, rf, downside_vol),
-        "Calmar Ratio": calmar_ratio(ann_ret, rf, get_drawdowns(returns).min().abs()),
         "Monthly 95% VAR (%)": value_at_risk(returns, 0.05) * 100,
         "Monthly 95% CVAR (%)": conditional_value_at_risk(returns, 0.05) * 100,
+        "Downside Annual Volatility (%)": downside_vol * 100,
+        "Sortino Ratio": sortino_ratio(ann_ret, rf, downside_vol),
+        "Calmar Ratio": calmar_ratio(ann_ret, rf, get_drawdowns(returns).min().abs()),
         "Tail Ratio": tail_ratio(returns),
         "Skewness": returns.skew(),
         "Excess Kurtosis": returns.kurtosis()
@@ -134,7 +134,9 @@ def get_ff_exposure(returns):
     ex_ret = returns.subtract(ff['RF'], axis=0)
     ff.drop('RF', axis=1, inplace=True)
     reg_summary = get_reg_summary(ff, ex_ret)
-    return reg_summary
+    reg_summary["Alpha"] *= 100
+    reg_summary.rename({"Alpha": "Alpha (%)"}, axis=1, inplace=True)
+    return round(reg_summary, 2)
 
 
 def get_pca(returns):
