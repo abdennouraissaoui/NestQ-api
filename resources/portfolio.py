@@ -12,6 +12,7 @@ class Portfolio(Resource):
         parser.add_argument('holdings', type=dict, required=True, help="This field cannot be left blank!")
         parser.add_argument('allocation', type=str, required=True, help="This field cannot be left blank!")
         parser.add_argument('rebalancingFrequency', type=str, required=True, help="This field cannot be left blank!")
+        parser.add_argument('addRegularizer', type=str, help="This field cannot be left blank!")
 
         for requirement, type in additional_reqs.items():
             parser.add_argument(requirement, type=type, required=True, help="This field cannot be left blank!")
@@ -30,12 +31,12 @@ class Portfolio(Resource):
             opt_end = data['optimizationEndDate'][:10] if data['optimizationEndDate'] else None
 
         if len(data['holdings']) == 1 and data['allocation'] not in ["Manual", "Equal Allocation"]:
-            print(data['holdings'].keys())
             data['holdings'] = {list(data['holdings'].keys())[0]: 1}
-        elif data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio", "Maximum Sharpe Ratio (Regularized)"]:
+        elif data['allocation'] in ["Hierarchical Risk Parity", "Minimum Volatility", "Maximum Sharpe Ratio"]:
             data["holdings"] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         opt_start,
-                                                                        opt_end)
+                                                                        opt_end,
+                                                                        add_regularizer=data["addRegularizer"])
 
         elif data['allocation'] == "Efficient Volatility":
             parser.add_argument('targetVolatility', required=True, help="This field cannot be left blank!")
@@ -43,7 +44,8 @@ class Portfolio(Resource):
             data['holdings'] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         float(data["targetVolatility"]) / 100,
                                                                         opt_start,
-                                                                        opt_end)
+                                                                        opt_end,
+                                                                        add_regularizer=data["addRegularizer"])
 
         elif data['allocation'] == "Efficient Return":
             parser.add_argument('targetReturn', required=True, help="This field cannot be left blank!")
@@ -51,7 +53,8 @@ class Portfolio(Resource):
             data['holdings'] = available_optimizers[data['allocation']](list(data['holdings'].keys()),
                                                                         float(data["targetReturn"]) / 100,
                                                                         opt_start,
-                                                                        opt_end)
+                                                                        opt_end,
+                                                                        add_regularizer=data["addRegularizer"])
         return data
 
     @classmethod

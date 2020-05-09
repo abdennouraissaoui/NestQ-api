@@ -14,6 +14,9 @@ const PieChart = ({ data, title, colors }) => {
 			fontSize: 17
 		},
 		colorSet: "customColorSet1",
+		// toolTip: {
+		// 	fontC
+		// },
 		data: [{
 			type: "pie",
 			toolTipContent: "{label}: <strong>{y}%</strong>",

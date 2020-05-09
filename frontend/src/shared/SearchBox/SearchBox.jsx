@@ -1,9 +1,10 @@
 import React from "react"
 import { FilterOutlined } from '@ant-design/icons';
 import { Input } from "antd"
-const SearchBox = ({ searchChange, placeholder }) => {
+const SearchBox = ({ searchChange, placeholder, className }) => {
     return (
         <Input type="search"
+            className={className}
             onChange={searchChange}
             prefix={<FilterOutlined />}
             placeholder={placeholder}

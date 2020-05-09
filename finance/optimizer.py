@@ -5,45 +5,38 @@ from pypfopt import expected_returns
 from pypfopt.hierarchical_risk_parity import HRPOpt
 
 
-def markowitz(tickers, start=None, end=None):
+def markowitz(tickers, start=None, end=None, regularize=False):
     prices = load_prices(tickers, start, end)
     mu = expected_returns.mean_historical_return(prices, frequency=12)
     S = risk_models.sample_cov(prices, frequency=12)
     ef = EfficientFrontier(mu, S)
+    if regularize:
+        ef.gamma = 1
     return ef
 
 
-def efficient_return(tickers, target_return, start=None, end=None):
-    ef = markowitz(tickers, start, end)
-    ef.gamma = 1
+def efficient_return(tickers, target_return, start=None, end=None, **kwargs):
+    ef = markowitz(tickers, start, end, True if kwargs["add_regularizer"] == "yes" else False)
     return ef.efficient_return(target_return)
 
 
-def efficient_vol(tickers, target_risk, start=None, end=None):
-    ef = markowitz(tickers, start, end)
-    ef.gamma = 1
+def efficient_vol(tickers, target_risk, start=None, end=None,**kwargs):
+    ef = markowitz(tickers, start, end, True if kwargs["add_regularizer"] == "yes" else False)
     return ef.efficient_risk(target_risk)
 
 
-def min_vol(tickers, start=None, end=None):
-    ef = markowitz(tickers, start, end)
+def min_vol(tickers, start=None, end=None, **kwargs):
+    ef = markowitz(tickers, start, end, True if kwargs["add_regularizer"] == "yes" else False)
     return ef.min_volatility()
 
 
-def max_sharpe(tickers, start=None, end=None):
-    ef = markowitz(tickers, start, end)
+def max_sharpe(tickers, start=None, end=None, **kwargs):
+    ef = markowitz(tickers, start, end, True if kwargs["add_regularizer"] == "yes" else False)
     # TODO: replace the rf with actual values
     return ef.max_sharpe(risk_free_rate=0.015)
 
 
-def max_sharpe_regularized(tickers, start=None, end=None):
-    ef = markowitz(tickers, start, end)
-    ef.gamma = 1
-    # TODO: replace the rf with actual values
-    return ef.max_sharpe(risk_free_rate=0.015)
-
-
-def hierarchical_risk_parity(tickers, start=None, end=None):
+def hierarchical_risk_parity(tickers, start=None, end=None, **kwargs):
     hrp = HRPOpt(load_returns(tickers, start, end))
     return hrp.hrp_portfolio()
 
@@ -64,7 +57,6 @@ available_optimizers = {
     "Manual": manual_allocation,
     "Equal Allocation": equally_weighted,
     "Maximum Sharpe Ratio": max_sharpe,
-    "Maximum Sharpe Ratio (Regularized)": max_sharpe_regularized,
     "Efficient Return": efficient_return,
     "Efficient Volatility": efficient_vol,
     "Minimum Volatility": min_vol,

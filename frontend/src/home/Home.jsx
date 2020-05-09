@@ -16,7 +16,6 @@ import {
 
 import {
     RiseOutlined,
-    RadarChartOutlined,
     DotChartOutlined,
     AimOutlined,
     SlidersOutlined,
@@ -28,27 +27,23 @@ const iconStyle = { fontSize: "60px", marginTop: "10px" }
 
 const optimizers = {
     "Maximum Sharpe": {
-        description: "Maximize the return per unit of risk",
+        description: "Maximize the return per unit of risk. L2-Regularization available",
         icon: <RiseOutlined style={iconStyle} />
     },
-    "L2-Regularized Maximum Sharpe": {
-        description: "Maximize the return per unit of risk and prevent over fitting ",
-        icon: <RadarChartOutlined style={iconStyle} />
-    },
     "Minimum Risk": {
-        description: "Maximize the return for the lowest risk possible",
+        description: "Maximize the return for the lowest risk possible. L2-Regularization available",
         icon: <DotChartOutlined style={iconStyle} />
     },
     "Efficient Return": {
-        description: "Minimize the risk for achieving your target return",
+        description: "Minimize the risk for achieving your target return. L2-Regularization available",
         icon: <AimOutlined style={iconStyle} />
     },
     "Efficient Risk": {
-        description: "Maximize the return for achieving your target risk level",
+        description: "Maximize the return for achieving your target risk level. L2-Regularization available",
         icon: <AimOutlined style={iconStyle} />
     },
     "Hierarchical Risk Parity": {
-        description: "Minimize risk by applying hierarchical clustering models",
+        description: "Apply hierarchical clustering models to build a robust minimum volatility portfolio",
         icon: <SlidersOutlined style={iconStyle} />
     },
     "Black-Litterman (Coming Soon)": {
@@ -86,18 +81,18 @@ const Home = () => {
     return (
         <React.Fragment>
             <div className="intro-container">
-                <div style={{ width: "70%", marginLeft: "auto", marginRight: "auto", marginBottom: "50px" }}>
+                <div style={{ width: "70%", marginLeft: "auto", marginRight: "auto"}}>
                     <Space direction="vertical">
                         <Typography.Title style={{ color: "white", marginTop: "50px" }} level={isMobile ? 3 : 1}> The Ultimate Portfolio Construction and Analytics Platform</Typography.Title>
                         <Typography.Text style={{ color: "#ccc", marginBottom: "50px", fontSize: isMobile ? "15px" : "20px" }} level={4}>NestQ is an online platform designed to help investors make better asset allocation decisions. It includes several portfolio construction techniques and risks analytics tools for identifying portfolio blind spots</Typography.Text>
                         <NavLink to="/auth" exact> <Button style={{ color: "white", fontWeight: "bold", marginTop: "40px" }} size="large" type="ghost"> Try it now! </Button> </NavLink>
                     </Space>
-                    <img src={NestqMain} style={{ maxWidth: "1000px", width: "100%", marginTop: "50px", }} alt="NestQ's main page" />
+                    <img src={NestqMain} style={{ maxWidth: "900px", width: "100%", marginTop: "50px", paddingBottom:"50px" }} alt="NestQ's main page" />
                 </div>
 
-                <div style={{ backgroundColor: "#FFFFFF", width: "100%", marginLeft: "auto", marginRight: "auto", marginTop: "300px", marginBottom: "50px" }}>
-                    <div style={{ width: "90%", maxWidth: "1000px", marginLeft: "auto", marginRight: "auto" }}>
-                        <Typography.Title style={{ color: "#495354", marginTop: "100px" }} level={isMobile ? 3 : 1}> State of the art optimizers for efficient asset allocation</Typography.Title>
+                <div style={{ backgroundColor: "#FFFFFF", width: "100%", marginLeft: "auto", marginRight: "auto" }}>
+                    <div style={{ width: "95%", maxWidth: "1300px", marginLeft: "auto", marginRight: "auto" }}>
+                        <Typography.Title style={{ color: "#495354", paddingTop: "50px" }} level={isMobile ? 3 : 1}> State of the art optimizers for efficient asset allocation</Typography.Title>
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
                             {
                                 Object.keys(optimizers).map((optimizer, index) => {
@@ -116,11 +111,11 @@ const Home = () => {
                         </div>
                         <Typography.Title style={{ color: "#495354", marginTop: "100px" }} level={isMobile ? 3 : 1}> Powerful portfolio analytics delivered in an intuitive interface</Typography.Title>
                         <div style={{ margin: "auto", marginBottom:"150px" }}>
-                            <Tabs defaultActiveKey={1}>
+                            <Tabs defaultActiveKey={1} size="large">
 
                                 {Object.keys(analytics).map((tab, index) => {
                                     return (
-                                        <Tabs.TabPane tab={tab} key={index}>
+                                        <Tabs.TabPane tab={tab} key={index} >
                                             <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
                                                 <div style={{ margin: 10, display: "flex", flexDirection: "column", textAlign: "left", verticalAlign: "middle" }}>
                                                     <Typography.Text style={{ fontSize:  isMobile? "17px": "20px", fontWeight: "bold", color:"#4b5354" }}>{analytics[tab].summary}</Typography.Text>

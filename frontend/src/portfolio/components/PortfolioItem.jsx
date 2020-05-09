@@ -18,7 +18,7 @@ const PortfolioItem = ({ name, holdings, colors, allocation, rebalancingFrequenc
     }
     const closePortfolioForm = () => setPortfolioFormOpen(false)
 
-    const openDuplicateForm = () =>{
+    const openDuplicateForm = () => {
         setIsEditMode(false)
         setPortfolioFormOpen(true)
     }
@@ -36,22 +36,26 @@ const PortfolioItem = ({ name, holdings, colors, allocation, rebalancingFrequenc
         <Card className="tc ma3 dib br3 pad3 bw2 shadow-2">
             <PieChart title={name} colors={colors} data={DataFormatter.toCategoricalChart(holdings)} />
             <div>
-                <Link to={`/analytics/portfolio/${encodeURIComponent(encodeURI(name))}`}>
-                    <Button
-                        icon={<StockOutlined />}
-                        className="ma1"
-                        size="large"
-                        type="primary"
-                    > Analyze </Button>
-                </Link>
-                <Link to={`/analytics/portfolio-comparison/${encodeURIComponent(encodeURI(name))}`}>
-                    <Button
-                        icon={<CalculatorOutlined />}
-                        className="ma1"
-                        size="large"
-                        type="primary"
-                    > Compare </Button>
-                </Link>
+                <Tooltip title="Analyze the portfolio">
+                    <Link to={`/analytics/portfolio/${encodeURIComponent(encodeURI(name))}`}>
+                        <Button
+                            icon={<StockOutlined />}
+                            className="ma1"
+                            size="large"
+                            type="primary"
+                        > Analyze </Button>
+                    </Link>
+                </Tooltip>
+                <Tooltip title="Compare to other portfolios">
+                    <Link to={`/analytics/portfolio-comparison/${encodeURIComponent(encodeURI(name))}`}>
+                        <Button
+                            icon={<CalculatorOutlined />}
+                            className="ma1"
+                            size="large"
+                            type="primary"
+                        > Compare </Button>
+                    </Link>
+                </Tooltip>
                 <Tooltip title="Duplicate">
                     <Button icon={<CopyOutlined />} className="ma1 mv2" size="large" type="dashed" onClick={openDuplicateForm} />
                 </Tooltip>
@@ -65,7 +69,7 @@ const PortfolioItem = ({ name, holdings, colors, allocation, rebalancingFrequenc
                     cancelText="No"
                 >
                     <Tooltip title="Delete">
-                    <Button icon={<DeleteOutlined />} className="ma1" size="large" danger />
+                        <Button icon={<DeleteOutlined />} className="ma1" size="large" danger />
 
                     </Tooltip>
                 </Popconfirm>
@@ -82,7 +86,7 @@ const PortfolioItem = ({ name, holdings, colors, allocation, rebalancingFrequenc
                 <div>
                     <PortfolioForm
                         closeForm={closePortfolioForm}
-                        name={isEditMode? name : undefined}
+                        name={isEditMode ? name : undefined}
                         holdings={DataFormatter.toListOfHoldings(holdings)}
                         allocation={allocation}
                         optimizationStartDate={optimizationStartDate}

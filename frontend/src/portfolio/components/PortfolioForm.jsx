@@ -11,7 +11,7 @@ import {
   Form,
   RemoveRowButton,
   InputNumber,
-  AutoComplete
+  AutoComplete,
 } from "formik-antd"
 import { Divider, Row } from "antd"
 import { Button, Alert, notification } from "antd"
@@ -68,7 +68,8 @@ const initialValues = (props) => {
     optimizationEndDate: props.optimizationEndDate || "",
     rebalancingFrequency: props.rebalancingFrequency || "",
     targetVolatility: props.targetVolatility || "",
-    targetReturn: props.targetReturn || ""
+    targetReturn: props.targetReturn || "",
+    addRegularizer: props.regularizer || "yes"
   }
 }
 
@@ -81,8 +82,12 @@ const layout = {
   },
 };
 
-
-
+const markowitzOptimizers = [
+  "Maximum Sharpe Ratio",
+  "Efficient Return",
+  "Efficient Volatility",
+  "Minimum Volatility"
+]
 
 const PortfolioForm = (props) => {
   const initialName = props.name
@@ -186,6 +191,21 @@ const PortfolioForm = (props) => {
                 placeholder="Ex: 7%" />
             </Form.Item>
           }
+
+          {markowitzOptimizers.includes(values.allocation) &&
+              <Form.Item label="L2-Regularization?" name="addRegularizer" required>
+
+                <Select name="addRegularizer" showArrow>
+                  <Select.Option value="yes">
+                    Yes
+                </Select.Option>
+                  <Select.Option value="no">
+                    No
+                  </Select.Option>
+                </Select>
+              </Form.Item>
+          }
+
           <Form.Item label="Rebalancing Frequency" name="rebalancingFrequency" hasFeedback={true} required>
 
             <Select name="rebalancingFrequency" placeholder="Ex: Monthly" showArrow className="w-90">

@@ -5,6 +5,7 @@ import MainNavigation from "./shared/Navigation/MainNavigation"
 import Portfolios from "./portfolio/pages/Portfolios"
 import PortfolioArena from "./portfolio/pages/PortfolioArena"
 import PortfolioBreakdown from "./portfolio/pages/PortfolioBreakdown"
+import Learn from "./learn/pages/Learn"
 import Footer from "./shared/Footer/Footer"
 import Auth from "./user/Auth"
 import { AuthContext } from "./shared/Context/AuthContext"
@@ -15,6 +16,7 @@ import PrivacyPolicy from "./shared/Legal/PrivacyPolicy"
 import TermsOfService from "./shared/Legal/TermsOfService"
 import ReactGa from "react-ga"
 import Testing from "./testing/Testing"
+
 
 function App() {
   useEffect(() => {
@@ -32,6 +34,9 @@ function App() {
     </Route>,
     <Route path="/testing" key={3} exact>
       <Testing />
+    </Route>,
+    <Route path="/learn" key={4} exact>
+      <Learn />
     </Route>
   ]
   if (accessToken) {
@@ -87,7 +92,9 @@ function App() {
       <Router>
         <MainNavigation />
         <main >
-          {routes}
+          <div className="main-container">
+            {routes}
+          </div>
         </main>
         <Footer />
       </Router>

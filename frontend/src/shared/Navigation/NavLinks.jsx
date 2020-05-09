@@ -11,6 +11,9 @@ const NavLinks = () => {
                 <NavLink to="/portfolios" exact> My Portfolios </NavLink>
             </li>}
             <li>
+                <NavLink to="/learn" exact> Learn </NavLink>
+            </li>
+            <li>
                 <NavLink to="/about" exact> About </NavLink>
             </li>
             {auth.isLoggedIn && <li>
@@ -19,7 +22,6 @@ const NavLinks = () => {
             {!auth.isLoggedIn && <li>
                 <NavLink to="/auth" exact> Authenticate </NavLink>
             </li>}
-
         </ul>
     )
 }

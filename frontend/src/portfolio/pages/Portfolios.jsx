@@ -76,7 +76,7 @@ const Portfolios = () => {
                 />
             }
             {!isLoading && !error &&
-                <div style={{ margin: "auto", width: "80%" }}>
+                <div style={{ margin: "auto" }}>
                     <Row justify="space-between">
                         <Button icon={<PlusOutlined />} size="large"  style={{ margin: "13px",fontWeight: "bold" }} onClick={openPortfolioForm}>Create a new portfolio</Button>
                         <SearchBox placeholder="Filter by portfolio name" searchChange={onSearchChange} />
