@@ -16,6 +16,7 @@
     "react-device-detect": "^1.12.1",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
+    "react-horizontal-scrolling-menu": "^0.7.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-transition-group": "^4.3.0",

@@ -14,7 +14,10 @@ const NavLinks = () => {
                 <NavLink to="/learn" exact> Learn </NavLink>
             </li>
             <li>
-                <NavLink to="/about" exact> About </NavLink>
+                <NavLink to="/about-nestq" exact> About NestQ </NavLink>
+            </li>
+            <li>
+                <NavLink to="/about-me" exact> About Me </NavLink>
             </li>
             {auth.isLoggedIn && <li>
                 <button onClick={auth.logout}>Logout</button>

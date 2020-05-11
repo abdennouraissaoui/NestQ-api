@@ -11,7 +11,8 @@ import Auth from "./user/Auth"
 import { AuthContext } from "./shared/Context/AuthContext"
 import Home from "./home/Home"
 import { useAuth } from './shared/hooks/auth-hook';
-import About from "./about/About"
+import AboutNestQ from "./about/pages/AboutNestQ"
+import AboutMe from "./about/pages/AboutMe"
 import PrivacyPolicy from "./shared/Legal/PrivacyPolicy"
 import TermsOfService from "./shared/Legal/TermsOfService"
 import ReactGa from "react-ga"
@@ -37,6 +38,12 @@ function App() {
     </Route>,
     <Route path="/learn" key={4} exact>
       <Learn />
+    </Route>,
+    <Route path="/about-nestq" key={5} exact>
+      <AboutNestQ />
+    </Route>,
+    <Route path="/about-me" key={6} exact>
+      <AboutMe />
     </Route>
   ]
   if (accessToken) {
@@ -50,9 +57,6 @@ function App() {
         </Route>
         <Route path="/analytics/portfolio-comparison/:portfolioName" exact>
           <PortfolioArena />
-        </Route>
-        <Route path="/about" exact>
-          <About />
         </Route>
         {sharedRoutes.map(route => {
           return route
@@ -68,9 +72,6 @@ function App() {
         </Route>
         <Route path="/" exact>
           <Home />
-        </Route>
-        <Route path="/about" exact>
-          <About />
         </Route>
         {sharedRoutes.map(route => {
           return route

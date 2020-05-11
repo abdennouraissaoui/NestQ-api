@@ -9,6 +9,7 @@ const Question = ({ question, answer, description, wordCount }) => {
             content: (
                 <p>{answer}</p>
             ),
+            width:700,
             onOk() { },
         });
     }

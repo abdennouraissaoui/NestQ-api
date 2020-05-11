@@ -1,28 +1,22 @@
 import React from "react"
 import { Card, Tooltip } from "antd"
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-// import "./Books.css"
-const { Meta } = Card;
-const booksRead = []
-const Arrow = ({ text, className }) => {
-    return (
-        <div
-            className={className}
-        >{text}</div>
-    );
-};
-const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
-const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
+import "./Books.css"
+const { Meta } = Card;
+const booksRead = require("./booksRead.json")
+
+ 
 const Books = () => {
     const booksData = booksRead.map((book, index) => {
         return (
-            <a href={book.link} className="menu-item" key={index} style={{ padding: "10px" }}>
+            <a href={book.link} className="menu-item" key={index} >
                 <Tooltip title={book.name} >
                     <Card
-
+                        
                         hoverable
-                        style={{ width: 200 }}
+                        style={{ width: 200, margin:"15px" }}
                         cover={<img alt={book.name} src={book.image} />}
                     >
                         <Meta title={book.name} description="www.goodreads.com" />
@@ -33,14 +27,18 @@ const Books = () => {
     })
 
     return (
-        <ScrollMenu
-            arrowLeft={ArrowLeft}
-            arrowRight={ArrowRight}
-            data={booksData}
-            wheel={false}
-        >
+        <div style={{width:"100%"}}>
+            <ScrollMenu
+                      arrowLeft={<LeftOutlined style={{fontSize:"20px"}}/>}
+                      arrowRight={<RightOutlined style={{fontSize:"20px"}} />}
+                data={booksData}
+                wheel={false}
+            >
 
-        </ScrollMenu>
+            </ScrollMenu>
+        </div>
+
+
     )
 }
 

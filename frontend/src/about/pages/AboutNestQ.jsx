@@ -1,7 +1,6 @@
 import React from "react"
 import "./About.css"
 import { Typography, Space } from 'antd';
-import Me from "./me.png"
 
 
 
@@ -10,17 +9,11 @@ const paragraphStyle = {
 }
 
 
-const About = () => {
+const AboutNestQ = () => {
     return (
         <div className="container">
 
-            <img src={Me} style={{ maxWidth: "200px", borderRadius: "70%" }} className="center" alt="Me" />
-            <br />
-            <br />
             <Space direction="vertical" size="small">
-                <Typography.Paragraph style={paragraphStyle}>
-                    My name is Abdennour. I recently finished my undergraduate studies in finance and computer science at the University of Toronto.
-                    </Typography.Paragraph>
                 <Typography.Paragraph style={paragraphStyle}>
                     I am dedicated to making investing simple and low-cost through the use of ETFs and modern portfolio optimization techniques. This top-down approach to investing piqued my interest after reading Ray Dalio’s book, <i>Principles</i>. Ever since, I have taken additional mathematics and programming courses in order to bring this philosophy to life.
                     </Typography.Paragraph>
@@ -46,4 +39,4 @@ const About = () => {
     )
 }
 
-export default About; 
+export default AboutNestQ; 
