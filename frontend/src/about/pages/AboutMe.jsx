@@ -3,7 +3,9 @@ import "./About.css";
 import { Typography } from "antd";
 import Me from "./me.png";
 import Books from "../components/Books";
-
+import EventTimeline from "../components/EventTimeline";
+import CareerGoals from "../components/CareerGoals";
+import Drive from "../components/Drive";
 const paragraphStyle = {
   fontSize: "16px",
 };
@@ -22,17 +24,19 @@ const AboutMe = () => {
       <Typography.Paragraph style={paragraphStyle}>
         My name is Abdennour. I recently finished my undergraduate studies in
         finance and computer science at the University of Toronto.
+        <br/>
+        Get in touch with me: <a href="mailto:abdennour.aissaoui@mail.utoronto.ca">abdennour.aissaoui@mail.utoronto.ca</a>
       </Typography.Paragraph>
-      <Typography.Title level={2}>Drive</Typography.Title>
-      <Typography.Title level={2}>Goals</Typography.Title>
-      <Typography.Title level={4}>Long term</Typography.Title>
-      <Typography.Title level={4}>Short term</Typography.Title>
-      <Typography.Title level={2}>Reading</Typography.Title>
+      <p></p>
+      <Typography.Title level={2}>My career goals</Typography.Title>
+      <CareerGoals />
+      <Typography.Title level={2}>What drives me</Typography.Title>
+      <Drive />
+      <Typography.Title level={2}>Favorite readings</Typography.Title>
       <p>
         I see incredible value in reading about subjects that are new to me,
         this way I know what I don’t know. For that reason, I try to not limit
         my readings to specific subjects.
-        <br />
         <br />
         Below are some of the books I’ve read; I suppose there is an
         overrepresentation of self-development books
@@ -40,6 +44,7 @@ const AboutMe = () => {
       <br />
       <Books />
       <Typography.Title level={2}>Timeline</Typography.Title>
+      <EventTimeline />
     </div>
   );
 };

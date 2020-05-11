@@ -25,7 +25,7 @@ const CustomLineChart = ({ formatTick, linesSettings, dataPoints, xlabel, ylabel
                     label={{ value: ylabel, angle: -90, position: 'left' }}
                 />
                 <Tooltip />
-                <Legend iconType="plainline" />
+            <Legend iconType="plainline" />
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
                 {Object.keys(linesSettings).map((line, index) => {
                     return <Line

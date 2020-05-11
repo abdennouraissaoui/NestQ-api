@@ -1,0 +1,50 @@
+[
+  {
+    "date": "October 2010",
+    "description": "Moved to Canada with my parents and siblings"
+  },
+  {
+    "date": "June 2015",
+    "description": "Graduated from Jeunes Sans Frontières high school. Scored the second highest mark in 2 mathematics courses and first in an Information Technology course"
+  },
+  {
+    "date": "September 2015",
+    "description": "Started my finance and computer science studies at the University of Toronto"
+  },
+  {
+    "date": "September 2017",
+    "description": "Interned at HOOPP, a $94 billion pension fund. Worked with a team that built credit derivatives trading systems."
+  },
+  {
+    "date": "September 2018",
+    "description": "Interned at Picton Mahoney Asset Management, a Toronto-based hedge fund entrusted with $6.6 billion in client assets"
+  },
+  {
+    "date": "November 2018",
+    "description": "Participated in a competition for the first time. I represented my university and presented monetary policy recommendations to the Bank of Canada"
+  },
+  {
+    "date": "January 2019",
+    "description": "Joined my university’s faculty as Teaching Assistant for my favorite 2nd, 3rd and 4th year courses.  Courses include finance, macroeconomics and statistics"
+  },
+  {
+    "date": "May 2019",
+    "description": "Rejoined Picton Mahoney Asset Management for a second internship. This time, I worked for a quantitative fund manager"
+  },
+  {
+    "date": "November 2019",
+    "description": "Won first place at AIMA’s portfolio construction competition"
+  },
+  {
+    "date": "January 2020",
+    "description": "Won third place at Rotman’s Algorithmic trading competition"
+  },
+  {
+    "date": "March 2020",
+    "description": "Initiated the development of NestQ"
+  },
+  {
+    "date": "April 2020",
+    "description": "Completed my studies in finance and computer science at the University of Toronto with a GPA of 3.9/4.0 in my last two years"
+  }
+]
