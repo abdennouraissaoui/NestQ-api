@@ -61,9 +61,12 @@ api.add_resource(UserLogout, "/api/logout")
 api.add_resource(PortfolioComparison, "/api/tearsheet/portfolio-comparison")
 api.add_resource(PortfolioAnalytics, "/api/tearsheet/portfolio/<string:portfolio_name>")
 
+
 @app.route("/")
 @app.route("/portfolios")
-@app.route("/about")
-@app.route("/FAQ")
+@app.route("/about-me")
+@app.route("/about-nestq")
+@app.route("/learn")
+@app.route("/terms-of-service")
 def react_app():
     return render_template('index.html')
