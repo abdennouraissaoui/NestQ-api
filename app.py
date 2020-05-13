@@ -13,7 +13,7 @@ from resources.user import (
 from resources.portfolio import Portfolio, PortfolioConstructionOptions
 from resources.portfolioanalytics import PortfolioAnalytics
 from resources.portfolioanalytics import PortfolioComparison
-
+from flask_sslify import SSLify
 
 app = Flask(__name__, static_folder="frontend/build/static", template_folder="frontend/build")
 
@@ -70,3 +70,7 @@ api.add_resource(PortfolioAnalytics, "/api/tearsheet/portfolio/<string:portfolio
 @app.route("/terms-of-service")
 def react_app():
     return render_template('index.html')
+
+
+if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
+    sslify = SSLify(app)

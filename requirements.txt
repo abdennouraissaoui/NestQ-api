@@ -30,5 +30,6 @@ Werkzeug==1.0.0
 yfinance==0.1.54
 Flask-Caching
 bidict
+flask-sslify
 psycopg2
 uwsgi
