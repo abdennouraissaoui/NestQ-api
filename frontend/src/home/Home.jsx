@@ -101,7 +101,7 @@ const Home = () => {
                 fontWeight:"lighter"
               }}
             >
-              NestQ is an online platform designed to help ETF investors make better
+              NestQ is an online platform designed to help passive investors make better
               allocation decisions. It includes several portfolio
               construction techniques and risk analytics tools
             </Typography.Text>
