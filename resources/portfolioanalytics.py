@@ -8,11 +8,17 @@ import traceback
 class PortfolioAnalytics(Resource):
     # TODO: add analysis period
     @jwt_required
-    def get(self, portfolio_name):
+    def post(self, portfolio_name):
+        data_parser = reqparse.RequestParser()
+        data_parser.add_argument("end")
+        data_parser.add_argument("start")
+        data = data_parser.parse_args()
+        start = data['start'][:10] if data["start"] else None
+        end = data['end'][:10] if data["end"] else None
         portfolio = PortfolioModel.find_by_name(portfolio_name, get_jwt_identity())
         if portfolio:
             try:
-                return create_portfolio_tearsheet(portfolio), 200
+                return create_portfolio_tearsheet(portfolio, start, end), 200
             except Exception as e:
                 traceback.print_exc()
                 # return {"message": e}, 500

@@ -38,8 +38,7 @@ const AboutMe = () => {
         this way I know what I don’t know. For that reason, I try to not limit
         my readings to specific subjects.
         <br />
-        Below are some of the books I’ve read; I suppose there is an
-        overrepresentation of self-development books
+        Below are some of my favorite books:
       </p>
       <br />
       <Books />

@@ -71,14 +71,15 @@ const AboutNestQ = () => {
         <Typography.Paragraph style={paragraphStyle}>
           I always turned to Python whenever I needed the computer's help. With
           the simple syntax, its charm never faded for me and I have been using
-          it for 5 years now. I built the backend using Python with the
+          it for 5 years now. I built the backend using Python and the
           following libraries: Sklearn, Numpy, Pandas, Statsmodels, Flask,
           SQLAlchemy.
           <br />
           <br />
           For the frontend I had a ton fun using ReactJS which I learned about as
-          I'm building NestQ. However, I admit I did not get as much of a kick out of
-          CSS
+          I'm building NestQ.
+          However, I admit I did not get as much of a kick out of
+          CSS.
         </Typography.Paragraph>
       </Space>
     </div>

@@ -69,7 +69,7 @@ const questionList = [
         "description": "As soon as you have paid off high interest rate debt",
         "answer": <div>
             <p>
-                Once you have paid off your high interest debt (such as credit card) and built your emergency fund, you should start investing immediately. Your future you will thank you.
+                Once you have paid off your high interest debt (such as credit card) and built your emergency fund, I suggest you start investing immediately but please consult a financial advisor first. Your future you will thank you.
                 <br /><br />
                 Also, don’t wait for the “market to tank”. Nobody knows for sure when that will happen and if it will even happen anytime soon.
 
