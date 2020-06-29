@@ -1,15 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "antd";
 import "./Home.css";
 import NestqMain from "./NestQ-Main.png";
 import NestqPCA from "./NestQ-PCA.PNG";
 import NestqMTS from "./NestQ-Monte-Carlo.PNG";
 import NestqRA from "./NestQ-Risk-Analytics.PNG";
 import NestFF from "./NestQ-FF.PNG";
-
-import { Typography, Space, Card } from "antd";
-import { Tabs } from "antd";
+import { Typography, Space, Card, Button, Tabs } from "antd";
 import { isMobile } from "react-device-detect";
 
 import {
@@ -91,18 +88,19 @@ const Home = () => {
               style={{ color: "white", marginTop: "50px" }}
               level={isMobile ? 3 : 1}
             >
-              Fast, Intuitive and Powerful Portfolio Construction and Analytics Platform 
+              Fast, Intuitive and Powerful Portfolio Construction and Analytics
+              Platform
             </Typography.Title>
             <Typography.Text
               style={{
                 color: "#ccc",
                 marginBottom: "50px",
                 fontSize: isMobile ? "15px" : "20px",
-                fontWeight:"lighter"
+                fontWeight: "lighter",
               }}
             >
-              NestQ is an online platform designed to help passive investors make better
-              allocation decisions. It includes several portfolio
+              NestQ is an online platform designed to help passive investors
+              make better allocation decisions. It includes several portfolio
               construction techniques and risk analytics tools
             </Typography.Text>
             <NavLink to="/auth" exact>

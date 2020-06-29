@@ -14,6 +14,9 @@ const NavLinks = () => {
                 <NavLink to="/learn" exact> Learn </NavLink>
             </li>
             <li>
+                <NavLink to="/blog" exact> Blog </NavLink>
+            </li>
+            <li>
                 <NavLink to="/about-nestq" exact> About NestQ </NavLink>
             </li>
             <li>

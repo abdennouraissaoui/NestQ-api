@@ -73,6 +73,16 @@
         "name": "The Art of War",
         "link": "https://www.goodreads.com/book/show/10534.The_Art_of_War",
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1453417993l/10534._SY475_.jpg"
+    },
+    {
+        "name": "Sapiens: A Brief History of Humankind",
+        "link": "https://www.goodreads.com/book/show/23692271-sapien",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1420585954l/23692271.jpg"
+    },
+    {
+        "name": "Factfulness: Ten Reasons We're Wrong About the World – and Why Things Are Better Than You Think",
+        "link": "https://www.goodreads.com/book/show/34890015-factfulness",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1544963815l/34890015._SY475_.jpg"
     }
 
 ]
