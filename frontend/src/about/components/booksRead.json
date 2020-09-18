@@ -80,9 +80,26 @@
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1420585954l/23692271.jpg"
     },
     {
+        "name": "21 Lessons for the 21st Century",
+        "link": "https://www.goodreads.com/book/show/38820046-21-lessons-for-the-21st-century",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1564577305l/38820046._SY475_.jpg"
+    },
+    {
         "name": "Factfulness: Ten Reasons We're Wrong About the World – and Why Things Are Better Than You Think",
         "link": "https://www.goodreads.com/book/show/34890015-factfulness",
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1544963815l/34890015._SY475_.jpg"
+    }
+    ,
+    {
+        "name": "Educated",
+        "link": "https://www.goodreads.com/book/show/35133922-educated",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1506026635l/35133922.jpg"
+    }
+    ,
+    {
+        "name": "Limitless: Core Techniques to Improve Performance, Productivity, and Focus",
+        "link": "https://www.goodreads.com/book/show/49994260-limitless",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577478589l/49994260._SY475_.jpg"
     }
 
 ]
