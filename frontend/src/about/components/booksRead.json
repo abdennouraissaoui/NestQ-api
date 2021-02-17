@@ -61,8 +61,6 @@
         "link": "https://www.goodreads.com/book/show/27220736-shoe-dog",
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1457284880l/27220736.jpg"
     },
-
-
     {
         "name": "The Power of Now: A Guide to Spiritual Enlightenment",
         "link": "https://www.goodreads.com/book/show/6708.The_Power_of_Now",
@@ -110,5 +108,10 @@
         "name": "Give and Take: A Revolutionary Approach to Success",
         "link": "https://www.goodreads.com/book/show/16158498-give-and-take",
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1356136579l/16158498.jpg"
+    },
+    {
+        "name": "Outliers: The Story of Success",
+        "link": "https://www.goodreads.com/book/show/3228917-outliers",
+        "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344266315l/3228917.jpg"
     }
 ]

@@ -38,6 +38,15 @@ const articles = [
     link:
       "https://www.linkedin.com/pulse/4-lessons-learned-portfolio-optimization-abdennour-aissaoui/",
   },
+  {
+    title: "Dual Momentum: Pre- and post-publication performance",
+    date: "2021-02-17",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C5612AQF9eDW3CSy1vA/article-cover_image-shrink_423_752/0/1613572423485?e=1619049600&v=beta&t=OKLxFGhDfdlypcqzxp4N0fHCmC1n552RWNxaRcCOt_M",
+    imageAltText: "Dual Momentum",
+    link:
+      "https://www.linkedin.com/pulse/dual-momentum-pre-post-publication-performance-abdennour-aissaoui/",
+  },
 ];
 
 const Blog = () => {
