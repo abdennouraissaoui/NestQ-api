@@ -1,5 +1,35 @@
 [
     {
+        "name": "The Changing World Order: Why Nations Succeed and Fail",
+        "link": "https://www.goodreads.com/en/book/show/52962238-the-changing-world-order",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1630251271i/52962238.jpg"
+    },
+    {
+        "name": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+        "link": "https://www.goodreads.com/book/show/40121378-atomic-habits?ref=nav_sb_ss_1_9",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1535115320i/40121378.jpg"
+    },
+    {
+        "name": "Your Next Five Moves: Master the Art of Business Strategy",
+        "link": "https://www.goodreads.com/book/show/50542735-your-next-five-moves?ref=nav_sb_ss_1_14",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1596384027i/50542735.jpg"
+    },
+    {
+        "name": "Surrounded by Idiots",
+        "link": "https://www.goodreads.com/book/show/39101777-surrounded-by-idiots?ref=nav_sb_ss_2_14",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1583763517i/39101777.jpg"
+    },
+    {
+        "name": "Never Split the Difference: Negotiating As If Your Life Depended On It",
+        "link": "https://www.goodreads.com/book/show/26156469-never-split-the-difference",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1460910517i/26156469.jpg"
+    },
+    {
+        "name": "The Almanack of Naval Ravikant: A Guide to Wealth and Happiness",
+        "link": "https://www.goodreads.com/book/show/54898389-the-almanack-of-naval-ravikant",
+        "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1598011736i/54898389.jpg"
+    },
+    {
         "name": "The Elements of Statistical Learning: Data Mining, Inference, and Prediction",
         "link": "https://www.goodreads.com/book/show/148009.The_Elements_of_Statistical_Learning",
         "image": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738132l/148009.jpg"
