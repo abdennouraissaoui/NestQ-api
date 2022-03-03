@@ -44,7 +44,7 @@ function App() {
     <Route path="/blog" key={7} exact>
       <Blog />
     </Route>,
-    <Route path="/learn" key={4} exact>
+    <Route path="/faq" key={4} exact>
       <Learn />
     </Route>,
     <Route path="/about-nestq" key={5} exact>

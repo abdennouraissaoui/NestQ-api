@@ -11,7 +11,7 @@ const NavLinks = () => {
                 <NavLink to="/portfolios" exact> My Portfolios </NavLink>
             </li>}
             <li>
-                <NavLink to="/learn" exact> Learn </NavLink>
+                <NavLink to="/faq" exact> FAQ </NavLink>
             </li>
             <li>
                 <NavLink to="/blog" exact> Blog </NavLink>
