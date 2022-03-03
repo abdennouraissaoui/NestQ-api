@@ -28,7 +28,7 @@ const MainNavigation = props => {
                     <span />
                 </button>
                 <NavLink to="/">
-                    <img style={{height:"100%"}} src={logo} alt="NestQ"/>
+                    <img style={{height:"20%"}} src={logo} alt="NestQ"/>
                     </NavLink>
                 {/* <h1 className="main-navigation__title">
 

@@ -16,12 +16,12 @@ const NavLinks = () => {
             <li>
                 <NavLink to="/blog" exact> Blog </NavLink>
             </li>
-            <li>
+            {/* <li>
                 <NavLink to="/about-nestq" exact> About NestQ </NavLink>
             </li>
             <li>
                 <NavLink to="/about-me" exact> About Me </NavLink>
-            </li>
+            </li> */}
             {auth.isLoggedIn && <li>
                 <button onClick={auth.logout}>Logout</button>
             </li>}

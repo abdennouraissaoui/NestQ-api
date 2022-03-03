@@ -14,7 +14,7 @@ const footerStyle = {
     boxShadow: "0 2px 6px rgba(0, 0, 0, 0.26)",
     left: "0",
     bottom: "0",
-    height: "3.3rem",
+    height: "2rem",
     width: "100%"
 };
 
@@ -46,7 +46,7 @@ const Footer = () => {
             <div style={phantomStyle}></div>
             <div style={footerStyle}>
                 <Space size={0} direction="vertical" style={{marginLeft: "auto", marginRight:"auto"}}> 
-                <ul style={linksStyle}>
+                {/* <ul style={linksStyle}>
                         <li style={{ marginRight: 10, color: "#ccc" }}>
                             Find me:
                         </li>
@@ -60,7 +60,7 @@ const Footer = () => {
                                 <LinkedinOutlined style={{ fontSize: '24px', color: '#ccc' }} />
                             </a>
                         </li>
-                    </ul>
+                    </ul> */}
                     <ul style={linksStyle}>
                         <li style={{ marginRight: 10 }}>
                             <NavLink style={{ color: "#ccc" }} to="/terms-of-service" exact>Terms of Service </NavLink>
