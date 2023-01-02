@@ -18,7 +18,7 @@
     "react-ga": "^2.7.0",
     "react-horizontal-scrolling-menu": "^0.7.7",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0",
+    "react-scripts": "5.0.1",
     "react-transition-group": "^4.3.0",
     "recharts": "^1.8.5",
     "tachyons": "^4.11.1",
